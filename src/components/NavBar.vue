@@ -5,6 +5,7 @@
       <li><RouterLink to="/dungeons">副本攻略</RouterLink></li>
       <li><RouterLink to="/news">每日新闻</RouterLink></li>
       <li><RouterLink to="/equipment">装备列表</RouterLink></li>
+      <li><RouterLink to="/buffs">buff效果</RouterLink></li>
     </ul>
   </nav>
 </template>

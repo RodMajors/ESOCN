@@ -1,0 +1,281 @@
+{
+    "buffs": [
+        {
+            "name": "高级勇气",
+            "enName": "Major Courage",
+            "des": "武器伤害和法术伤害提高430"
+        },
+        {
+            "name": "次级勇气",
+            "enName": "Minor Courage",
+            "des": "武器伤害和法术伤害提高215"
+        },
+        {
+            "name": "高级杀戮",
+            "enName": "Major Slayer",
+            "des": "对地下城、试炼及竞技场怪物的伤害提高10%"
+        },
+        {
+            "name": "次级杀戮",
+            "enName": "Minor Slayer",
+            "des": "对地下城、试炼及竞技场怪物的伤害提高 5%"
+        },
+        {
+            "name": "高级力量",
+            "enName": "Major Force",
+            "des": "暴击伤害提高20%"
+        },
+        {
+            "name": "次级力量",
+            "enName": "Minor Force",
+            "des": "暴击伤害提高10%"
+        },
+        {
+            "name": "高级英勇",
+            "enName": "Major Heroism",
+            "des": "每1.5秒获得3终极点"
+        },
+        {
+            "name": "次级英勇",
+            "enName": "Minor Heroism",
+            "des": "每1.5秒获得1终极点"
+        },
+        {
+            "name": "高级巫术",
+            "enName": "Major Sorcery",
+            "des": "法术伤害提高20%"
+        },
+        {
+            "name": "次级巫术",
+            "enName": "Minor Sorcery",
+            "des": "法术伤害提高10%"
+        },
+        {
+            "name": "高级残暴",
+            "enName": "Major Brutality",
+            "des": "武器伤害提高20%"
+        },
+        {
+            "name": "次级残暴",
+            "enName": "Minor Brutality",
+            "des": "武器伤害提高10%"
+        },
+        {
+            "name": "高级狂怒",
+            "enName": "Major Berserk",
+            "des": "使造成的伤害提高10%"
+        },
+        {
+            "name": "次级狂怒",
+            "enName": "Minor Berserk",
+            "des": "使造成的伤害提高 5%"
+        },
+        {
+            "name": "高级预知",
+            "enName": "Major Prophecy",
+            "des": "法术暴击值提高2629"
+        },
+        {
+            "name": "次级预知",
+            "enName": "Minor Prophecy",
+            "des": "法术暴击值提高1314"
+        },
+        {
+            "name": "高级野性",
+            "enName": "Major Savagery",
+            "des": "武器暴击值提高2629"
+        },
+        {
+            "name": "次级野性",
+            "enName": "Minor Savagery",
+            "des": "武器暴击值提高1314"
+        },
+        {
+            "name": "高级活力",
+            "enName": "Major Vitality",
+            "des": "受到的治疗量和护盾量提高12%"
+        },
+        {
+            "name": "次级活力",
+            "enName": "Minor Vitality",
+            "des": "受到的治疗量和护盾量提高 6%"
+        },
+        {
+            "name": "高级智慧",
+            "enName": "Major Intellect",
+            "des": "魔力再生提高30%"
+        },
+        {
+            "name": "次级智慧",
+            "enName": "Minor Intellect",
+            "des": "魔力再生提高15%"
+        },
+        {
+            "name": "高级忍耐",
+            "enName": "Major Endurance",
+            "des": "耐力再生提高30%"
+        },
+        {
+            "name": "次级忍耐",
+            "enName": "Minor Endurance",
+            "des": "耐力再生提高15%"
+        },
+        {
+            "name": "高级坚韧",
+            "enName": "Major Fortitude",
+            "des": "生命再生提高30%"
+        },
+        {
+            "name": "次级坚韧",
+            "enName": "Minor Fortitude",
+            "des": "生命再生提高15%"
+        },
+        {
+            "name": "高级坚毅",
+            "enName": "Major Toughness",
+            "des": "生命上限提高20%"
+        },
+        {
+            "name": "次级坚毅",
+            "enName": "Minor Toughness",
+            "des": "生命上限提高10%"
+        },
+        {
+            "name": "高级庇护",
+            "enName": "Major Ageis",
+            "des": "在地下城、试炼及竞技场中收到的怪物伤害降低10%"
+        },
+        {
+            "name": "次级庇护",
+            "enName": "Minor Aegis",
+            "des": "在地下城、试炼及竞技场中收到的怪物伤害降低 5%"
+        },
+        {
+            "name": "高级守护",
+            "enName": "Major Protection",
+            "des": "受到的伤害降低10%"
+        },
+        {
+            "name": "次级守护",
+            "enName": "Minor Protection",
+            "des": "受到的伤害降低 5%"
+        },
+        {
+            "name": "高级信念",
+            "enName": "Major Resolve",
+            "des": "物理抗性和法术抗性提高5948"
+        },
+        {
+            "name": "次级信念",
+            "enName": "Minor Resolve",
+            "des": "物理抗性和法术抗性提高2974"
+        },
+        {
+            "name": "高级修复",
+            "enName": "Major Mending",
+            "des": "造成的治疗量和护盾量提高12%"
+        },
+        {
+            "name": "次级修复",
+            "enName": "Minor Mending",
+            "des": "造成的治疗量和护盾量提高 6%"
+        },
+        {
+            "name": "高级闪避",
+            "enName": "Major Evasion",
+            "des": "受到的范围攻击伤害降低20%"
+        },
+        {
+            "name": "次级闪避",
+            "enName": "Minor Evasion",
+            "des": "受到的范围攻击伤害降低10%"
+        },
+        {
+            "name": "高级迅敏",
+            "enName": "Major Expedition",
+            "des": "移动速度提高30%"
+        },
+        {
+            "name": "次级迅敏",
+            "enName": "Minor Expedition",
+            "des": "移动速度提高15%"
+        },
+        {
+            "name": "赋能",
+            "enName": "Empower",
+            "des": "对怪物的重攻击伤害提高70%"
+        },
+        {
+            "name": "高级疾驰",
+            "enName": "Major Gallop",
+            "des": "坐骑速度提高30%"
+        }
+    ],
+    "debuffs": [
+        {
+            "name": "高级破甲",
+            "enName": "Major Breach",
+            "des": "物理抗性、法术抗性降低5948"
+        },
+        {
+            "name": "次级破甲",
+            "enName": "Minor Breach",
+            "des": "物理抗性、法术抗性降低2974"
+        },
+        {
+            "name": "高级脆弱",
+            "enName": "Major Vulnerability",
+            "des": "使受到的伤害提高10%"
+        },
+        {
+            "name": "次级脆弱",
+            "enName": "Minor Vulnerability",
+            "des": "使受到的伤害提升5%"
+        },
+        {
+            "name": "高级虚弱",
+            "enName": "Major Brittle",
+            "des": "使受到的暴击伤害提升20%"
+        },
+        {
+            "name": "次级虚弱",
+            "enName": "Minor Brittle",
+            "des": "使受到的暴击伤害提升10%"
+        },
+        {
+            "name": "高级亵渎",
+            "enName": "Major Defile",
+            "des": "使受到的治疗和生命回复降低16%"
+        },
+        {
+            "name": "次级亵渎",
+            "enName": "Minor Defile",
+            "des": "使受到的治疗和生命回复降低 8%"
+        },
+        {
+            "name": "高级致残",
+            "enName": "Major Maim",
+            "des": "使其造成的伤害降低10%"
+        },
+        {
+            "name": "次级致残",
+            "enName": "Minor Main",
+            "des": "使其造成的伤害降低 5%"
+        },
+        {
+            "name": "高级怯懦",
+            "enName": "Major Cowardice",
+            "des": "使其武器伤害和法术伤害降低430"
+        },
+        {
+            "name": "次级怯懦",
+            "enName": "Minor Cowardice",
+            "des": "使其武器伤害和法术伤害降低215"
+        },
+        {
+            "name": "失衡",
+            "enName": "Off Balance",
+            "des": "利用者天赋将对失衡敌人多造成10%伤害"
+        }
+    ]
+}

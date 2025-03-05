@@ -59,7 +59,7 @@
             :class="index % 2 === 0 ? 'row-dark' : 'row-light'"
           >
             <td @click="goToDetail(set.enName)" class="icon-column">
-              <img :src="getIconPath(set)" class="set-icon" alt="Set Icon" />
+              <img :src="getIconPath(set)" class="set-icon" alt="Set Icon" loading="lazy" />
             </td>
             <td class="name-column">
               <div @click="goToDetail(set.enName)" class="name-link">

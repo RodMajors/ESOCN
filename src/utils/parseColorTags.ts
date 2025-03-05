@@ -50,7 +50,7 @@ export function parseColorTags(text: string): string {
 
   // “武器伤害”规则，颜色 #CC6600（橙色）
   keywords = ['武器伤害'];
-  color = '#996633';
+  color = '#AD4E0F';
 
   keywords.forEach((keyword) => {
     const regexWithNumber = new RegExp(`([-+]?\\d*\\.?\\d+)\\s*${keyword}`, 'g');

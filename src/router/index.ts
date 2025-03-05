@@ -1,22 +1,16 @@
-// router/index.ts
 import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
-import Home from '../views/Home.vue';
-import DungeonList from '../views/DungeonList.vue';
-import DungeonDetail from '../views/DungeonDetail.vue';
-import NewsList from '../views/NewsList.vue';
-import NewsDetail from '../views/NewsDetail.vue';
-import EquipmentList from '../views/EquipmentList.vue';
-import EquipmentDetail from '../views/EquipmentDetail.vue';
 
 const routes: RouteRecordRaw[] = [
-  { path: '/', component: Home },
-  { path: '/dungeons', component: DungeonList },
-  { path: '/dungeons/:enName', component: DungeonDetail },
-  { path: '/news', component: NewsList },
-  { path: '/news/:id', component: NewsDetail },
-  { path: '/equipment', component: EquipmentList },
-  { path: '/equipment/:enName', component: EquipmentDetail },
+  { path: '/', component: () => import('../views/Home.vue') },
+  { path: '/dungeons', component: () => import('../views/DungeonList.vue') },
+  { path: '/dungeons/:enName', component: () => import('../views/DungeonDetail.vue') },
+  { path: '/news', component: () => import('../views/NewsList.vue') },
+  { path: '/news/:id', component: () => import('../views/NewsDetail.vue') },
+  { path: '/equipment', component: () => import('../views/EquipmentList.vue') },
+  { path: '/equipment/:enName', component: () => import('../views/EquipmentDetail.vue') },
+  { path: '/buffs', component: () => import('../views/BuffsList.vue') },
+  { path: '/buffs/:enName', component: () => import('../views/BuffsDetail.vue') },
 ];
 
 const router = createRouter({

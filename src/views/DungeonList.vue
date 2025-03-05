@@ -225,9 +225,6 @@ td {
   text-align: left;
 }
 
-tr {
-}
-
 .image-container {
   position: relative;
   width: 100%;
