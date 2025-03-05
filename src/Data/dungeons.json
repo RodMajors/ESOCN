@@ -1,0 +1,88 @@
+[
+    {
+      "name": "獠牙巢穴",
+      "enName": "Fang Lair",
+      "place": ["班古莱", "位于班古莱矛诺斯地区，坐落于巨魔的牙签以北"],
+      "background": "https://images.uesp.net/9/93/ON-load-Fang_Lair.jpg",
+      "picture": "https://images.uesp.net/d/d6/ON-place-Fang_Lair.jpg",
+      "mystery": "矮人城市阿肯塔姆兹-芬 (Arkngthamz-Phng) 的辉煌程度堪比杜马克王国，但在第一纪元被一条巨龙摧毁之前。关于这种可怕生物的传说让旅行者一直远离尖牙巢穴……直到现在。",
+      "des": "獠牙巢穴曾经是一个大型的锻莫矿坑，然而，他们的荣耀在几个世纪前就被巨龙图尔佛昆摧毁了。巨龙将矮人大厅作为它的巢穴已经有无数年了，以至于矿山的原名已经丢失，它被简单地称为‘獠牙巢穴’。图尔佛昆最终死去，但锻莫大厅仍然具有无穷的吸引力，来自泰姆瑞尔各个地方的冒险者试图探查獠牙巢穴的秘密，盗取金银财宝，但都遭遇了灭顶之灾。现在，强大的死灵法师乌黑者奥瑞恩和他的追随者们通过一个仪式复活了图尔弗昆，并让他重新回归奈恩。",
+      "BOSS": [
+        {
+          "name": "骸骨兽群",
+          "enName": "Cadaverous Menagerie",
+          "spicies": "骸骨",
+          "place": "獠牙巢穴",
+          "n-Health": "1,683,986",
+          "v-Health": "4,511,248",
+          "hmHealth": "",
+          "des": "骸骨兽群包括骸骨熊<CadaverousBear>、骸骨瓜尔<CadaverousGuar>、骸骨森切虎<CadaverousSenche-Tiger>其中骸骨熊是真正的BOSS，当骸骨熊死亡的时候其他骸骨也会立即死亡。战斗中骸骨恐狼<Cadaverous Dire Wolf>也会生成。",
+          "picture": "https://images.uesp.net/b/b7/ON-creature-Cadaverous_Bear.jpg",
+          "skills": [
+            {
+              "name":"猛扑",
+              "enName": "Lunge",
+              "icon": "/public/esoui/art/icons/death_recap_melee_heavy.png",
+              "des": "骸骨熊的基本近战攻击，造成轻微物理伤害。"
+            }
+          ],
+          "mech": ""
+        }
+      ],
+      "equipment":[
+
+      ],
+      "achievement":[
+
+      ],
+      "drop": [
+
+      ],
+      "mech": [
+
+      ]
+    },
+    {
+      "name": "唤鳞者之巅",
+      "enName": "Scalecaller Peak",
+      "place": ["班古莱", "位于班古莱矛诺斯地区，坐落于巨魔的牙签以北"],
+      "background": "https://images.uesp.net/2/23/ON-load-Scalecaller_Peak.jpg",
+      "picture": "https://images.uesp.net/d/d6/ON-place-Fang_Lair.jpg",
+      "mystery": "被龙大君遗弃的唤鳞者赞恩神庙空置了数个世纪之久。如今，异教徒接管了这座山，他们令人作呕的计划威胁着整个泰姆瑞尔。",
+      "des": "獠牙巢穴曾经是一个大型的锻莫矿坑，然而，他们的荣耀在几个世纪前就被巨龙图尔佛昆摧毁了。巨龙将矮人大厅作为它的巢穴已经有无数年了，以至于矿山的原名已经丢失，它被简单地称为‘獠牙巢穴’。图尔佛昆最终死去，但锻莫大厅仍然具有无穷的吸引力，来自泰姆瑞尔各个地方的冒险者试图探查獠牙巢穴的秘密，盗取金银财宝，但都遭遇了灭顶之灾。现在，强大的死灵法师乌黑者奥瑞恩和他的追随者们通过一个仪式复活了图尔弗昆，并让他重新回归奈恩。",
+      "BOSS": [
+        {
+          "name": "骸骨兽群",
+          "enName": "Cadaverous Menagerie",
+          "spicies": "骸骨",
+          "place": "獠牙巢穴",
+          "n-Health": "1,683,986",
+          "v-Health": "4,511,248",
+          "hmHealth": "",
+          "des": "骸骨兽群包括骸骨熊<CadaverousBear>、骸骨瓜尔<CadaverousGuar>、骸骨森切虎<CadaverousSenche-Tiger>其中骸骨熊是真正的BOSS，当骸骨熊死亡的时候其他骸骨也会立即死亡。战斗中骸骨恐狼<Cadaverous Dire Wolf>也会生成。",
+          "picture": "https://images.uesp.net/b/b7/ON-creature-Cadaverous_Bear.jpg",
+          "skills": [
+            {
+              "name":"猛扑",
+              "enName": "Lunge",
+              "icon": "/public/esoui/art/icons/death_recap_melee_heavy.png",
+              "des": "骸骨熊的基本近战攻击，造成轻微物理伤害。"
+            }
+          ],
+          "mech": ""
+        }
+      ],
+      "equipment":[
+
+      ],
+      "achievement":[
+
+      ],
+      "drop": [
+
+      ],
+      "mech": [
+
+      ]
+    }
+]
