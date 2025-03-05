@@ -270,9 +270,35 @@ const getIconPath = (set: any): string => {
 
 onMounted(() => {
   equipment.value = loadEquipment();
-  restorePageState(); // 恢复状态
+  restorePageState();
+  applyRouteFilters(); // 新增
   isLoading.value = false;
 });
+
+watch(() => route.path, (newPath) => {
+  if (newPath === '/equipment') {
+    restorePageState();
+    applyRouteFilters(); // 新增
+  }
+});
+
+// 新增函数
+const applyRouteFilters = () => {
+  const { search, type, place } = route.query;
+  if (search) {
+    searchQuery.value = String(search);
+  }
+  if (place) {
+    searchQuery.value = String(place);
+  }
+  if (type) {
+    const typeText = String(type);
+    if (!activeTypeFilters.value.includes(typeText)) {
+      activeTypeFilters.value = [typeText]; // 只选中当前类型
+      showFilter.value = true; // 自动展开筛选区域
+    }
+  }
+};
 
 watch(() => route.path, (newPath) => {
   if (newPath === '/equipment') { // 假设列表页路由为 /equipment
@@ -292,7 +318,7 @@ watch(
 
 const goToDetail = (enName: string) => {
   savePageState();
-  const formattedName = enName.replace(/\s+/g, '-');
+  const formattedName = enName.replace(/\s+/g, '_').replace(/-/g, '--'); // 将空格替换为 _，将 - 替换为 --
   router.push(`/equipment/${formattedName}`);
 };
 
@@ -602,8 +628,8 @@ table {
   width: 60px;
   border: 1px solid #444;
   border-radius: 4px;
-  background-color: #2c2c2c;
-  color: #fff;
+  background-color: #262626;
+  color: #C5C29E;
   text-align: center;
   appearance: textfield; /* 隐藏增减按钮 */
 }

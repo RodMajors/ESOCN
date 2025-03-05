@@ -226,7 +226,6 @@ td {
 }
 
 tr {
-  background-color: #101010;
 }
 
 .image-container {

@@ -3,7 +3,13 @@ import equipmentData from '../data/equipment.json';
 
 // 定义 Bonus 为索引签名类型
 interface Bonus {
-  [key: string]: string; // 改为索引签名
+  [key: string]: string;
+}
+
+// 定义 Styles 的具体结构
+interface Styles {
+  武器?: { [key: string]: any };
+  护甲?: { [key: string]: any };
 }
 
 // 定义完整的 EquipmentSet 接口
@@ -11,11 +17,11 @@ interface EquipmentSet {
   name: string;
   enName: string;
   place: string;
-  bonuses: Bonus; // 使用索引签名类型
+  bonuses: Bonus;
   type: number;
   id?: string;
   itemIDs?: string[];
-  styles?: any;
+  styles?: Styles; // 使用具体类型替代 any
 }
 
 // 定义 JSON 文件的结构

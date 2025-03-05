@@ -1,6 +1,8 @@
 <template>
     <footer class="footer">
-      <p>&copy; 2025 游戏攻略站. All Rights Reserved.</p>
+      <p>&copy; ESOCN by @RodMajors All Rights Reserved.</p>
+      <p>ESOCN 与 Bethesda Softworks、ZeniMax Online Studios 及其母公司 ZeniMax Media 均无任何直接或间接关系。</p>
+      <p>《上古卷轴® Online》由 ZeniMax Media 旗下公司 ZeniMax Online Studios LLC 开发。ZeniMax、上古卷轴、ESO、Bethesda、Bethesda Softworks和相关徽标是 ZeniMax Media Inc. 在美国和/或其他国家/地区的注册商标或商标。</p>
     </footer>
   </template>
   
@@ -10,9 +12,9 @@
   
   <style scoped>
   .footer {
-    background-color: #2c2c2c;
+    background-color: #101010;
     text-align: center;
-    padding: 1rem;
-    border-top: 1px solid #444;
+    font-size: 0.7rem;
+    border-top: 1px solid #948159;
   }
   </style>

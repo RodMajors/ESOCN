@@ -24,14 +24,15 @@ import { RouterLink } from 'vue-router';
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
-  color: #ffffff;
+  color: #BCA875;
   text-decoration: none; /* 移除下划线 */
+  font-family:"Garamond", "Centaur", 'Trebuchet MS', sans-serif ;
 }
 
 .logo:hover {
-  color: #ffcc00; /* 悬停时变金色，与其他链接一致 */
+  color: #ffffff; /* 悬停时变金色，与其他链接一致 */
 }
 
 .nav-links {
@@ -43,12 +44,13 @@ import { RouterLink } from 'vue-router';
 }
 
 .nav-links li a {
-  color: #ffffff;
+  color: #BCA875;
   text-decoration: none;
   font-size: 1.1rem;
+  font-family: "Microsoft YaHei","黑体","宋体",sans-serif;
 }
 
 .nav-links li a:hover {
-  color: #ffcc00;
+  color: #ffffff;
 }
 </style>

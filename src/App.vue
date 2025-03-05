@@ -22,7 +22,7 @@ import SideBar from './components/SideBar.vue';
 <style> /* 无 scoped */
 :root {
   --text-color: #C5C29E;
-  font-family: "宋体",Simsun;
+  font-family: "Microsoft YaHei","黑体","宋体",sans-serif;  
 }
 
 body {
@@ -40,13 +40,12 @@ body {
   flex: 1;
 }
 
+/* App.vue 的 <style> 部分 */
 .main-content {
   flex: 3.5;
-  background-color: #101010;
+  background-color: #000000;
   margin: 1rem;
-  padding: 1rem;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .sidebar {

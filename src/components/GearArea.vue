@@ -7,7 +7,7 @@
         <br v-if="armorTypes.length > 0" />
         <span v-if="armorTypes.length > 0" class="armor-type">{{ armorTypes.join(' / ') }}</span>
       </div>
-      <span class="place">{{ set.place }}</span>
+      <span class="place">{{ set.place.split(',')[0] }}</span>
     </div>
 
     <!-- 居中内容 -->
@@ -73,6 +73,19 @@ export default defineComponent({
 
     // 获取护甲类型
     const armorTypes = computed(() => {
+      // type 为 3（制造）：直接返回“自选护甲类型”
+      if (props.set.type === 3) {
+        return ['自选护甲类型'];
+      }
+
+      // type 为 12（神器）：取 styles 第一项的第一键名
+      if (props.set.type === 12 && props.set.styles) {
+        const firstStyleKey = Object.keys(props.set.styles)[0] as keyof typeof props.set.styles; // 类型断言
+        const firstSubKey = Object.keys(<object>props.set.styles[firstStyleKey])[0];
+        return [firstSubKey === '颈部装备' ? '项链' : firstSubKey];
+      }
+
+      // 其他情况：检查护甲类型
       const armorStyles = props.set.styles?.护甲;
       if (!armorStyles) return [];
 
@@ -94,7 +107,14 @@ export default defineComponent({
         });
       });
 
-      return Array.from(typesSet);
+      const typesArray = Array.from(typesSet);
+      if (typesArray.length === 1) {
+        return typesArray; // 单一类型，如 ["重甲"]
+      } else if (typesArray.length === 3 && typesArray.includes('重甲') && typesArray.includes('中甲') && typesArray.includes('轻甲')) {
+        return ['随机护甲类型']; // 三种都有
+      } else {
+        return typesArray; // 其他情况，如 ["重甲", "中甲"]
+      }
     });
 
     // 获取图标路径
@@ -135,13 +155,13 @@ export default defineComponent({
 
 <style scoped>
 .gear-area {
-  width: 300px; /* 固定宽度 */
+  width: 300px;
   padding: 1rem;
   background-color: #000000;
   border: 1px solid #444;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  margin: 1rem;
+  margin: 0.5rem;
 }
 
 .type-place {
