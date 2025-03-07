@@ -31,6 +31,8 @@
               </span>
             </div>
           </div>
+          <!-- 部件过滤暂时禁用，因为 API 不返回 styles -->
+          <!--
           <div class="filter-column">
             <h4>部件</h4>
             <div class="filter-options">
@@ -44,41 +46,51 @@
               </span>
             </div>
           </div>
+          -->
         </div>
       </div>
     </transition>
 
+    <!-- 加载状态 -->
+    <div v-if="isLoading" class="loading">“他妈的这数据量也太多了...<br>——@RodMajors“</div>
 
     <!-- 装备列表 -->
     <transition name="slide-down">
-      <table v-if="filteredEquipment.length > 0 && !isLoading" :style="{ marginTop: showFilter ? '1rem' : '0' }">
+      <table v-if="paginatedEquipment.length > 0 && !isLoading" :style="{ marginTop: showFilter ? '1rem' : '0' }">
         <tbody>
           <tr
             v-for="(set, index) in paginatedEquipment"
             :key="set.enName"
             :class="index % 2 === 0 ? 'row-dark' : 'row-light'"
-          >
+          > 
             <td @click="goToDetail(set.enName)" class="icon-column">
-              <img :src="getIconPath(set)" class="set-icon" alt="Set Icon" loading="lazy" />
+              <img :src="set.icon" class="set-icon" alt="Set Icon"/>
             </td>
             <td class="name-column">
               <div @click="goToDetail(set.enName)" class="name-link">
                 <span>{{ set.name }}</span>
                 <br />
-                <span class="en-name">&lt;{{ set.enName }}&gt;</span> <!-- 用尖括号包裹 -->
+                <span class="en-name">&lt;{{ set.enName }}&gt;</span>
               </div>
             </td>
-            <td @click="filterByPlace(set.place)" class="place-link">{{ set.place.split(',')[0] }}</td>
+            <td @click="filterByPlace(set.place)" class="place-link">
+              <span>{{ set.place.split(',')[0] }}</span>
+              <br />
+              <span class="en-name">{{ set.enplace.split(',')[0] }}</span>
+            </td>
             <td @click="filterByType(set.type)" class="type-link">{{ getTypeText(set.type) }}</td>
             <td>
               <ul id="bonuses">
-                <li v-for="(effect, key) in Object.values(set.bonuses).filter(e => e)" :key="key" v-html="parseColorTags(effect)"></li>
+                <li v-for="(effect, key) in set.bonuses" :key="key" v-html="effect" @click = "handleClick"></li>
               </ul>
             </td>
           </tr>
         </tbody>
       </table>
     </transition>
+
+    <!-- 无数据提示 -->
+    <div v-if="filteredEquipment.length === 0 && !isLoading" class="no-data">没有找到符合条件的装备</div>
 
     <!-- 分页 -->
     <div class="pagination" v-if="totalPages > 1">
@@ -109,7 +121,6 @@
         placeholder="跳转"
       />
       <button :disabled="currentPage === totalPages" @click="changePage(currentPage + 1)" class="page-btn">下一页</button>
-      
     </div>
   </div>
 </template>
@@ -118,65 +129,64 @@
 import { ref, onMounted, computed, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { loadEquipment } from '../utils/loadEquipment';
-import { parseColorTags } from '../utils/parseColorTags';
+import { parseColorTags } from '@/utils/parseColorTags';
+import { loadAllEquipment } from '../utils/loadEquipment'
+import { RouterLink } from 'vue-router';
+import BuffLink from "@/components/BuffLink.vue";
 
-const equipment = ref<ReturnType<typeof loadEquipment>>([]);
+const equipment = ref<any[]>([]);
 const router = useRouter();
 const route = useRoute();
 const currentPage = ref(1);
 const itemsPerPage = 20;
-const defaultIcon = 'https://via.placeholder.com/24';
+const totalPages = ref(0); // 暂时手动设置，后续需后端支持
 const isLoading = ref(true);
 const searchQuery = ref('');
 const showFilter = ref(false);
 const activeTypeFilters = ref<string[]>([]);
-const activePartFilters = ref<string[]>([]);
-const loadedImages = ref(new Set<string>());
-const scrollPosition = ref(0); // 保存滚动位置
+// const activePartFilters = ref<string[]>([]); // 暂时禁用部件过滤
 
 const typeOptions = ['制造', '试炼', '副本', '竞技场', 'PVP', '怪物', '区域', '神器', '职业'];
-const partOptions = ['重甲', '中甲', '轻甲'];
+const partOptions = ['重甲', '中甲', '轻甲']; // 保留但未使用
 
 const inputPage = ref('');
 
-const jumpToPage = () => {
-  const page = parseInt(inputPage.value);
-  if (page >= 1 && page <= totalPages.value) {
-    changePage(page);
+// 加载所有装备数据
+const fetchAllEquipment = async () => {
+  isLoading.value = true;
+  try {
+    const data = await loadAllEquipment(); // 一次性加载所有数据
+    equipment.value = data;
+    totalPages.value = Math.ceil(data.length / itemsPerPage); // 计算总页数
+    console.log("data.length", data.length)
+  } catch (error) {
+    console.error('加载装备数据失败:', error);
+  } finally {
+    isLoading.value = false;
   }
 };
 
-// 保存页面状态到 localStorage
-const savePageState = () => {
-  const state = {
-    currentPage: currentPage.value,
-    scrollPosition: window.scrollY,
-    searchQuery: searchQuery.value,
-    activeTypeFilters: activeTypeFilters.value,
-    activePartFilters: activePartFilters.value,
-  };
-  localStorage.setItem('equipmentListState', JSON.stringify(state));
+// 获取当前页的装备数据
+const paginatedEquipment = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return filteredEquipment.value.slice(start, end); // 只返回当前页的数据
+});
+
+const handleClick = (event: Event) =>{
+  const target = event.target as HTMLElement;
+    if (target.classList.contains("link")) {
+      const to = target.dataset.to;
+      if (to) {
+        router.push(to); // 使用 Vue Router 跳转
+      }
+    }
 };
 
-// 从 localStorage 恢复页面状态
-const restorePageState = () => {
-  const savedState = localStorage.getItem('equipmentListState');
-  if (savedState) {
-    const state = JSON.parse(savedState);
-    currentPage.value = state.currentPage || 1;
-    scrollPosition.value = state.scrollPosition || 0;
-    searchQuery.value = state.searchQuery || '';
-    activeTypeFilters.value = state.activeTypeFilters || [];
-    activePartFilters.value = state.activePartFilters || [];
-    setTimeout(() => window.scrollTo(0, scrollPosition.value), 0); // 等DOM渲染完成再滚动
-  }
-};
-
-// 修复后的筛选逻辑
+// 筛选逻辑
 const filteredEquipment = computed(() => {
   let filtered = equipment.value;
 
-  // 搜索过滤
   if (searchQuery.value) {
     filtered = filtered.filter(set =>
       set.name.includes(searchQuery.value) ||
@@ -185,52 +195,45 @@ const filteredEquipment = computed(() => {
     );
   }
 
-  // 类型过滤
   if (activeTypeFilters.value.length > 0) {
     filtered = filtered.filter(set =>
       activeTypeFilters.value.includes(getTypeText(set.type))
     );
   }
 
-  // 部件过滤（重甲、中甲、轻甲）
-  if (activePartFilters.value.length > 0) {
-    filtered = filtered.filter(set => {
-      const armorStyles = set.styles?.护甲;
-      if (!armorStyles) return false;
-
-      // 定义映射关系，使用 as const 确保键是字面量类型
-      const partMap = {
-        '重甲': '重型',
-        '中甲': '中型',
-        '轻甲': '轻型'
-      } as const;
-
-      // 获取护甲部分的子对象（如 "手部"、"胸甲" 等）
-      const armorParts = Object.values(armorStyles) as Array<{ [key: string]: any }>;
-
-      // 检查是否有任何子对象的键名匹配选中的护甲类型
-      return armorParts.some(part => {
-        const partTypes = Object.keys(part); // 获取 "重型"、"中型"、"轻型" 等键名
-        return activePartFilters.value.some(filter => {
-          const expectedType = partMap[filter as keyof typeof partMap];
-          return partTypes.includes(expectedType);
-        });
-      });
-    });
-  }
-
   return filtered;
 });
 
-const paginatedEquipment = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  return filteredEquipment.value.slice(start, end);
+
+onMounted(() => {
+  fetchAllEquipment();
+  restorePageState();
+  applyRouteFilters();
 });
 
-const totalPages = computed(() => {
-  return Math.ceil(filteredEquipment.value.length / itemsPerPage);
-});
+// 保存页面状态
+const savePageState = () => {
+  const state = {
+    currentPage: currentPage.value,
+    scrollPosition: window.scrollY,
+    searchQuery: searchQuery.value,
+    activeTypeFilters: activeTypeFilters.value,
+    // activePartFilters: activePartFilters.value, // 禁用
+  };
+  localStorage.setItem('equipmentListState', JSON.stringify(state));
+};
+
+// 恢复页面状态
+const restorePageState = () => {
+  const savedState = localStorage.getItem('equipmentListState');
+  if (savedState) {
+    const state = JSON.parse(savedState);
+    currentPage.value = state.currentPage || 1;
+    searchQuery.value = state.searchQuery || '';
+    activeTypeFilters.value = state.activeTypeFilters || [];
+    // activePartFilters.value = state.activePartFilters || [];
+  }
+};
 
 const visiblePages = computed(() => {
   const pages = [];
@@ -250,81 +253,52 @@ const getTypeText = (type: number): string => {
   return typeMap[type] || '未知';
 };
 
-const getIconPath = (set: any): string => {
-  let iconPath = '';
-  if (set.styles?.护甲?.头部) {
-    const headType = Object.values(set.styles.护甲.头部)[0] as any;
-    iconPath = headType?.icon || '';
-  } else {
-    const getFirstIcon = (obj: any): string => {
-      if (!obj) return '';
-      if (obj.icon) return obj.icon;
-      const firstValue = Object.values(obj)[0];
-      return getFirstIcon(firstValue);
-    };
-    iconPath = getFirstIcon(set.styles);
-  }
-  const cleanPath = iconPath.replace(/^\/esoui\//, '').replace('.dds', '.webp'); // 替换为 PNG
-  return cleanPath ? `/esoui/${cleanPath}` : defaultIcon;
-};
-
-onMounted(() => {
-  equipment.value = loadEquipment();
-  restorePageState();
-  applyRouteFilters(); // 新增
-  isLoading.value = false;
-});
-
-watch(() => route.path, (newPath) => {
-  if (newPath === '/equipment') {
-    restorePageState();
-    applyRouteFilters(); // 新增
-  }
-});
-
-// 新增函数
 const applyRouteFilters = () => {
   const { search, type, place } = route.query;
-  if (search) {
-    searchQuery.value = String(search);
-  }
-  if (place) {
-    searchQuery.value = String(place);
-  }
+  if (search) searchQuery.value = String(search);
+  if (place) searchQuery.value = String(place);
   if (type) {
     const typeText = String(type);
     if (!activeTypeFilters.value.includes(typeText)) {
-      activeTypeFilters.value = [typeText]; // 只选中当前类型
-      showFilter.value = true; // 自动展开筛选区域
+      activeTypeFilters.value = [typeText];
+      showFilter.value = true;
     }
   }
 };
 
 watch(() => route.path, (newPath) => {
-  if (newPath === '/equipment') { // 假设列表页路由为 /equipment
+  if (newPath === '/equipment') {
     restorePageState();
+    applyRouteFilters();
   }
 });
 
 watch(
-  [activeTypeFilters, activePartFilters],
+  [activeTypeFilters, searchQuery],
   () => {
-    currentPage.value = 1; // 筛选变化时返回第一页
-    savePageState(); // 更新保存的状态
+    currentPage.value = 1;
+    savePageState();
   },
-  { deep: true } // 监听数组内部变化
+  { deep: true }
 );
-
 
 const goToDetail = (enName: string) => {
   savePageState();
-  const formattedName = enName.replace(/\s+/g, '_').replace(/-/g, '--'); // 将空格替换为 _，将 - 替换为 --
+  const formattedName = enName.replace(/\s+/g, '_');
   router.push(`/equipment/${formattedName}`);
 };
 
 const changePage = (page: number) => {
   if (page >= 1 && page <= totalPages.value) {
     currentPage.value = page;
+    savePageState();
+  }
+};
+
+const jumpToPage = () => {
+  const page = parseInt(inputPage.value);
+  if (page >= 1 && page <= totalPages.value) {
+    changePage(page);
   }
 };
 
@@ -345,19 +319,12 @@ const toggleTypeFilter = (type: string) => {
   }
 };
 
-const togglePartFilter = (part: string) => {
-  const index = activePartFilters.value.indexOf(part);
-  if (index === -1) {
-    activePartFilters.value.push(part);
-  } else {
-    activePartFilters.value.splice(index, 1);
-  }
-};
+// const togglePartFilter = (part: string) => { /* 禁用 */ };
 
 const filterByType = (type: number) => {
   const typeText = getTypeText(type);
   toggleTypeFilter(typeText);
-  showFilter.value = true; // 自动打开筛选区域
+  showFilter.value = true;
 };
 
 const filterByPlace = (place: string) => {
@@ -498,7 +465,7 @@ td {
 }
 
 td:nth-child(3) {
-  width: 8%;
+  width: 10%;
   text-align: center;
 }
 
@@ -508,16 +475,16 @@ td:nth-child(4) {
 }
 
 td:nth-child(5) {
-  width: 54%;
+  width: 53%;
   text-align: left;
 }
 
 .row-dark {
-  background-color: #1A1A1A;
+  background-color: #101010;
 }
 
 .row-light {
-  background-color: #262626;
+  background-color: #1A1A1A;
 }
 
 /* 套装名称悬停效果 */
@@ -659,7 +626,7 @@ table {
 
 /* 修改英文名称样式 */
 .en-name {
-  font-size: 0.85rem; /* 缩小字体，原默认可能是1rem */
+  font-size: 0.80rem; /* 缩小字体，原默认可能是1rem */
 }
 
 </style>

@@ -27,9 +27,9 @@
         <!-- 中间图标区域 -->
         <div class="icons-container">
           <img
-            v-for="(icon, index) in styleIcons"
+            v-for="(icon, index) in set.styles"
             :key="index"
-            :src="getIconPath(icon)"
+            :src="icon"
             class="style-icon"
             alt="Style Icon"
           />
@@ -74,18 +74,9 @@ import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { loadEquipment } from '../utils/loadEquipment';
 import GearArea from '../components/GearArea.vue';
+import { loadRelatedEquipment, getEquipmentByEnName } from '../utils/loadEquipment';
+import type { EquipmentSet } from '@/types/equipment'
 
-interface EquipmentSet {
-  name: string;
-  enName: string;
-  place: string;
-  bonuses: { [key: string]: string };
-  type: number;
-  styles?: {
-    武器?: { [key: string]: any };
-    护甲?: { [key: string]: any };
-  };
-}
 
 const route = useRoute();
 const router = useRouter();
@@ -129,15 +120,15 @@ const relatedSets = computed(() => {
     .slice(0, 3);
 });
 
-onMounted(() => {
-  equipmentData.value = loadEquipment();
-  const enName = (route.params.enName as string).replace(/--/g, '-').replace(/_/g, ' '); // 将 -- 替换为 -，将 _ 替换为空格
-  set.value = equipmentData.value.find(s => s.enName === enName) || null;
-  console.log('Equipment detail loaded:', set.value);
+onMounted(async () => {
+  const enName = (route.params.enName as string).replace(/_/g, ' '); // 将下划线替换为空格
+  set.value = await getEquipmentByEnName(enName);
+  if(! set.value) return ;
+  equipmentData.value = await loadRelatedEquipment(set.value.place.split(',')[0]); // 加载所有装备数据
 });
 
 const goToDetail = (enName: string) => {
-  const formattedName = enName.replace(/\s+/g, '-');
+  const formattedName = enName.replace(/\s+/g, '_');
   router.push(`/equipment/${formattedName}`);
 };
 
@@ -148,6 +139,8 @@ const filterByPlace = (place: string) => {
 const filterByType = (type: number) => {
   router.push({ path: '/equipment', query: { type: getTypeText(type) } });
 };
+
+console.log(set)
 </script>
 
 <style scoped>
@@ -241,7 +234,7 @@ const filterByType = (type: number) => {
 .divider {
   width: 100%;
   height: 1px;
-  background: linear-gradient(to right, transparent, #444, transparent);
+  background: linear-gradient(to right, transparent, #EEEEEE, transparent);
 }
 
 /* 第二个块：相关套装 */

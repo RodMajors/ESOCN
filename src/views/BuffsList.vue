@@ -13,7 +13,7 @@
           </td>
             <td class="name-column">{{ buff.name }}</td>
             <td class="en-name-column">&lt;{{ buff.enName }}&gt;</td>
-            <td class="des-column">{{ buff.des }}</td>
+            <td class="des-column" v-html="parseColorTags(buff.des)"></td>
           </tr>
         </tbody>
       </table>
@@ -23,7 +23,8 @@
   <script setup lang="ts">
   import { computed } from 'vue';
   import { useRouter } from 'vue-router';
-  import buffsData from '@/data/buffs.json'; // 使用 @ 表示 src 目录
+  import buffsData from '@/Data/buffs.json'; // 使用 @ 表示 src 目录
+  import { parseColorTags } from '@/utils/parseColorTags';
   
   // 定义 Buff 接口，添加 isDebuff 用于区分
   interface Buff {
@@ -44,7 +45,7 @@
   
   const router = useRouter();
   
-  // 合并 buffs 和 debuffs，并添加 isDebuff 标记
+  // 合并 buffs 和 debuffs，并添   isDebuff 标记
   const allBuffs = computed(() => {
     const buffsWithType = typedBuffsData.buffs.map(buff => ({ ...buff, isDebuff: false }));
     const debuffsWithType = typedBuffsData.debuffs.map(debuff => ({ ...debuff, isDebuff: true }));
@@ -103,6 +104,7 @@
   }
   
   .en-name-column {
+    font-family: "Centaur", 'Trebuchet MS', sans-serif ;
     width: 25%;
   }
   

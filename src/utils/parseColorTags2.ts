@@ -2,12 +2,9 @@ import buffs from '@/Data/buffs.json';
 import { RouterLink } from 'vue-router';
 
 
-export function parseColorTags(text: string): string {
+export function parseColorTags2(text: string): string {
   // 忽略掉 \r \n
-  text = text.replace(/\\r/g, '\r').replace(/\\n/g, '\n');
-
-  // 移除 \r 和 \n
-  text = text.replace(/[\r\n]+/g, '').trim();
+  text = text.replace(/\\r\\n/g, '<br>')
 
   // 先处理 |cFFFFFF25|r 形式的标记，还原为原始内容
   let formattedText = text.replace(/\|c([0-9a-fA-F]{6})(.*?)\|r/g, (_, __, content) => {

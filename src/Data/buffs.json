@@ -142,7 +142,7 @@
         },
         {
             "name": "高级庇护",
-            "enName": "Major Ageis",
+            "enName": "Major Aegis",
             "des": "在地下城、试炼及竞技场中收到的怪物伤害降低10%"
         },
         {
@@ -259,7 +259,7 @@
         },
         {
             "name": "次级致残",
-            "enName": "Minor Main",
+            "enName": "Minor Maim",
             "des": "使其造成的伤害降低 5%"
         },
         {

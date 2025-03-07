@@ -4,8 +4,8 @@
     <div class="type-place">
       <div>
         <span class="type">{{ typeText }}</span>
-        <br v-if="armorTypes.length > 0" />
-        <span v-if="armorTypes.length > 0" class="armor-type">{{ armorTypes.join(' / ') }}</span>
+        <br v-if="set.armor.length > 0" />
+        <span v-if="set.armor.length > 0" class="armor-type">{{ set.armor }}</span>
       </div>
       <span class="place">{{ set.place.split(',')[0] }}</span>
     </div>
@@ -13,13 +13,13 @@
     <!-- 居中内容 -->
     <div class="center-content">
       <!-- 套装图标 -->
-      <img :src="getIconPath(set)" class="set-icon" alt="Set Icon" />
+      <img :src="set.icon" class="set-icon" alt="Set Icon" />
 
       <!-- 套装名称和英文名 -->
       <div @click="goToDetail(set.enName)" class="name-container">
         <span class="name">{{ set.name }}</span>
         <br />
-        <span class="en-name">&lt;{{ set.enName }}&gt;</span>
+        <span class="en-name">{{ set.enName.toUpperCase() }}</span>
       </div>
 
       <!-- 分割线 -->
@@ -27,7 +27,8 @@
 
       <!-- 套装效果 -->
       <ul class="bonuses">
-        <li v-for="(effect, key) in Object.values(set.bonuses).filter(e => e)" :key="key" v-html="parseColorTags(effect)"></li>
+        <li v-for="(effect, key) in Object.values(set.bonuses).filter(e => e)" :key="key" 
+          v-html="effect" @click = "handleClick"></li>
       </ul>
     </div>
   </div>
@@ -37,18 +38,9 @@
 import { computed, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import { parseColorTags } from '../utils/parseColorTags';
+import type { EquipmentSet } from '../types/equipment'; // 导入公共类型
 
-interface EquipmentSet {
-  name: string;
-  enName: string;
-  place: string;
-  bonuses: { [key: string]: string };
-  type: number;
-  styles?: {
-    武器?: { [key: string]: any };
-    护甲?: { [key: string]: any };
-  };
-}
+const router = useRouter() ;
 
 export default defineComponent({
   name: 'GearArea',
@@ -58,7 +50,9 @@ export default defineComponent({
       required: true,
     },
   },
+  
   setup(props) {
+    
     const router = useRouter();
 
     // 获取套装类型对应的文本
@@ -71,70 +65,17 @@ export default defineComponent({
       return typeMap[props.set.type] || '未知';
     });
 
-    // 获取护甲类型
-    const armorTypes = computed(() => {
-      // type 为 3（制造）：直接返回“自选护甲类型”
-      if (props.set.type === 3) {
-        return ['自选护甲类型'];
-      }
-
-      // type 为 12（神器）：取 styles 第一项的第一键名
-      if (props.set.type === 12 && props.set.styles) {
-        const firstStyleKey = Object.keys(props.set.styles)[0] as keyof typeof props.set.styles; // 类型断言
-        const firstSubKey = Object.keys(<object>props.set.styles[firstStyleKey])[0];
-        return [firstSubKey === '颈部装备' ? '项链' : firstSubKey];
-      }
-
-      // 其他情况：检查护甲类型
-      const armorStyles = props.set.styles?.护甲;
-      if (!armorStyles) return [];
-
-      const partMap = {
-        '重型': '重甲',
-        '中型': '中甲',
-        '轻型': '轻甲'
-      } as const;
-
-      const armorParts = Object.values(armorStyles) as Array<{ [key: string]: any }>;
-      const typesSet = new Set<string>();
-
-      armorParts.forEach(part => {
-        const partTypes = Object.keys(part);
-        partTypes.forEach(type => {
-          if (type in partMap) {
-            typesSet.add(partMap[type as keyof typeof partMap]);
+    const handleClick = (event: Event) =>{
+      const target = event.target as HTMLElement;
+        if (target.classList.contains("link")) {
+          const to = target.dataset.to;
+          if (to) {
+            router.push(to); // 使用 Vue Router 跳转
           }
-        });
-      });
-
-      const typesArray = Array.from(typesSet);
-      if (typesArray.length === 1) {
-        return typesArray; // 单一类型，如 ["重甲"]
-      } else if (typesArray.length === 3 && typesArray.includes('重甲') && typesArray.includes('中甲') && typesArray.includes('轻甲')) {
-        return ['随机护甲类型']; // 三种都有
-      } else {
-        return typesArray; // 其他情况，如 ["重甲", "中甲"]
-      }
-    });
+        }
+    };
 
     // 获取图标路径
-    const getIconPath = (set: EquipmentSet): string => {
-      let iconPath = '';
-      if (set.styles?.护甲?.头部) {
-        const headType = Object.values(set.styles.护甲.头部)[0] as any;
-        iconPath = headType?.icon || '';
-      } else {
-        const getFirstIcon = (obj: any): string => {
-          if (!obj) return '';
-          if (obj.icon) return obj.icon;
-          const firstValue = Object.values(obj)[0];
-          return getFirstIcon(firstValue);
-        };
-        iconPath = getFirstIcon(set.styles);
-      }
-      const cleanPath = iconPath.replace(/^\/esoui\//, '').replace('.dds', '.webp');
-      return cleanPath ? `/esoui/${cleanPath}` : 'https://via.placeholder.com/24';
-    };
 
     // 跳转到套装详情页
     const goToDetail = (enName: string) => {
@@ -144,10 +85,9 @@ export default defineComponent({
 
     return {
       typeText,
-      armorTypes,
-      getIconPath,
       goToDetail,
       parseColorTags,
+      handleClick
     };
   },
 });

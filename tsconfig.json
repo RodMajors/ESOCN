@@ -4,7 +4,7 @@
     "strict": true,
     "sourceMap": true,
     "resolveJsonModule": true,
-    "suppressImplicitAnyIndexErrors":true,
+    "verbatimModuleSyntax": true,
     "ignoreDeprecations": "5.0"
   },
   "files": [],

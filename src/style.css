@@ -10,3 +10,11 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.link{
+  cursor: pointer;
+  text-decoration: none;
+}
+.link:hover{
+  text-decoration: underline;
+}

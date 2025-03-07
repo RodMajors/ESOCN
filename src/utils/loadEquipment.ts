@@ -1,38 +1,128 @@
 // utils/loadEquipment.ts
-import equipmentData from '../data/equipment.json';
+import { parseColorTags } from './parseColorTags';
+import { parseColorTags2 } from './parseColorTags2';
 
-// 定义 Bonus 为索引签名类型
-interface Bonus {
-  [key: string]: string;
+export async function loadEquipmentDetail(id: number): Promise<any> {
+  const response = await fetch(`/api/equipment/${id}`);
+  if (!response.ok) throw new Error('Failed to fetch equipment detail');
+  const data = await response.json();
+  return {
+    ...data,
+    bonuses: parseBonuses(data.bonuses), // 解析 bonuses
+  };
 }
 
-// 定义 Styles 的具体结构
-interface Styles {
-  武器?: { [key: string]: any };
-  护甲?: { [key: string]: any };
+//根据英文名找套装
+export async function getEquipmentByEnName(enName: string): Promise<any> {
+  enName = decodeURIComponent(enName).replace(/\s+/g, '%20');
+  const response = await fetch(`/api/equipment/${enName}`);
+  if (!response.ok) throw new Error('Failed to fetch equipment detail');
+  const data = await response.json();
+  return {
+    ...data,
+    bonuses: parseBonuses2(data.bonuses), // 解析 bonuses
+  };
 }
 
-// 定义完整的 EquipmentSet 接口
-interface EquipmentSet {
-  name: string;
-  enName: string;
-  place: string;
-  bonuses: Bonus;
-  type: number;
-  id?: string;
-  itemIDs?: string[];
-  styles?: Styles; // 使用具体类型替代 any
+export async function getEquipmentByEnName0(enName: string): Promise<any> {
+  enName = decodeURIComponent(enName).replace(/\s+/g, '%20');
+  const response = await fetch(`/api/equipment/${enName}`);
+  if (!response.ok) throw new Error('Failed to fetch equipment detail');
+  const data = await response.json();
+  return {
+    ...data,
+    bonuses: parseBonuses(data.bonuses), // 解析 bonuses
+  };
 }
 
-// 定义 JSON 文件的结构
-interface EquipmentData {
-  timestamp: number;
-  sets: EquipmentSet[];
+// 解析 bonuses
+const parseBonuses = (bonuses: { [key: string]: string }): { [key: string]: string } => {
+  const parsedBonuses: { [key: string]: string } = {};
+  for (const [key, value] of Object.entries(bonuses)) {
+    parsedBonuses[key] = parseColorTags(value); // 使用 parseColorTags 解析颜色
+  }
+  return parsedBonuses;
+};
+
+const parseBonuses2 = (bonuses: { [key: string]: string }): { [key: string]: string } => {
+  const parsedBonuses: { [key: string]: string } = {};
+  for (const [key, value] of Object.entries(bonuses)) {
+    parsedBonuses[key] = parseColorTags2(value); // 使用 parseColorTags 解析颜色
+  }
+  return parsedBonuses;
+};
+
+export async function loadAllEquipment(): Promise<any[]> {
+  try {
+    console.log(`Fetching /api/equipment/all`);
+    const response = await fetch('/api/equipment/all');
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log('API response:', data);
+
+    // 为每个装备加载 bonuses
+    const equipmentWithBonuses = await Promise.all(
+      data.map(async (set: any) => {
+        const details = await getEquipmentByEnName0(set.enName);
+        return {
+          ...set,
+          bonuses: details.bonuses, // 合并 bonuses
+        };
+      })
+    );
+
+    return equipmentWithBonuses;
+  } catch (error) {
+    console.error('Error loading equipment:', error);
+    return [];
+  }
 }
 
-// 显式类型断言，确保 equipmentData 符合预期结构
-const typedEquipmentData = equipmentData as EquipmentData;
+// loadEquipment.ts
+// utils/loadEquipment.ts
+export async function loadRelatedEquipment(place: string): Promise<any[]> {
+  try {
+    const response = await fetch(`/api/equipment/related/${encodeURIComponent(place)}`);
+    if (!response.ok) throw new Error('Failed to fetch related equipment');
+    const data = await response.json();
+    return Promise.all(
+      data.map(async (set: any) => {
+        const details = await getEquipmentByEnName(set.enName);
+        return { ...set, bonuses: details.bonuses }; // 合并 bonuses（如果需要额外处理）
+      })
+    );
+  } catch (error) {
+    console.error('Error loading related equipment:', error);
+    return [];
+  }
+}
 
-export function loadEquipment(): EquipmentSet[] {
-  return typedEquipmentData.sets;
+export async function loadEquipment(page = 1, limit = 20): Promise<any[]> {
+  try {
+    console.log(`Fetching /api/equipment?page=${page}&limit=${limit}`);
+    const response = await fetch(`/api/equipment?page=${page}&limit=${limit}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log('API response:', data);
+
+    // 为每个装备加载 bonuses
+    const equipmentWithBonuses = await Promise.all(
+      data.map(async (set: any) => {
+        const details = await getEquipmentByEnName0(set.enName);
+        return {
+          ...set,
+          bonuses: details.bonuses, // 合并 bonuses
+        };
+      })
+    );
+
+    return equipmentWithBonuses;
+  } catch (error) {
+    console.error('Error loading equipment:', error);
+    return [];
+  }
 }
