@@ -27,11 +27,11 @@ export function parseColorTags2(text: string): string {
     formattedText = formattedText.replace(BUFFS[i].name, `<span data-to="/buffs/${BUFFS[i].enName.replace(' ', '-')}" style = "color: #FDFF00" class = "link">${BUFFS[i].name}</span>`);
   }
 
-  // 定义关键字和样式
+  
   let keywords = ['魔力恢复', '魔力回复', '魔力上限', '魔力'];
-  let color = '#0077cc'; // 深蓝色
+  let color = '#0077cc';
 
-  // 遍历关键字并替换为带样式的 HTML 标签
+  
   keywords.forEach((keyword) => {
     const regexWithNumber = new RegExp(`([-+]?\\d*\\.?\\d+)\\s*${keyword}`, 'g');
     formattedText = formattedText.replace(regexWithNumber, `<span style="color: ${color};">$1 ${keyword}</span>`);
@@ -40,7 +40,7 @@ export function parseColorTags2(text: string): string {
   });
 
   keywords = ['耐力恢复', '耐力回复', '耐力上限', '耐力'];
-  color = '#009000'; // 深绿色
+  color = '#009000';
 
   keywords.forEach((keyword) => {
     const regexWithNumber = new RegExp(`([-+]?\\d*\\.?\\d+)\\s*${keyword}`, 'g');
@@ -50,7 +50,7 @@ export function parseColorTags2(text: string): string {
   });
 
   keywords = ['生命恢复', '生命回复', '生命上限', '生命', '治疗'];
-  color = '#FF6666'; // 红色
+  color = '#FF6666';
 
   keywords.forEach((keyword) => {
     const regexWithNumber = new RegExp(`([-+]?\\d*\\.?\\d+)\\s*${keyword}`, 'g');

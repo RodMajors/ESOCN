@@ -1,3 +1,4 @@
+<!-- src/views/DungeonList.vue -->
 <template>
   <div class="dungeon-list">
     <!-- 搜索框 -->
@@ -5,7 +6,7 @@
       <div class="search-container">
         <input
           v-model="searchQuery"
-          type="text"
+          type="text"   
           placeholder="请输入副本中/英文名"
           class="search-input"
         />
@@ -20,34 +21,24 @@
           <tr v-for="(dungeon, index) in paginatedDungeons" :key="dungeon.enName">
             <!-- 奇数行（index为偶数）：图片-神话 -->
             <template v-if="index % 2 === 0">
-              <td @click="goToDetail(dungeon.enName)" class="icon-column">
-                <div class="image-container">
-                  <img :src="dungeon.background" class="dungeon-icon" alt="Dungeon Background" />
-                  <div class="overlay">
-                    <div class="name-text">
-                      <span>{{ dungeon.name }}</span>
-                      <br />
-                      <span class="en-name">&lt;{{ dungeon.enName }}&gt;</span>
-                    </div>
-                  </div>
-                </div>
+              <td class="icon-column">
+                <DungeonImage
+                  :name="dungeon.name"
+                  :en-name="dungeon.enName"
+                  :background="dungeon.background"
+                />
               </td>
               <td class="mystery-column">{{ dungeon.mystery }}</td>
             </template>
             <!-- 偶数行（index为奇数）：神话-图片 -->
             <template v-else>
               <td class="mystery-column">{{ dungeon.mystery }}</td>
-              <td @click="goToDetail(dungeon.enName)" class="icon-column">
-                <div class="image-container">
-                  <img :src="dungeon.background" class="dungeon-icon" alt="Dungeon Background" />
-                  <div class="overlay">
-                    <div class="name-text">
-                      <span>{{ dungeon.name }}</span>
-                      <br />
-                      <span class="en-name">&lt;{{ dungeon.enName }}&gt;</span>
-                    </div>
-                  </div>
-                </div>
+              <td class="icon-column">
+                <DungeonImage
+                  :name="dungeon.name"
+                  :en-name="dungeon.enName"
+                  :background="dungeon.background"
+                />
               </td>
             </template>
           </tr>
@@ -92,6 +83,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import dungeonsData from '../data/dungeons.json';
+import DungeonImage from '../components/DungeonImage.vue'; // 导入新组件
 
 const dungeons = ref(dungeonsData);
 const router = useRouter();
@@ -223,54 +215,7 @@ td {
 .mystery-column {
   width: 50%;
   text-align: left;
-}
-
-.image-container {
-  position: relative;
-  width: 100%;
-  overflow: hidden; /* 防止放大时溢出 */
-}
-
-.dungeon-icon {
-  width: 100%;
-  max-height: 150px;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.6s ease; /* 图片缩放动画 */
-}
-
-.image-container:hover .dungeon-icon {
-  transform: scale(1.2); /* 鼠标悬停时放大1.2倍 */
-}
-
-.overlay {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(-50%);
-  transition: background-color 0.6s ease; /* 不透明度动画 */
-}
-
-.image-container:hover .overlay {
-  background-color: rgba(0, 0, 0, 0.9); /* 悬停时不透明度增加 */
-}
-
-.name-text {
   text-align: center;
-}
-
-.name-text:hover {
-  text-decoration: underline;
-}
-
-.en-name {
-  font-size: 0.85rem;
 }
 
 .loading {
@@ -356,12 +301,5 @@ td {
 .slide-down-leave-to {
   opacity: 0;
   transform: translateY(-20px);
-}
-
-.name-text {
-  transition: transform 0.6s ease;
-}
-.image-container:hover .name-text {
-  transform: scale(1.1); /* 文字放大1.1倍 */
 }
 </style>
