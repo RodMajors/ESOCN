@@ -28,7 +28,7 @@
       <!-- 套装效果 -->
       <ul class="bonuses">
         <li v-for="(effect, key) in Object.values(set.bonuses).filter(e => e)" :key="key" 
-          v-html="effect" @click = "handleClick"></li>
+          v-html="parseColorTags(effect)" @click = "handleClick"></li>
       </ul>
     </div>
   </div>
@@ -79,7 +79,7 @@ export default defineComponent({
 
     // 跳转到套装详情页
     const goToDetail = (enName: string) => {
-      const formattedName = enName.replace(/\s+/g, '-');
+      const formattedName = enName.replace(/\s+/g, '_');
       router.push(`/equipment/${formattedName}`);
     };
 

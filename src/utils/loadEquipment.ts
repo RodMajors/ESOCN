@@ -89,8 +89,7 @@ export async function loadRelatedEquipment(place: string): Promise<any[]> {
     const data = await response.json();
     return Promise.all(
       data.map(async (set: any) => {
-        const details = await getEquipmentByEnName(set.enName);
-        return { ...set, bonuses: details.bonuses }; // 合并 bonuses（如果需要额外处理）
+        return set; // 合并 bonuses（如果需要额外处理）
       })
     );
   } catch (error) {

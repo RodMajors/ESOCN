@@ -22,6 +22,14 @@
             <span class="label">套装类型：</span>
             <span class="value clickable">{{ getTypeText(set.type) }}</span>
           </div>
+          <div class="info-item">
+            <span class="label">护甲类型：</span>
+            <span class="value">{{ set.armor }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">套装样式：</span>
+            <span class="value">{{ set.style }}</span>
+          </div>
         </div>
 
         <!-- 中间图标区域 -->
@@ -70,7 +78,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { loadEquipment } from '../utils/loadEquipment';
 import GearArea from '../components/GearArea.vue';
@@ -110,7 +118,7 @@ const styleIcons = computed(() => {
 
 const getIconPath = (icon: string): string => {
   const cleanPath = icon.replace(/^\/esoui\//, '').replace('.dds', '.webp');
-  return cleanPath ? `../esoui/${cleanPath}` : 'https://via.placeholder.com/24';
+  return cleanPath ? `../esoui/${cleanPath}` : 'https://  .placeholder.com/24';
 };
 
 const relatedSets = computed(() => {
@@ -120,11 +128,24 @@ const relatedSets = computed(() => {
     .slice(0, 3);
 });
 
-onMounted(async () => {
-  const enName = (route.params.enName as string).replace(/_/g, ' '); // 将下划线替换为空格
+const loadSet = async (enName: string) => {
   set.value = await getEquipmentByEnName(enName);
-  if(! set.value) return ;
-  equipmentData.value = await loadRelatedEquipment(set.value.place.split(',')[0]); // 加载所有装备数据
+  if (!set.value) return;
+  equipmentData.value = await loadRelatedEquipment(set.value.place.split(',')[0]);
+};
+
+// 初次加载
+onMounted(async () => {
+  const enName = (route.params.enName as string).replace(/_/g, ' ');
+  await loadSet(enName);
+});
+
+// 监听路由变化
+watch(() => route.params.enName, async (newEnName) => {
+  if (newEnName) {
+    const enName = (newEnName as string).replace(/_/g, ' ');
+    await loadSet(enName);
+  }
 });
 
 const goToDetail = (enName: string) => {
@@ -139,8 +160,6 @@ const filterByPlace = (place: string) => {
 const filterByType = (type: number) => {
   router.push({ path: '/equipment', query: { type: getTypeText(type) } });
 };
-
-console.log(set)
 </script>
 
 <style scoped>
@@ -192,7 +211,6 @@ console.log(set)
 
 .value {
   font-size: 1rem;
-  color: #fff;
 }
 
 .clickable {
