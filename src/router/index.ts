@@ -11,6 +11,7 @@ const routes: RouteRecordRaw[] = [
   { path: '/equipment/:enName', component: () => import('../views/EquipmentDetail.vue') },
   { path: '/buffs', component: () => import('../views/BuffsList.vue') },
   { path: '/buffs/:enName', component: () => import('../views/BuffsDetail.vue') },
+  { path: '/skills', component: () => import('../views/Skills.vue') },
 ];
 
 const router = createRouter({
