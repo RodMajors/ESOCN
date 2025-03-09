@@ -31,7 +31,7 @@ export function parseColorTags(text: string): string {
   }
 
   // 定义关键字和样式
-  let keywords = ['魔力恢复', '魔力回复', '魔力上限', '魔力'];
+  let keywords = ['魔力恢复', '魔力回复', '魔力上限', '魔力', '魔法伤害'];
   let color = '#0077cc'; // 深蓝色
 
   // 遍历关键字并替换为带样式的 HTML 标签
@@ -42,7 +42,7 @@ export function parseColorTags(text: string): string {
     formattedText = formattedText.replace(regexWithoutNumber, `<span style="color: ${color};">${keyword}</span>`);
   });
 
-  keywords = ['耐力恢复', '耐力回复', '耐力上限', '耐力'];
+  keywords = ['耐力恢复', '耐力回复', '耐力上限', '耐力', '物理伤害'];
   color = '#009000'; // 深绿色
 
   keywords.forEach((keyword) => {
