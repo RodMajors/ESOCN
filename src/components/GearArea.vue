@@ -181,11 +181,13 @@ export default defineComponent({
 .name-container .name {
   font-size: 1.2rem;
   color: #F6E43A;
+  font-weight: 550;
 }
 
 .name-container .en-name {
   font-size: 0.9rem;
   color: #F6E43A;
+  font-weight: 550;
 }
 
 .name-container:hover .name,

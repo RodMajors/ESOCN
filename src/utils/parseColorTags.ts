@@ -5,7 +5,7 @@ import { RouterLink } from 'vue-router';
 export function parseColorTags(text: string): string {
   // 忽略掉 \r \n
   text = text.replace(/\\r/g, '\r').replace(/\\n/g, '\n');
-
+  text = text.replace(/￼/g, '');
   // 移除 \r 和 \n
   text = text.replace(/[\r\n]+/g, '').trim();
 
@@ -21,7 +21,7 @@ export function parseColorTags(text: string): string {
   });
 
   //替换BUFF和deBUFF
-  let BUFFS = buffs.buffs;  
+  let BUFFS = buffs.buffs;   
   for (var i = 0 ; i < BUFFS.length ; i ++){
     formattedText = formattedText.replace(BUFFS[i].name, `<span data-to="/buffs/${BUFFS[i].enName.replace(' ', '-')}" style = "color: #FDFF00" class = "link">${BUFFS[i].name}</span>`);
   }
@@ -31,7 +31,7 @@ export function parseColorTags(text: string): string {
   }
 
   // 定义关键字和样式
-  let keywords = ['魔力恢复', '魔力回复', '魔力上限', '魔力', '魔法伤害'];
+  let keywords = ['魔力恢复', '魔力回复', '魔力上限', '魔力'];
   let color = '#0077cc'; // 深蓝色
 
   // 遍历关键字并替换为带样式的 HTML 标签
@@ -42,7 +42,7 @@ export function parseColorTags(text: string): string {
     formattedText = formattedText.replace(regexWithoutNumber, `<span style="color: ${color};">${keyword}</span>`);
   });
 
-  keywords = ['耐力恢复', '耐力回复', '耐力上限', '耐力', '物理伤害'];
+  keywords = ['耐力恢复', '耐力回复', '耐力上限', '耐力'];
   color = '#009000'; // 深绿色
 
   keywords.forEach((keyword) => {
@@ -63,7 +63,7 @@ export function parseColorTags(text: string): string {
   });
 
   // “武器伤害”规则，颜色 #CC6600（橙色）
-  keywords = ['武器伤害'];
+  keywords = ['武器伤害', '物理伤害'];
   color = '#AD4E0F';
 
   keywords.forEach((keyword) => {
@@ -74,7 +74,7 @@ export function parseColorTags(text: string): string {
   });
 
   // “法术伤害”规则，颜色 #990099（紫色）
-  keywords = ['法术伤害'];
+  keywords = ['法术伤害', '魔法伤害'];
   color = '#9856FF';
 
   keywords.forEach((keyword) => {

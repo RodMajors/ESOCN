@@ -40,13 +40,16 @@ for class_data in data:
 
             # 插入 skills 表（基础技能）
             cursor.execute("""
-                INSERT IGNORE INTO skills (skill_tree_id, name, description, isChanneled, isDamage, isHealer, isTank,
-                                    ultimate, cost, duration, castTime, maxRange, minRange, radius, target, icon, enName)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                INSERT IGNORE INTO skills (skill_tree_id, name, description, isChanneled,
+                                    ultimate, cost, duration, castTime, maxRange, minRange, 
+                                    radius, target, icon, enName, passive, newEffect, 
+                                    magickaCost, staminaCost, healthCost)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, (skill_tree_id, skill["name"], skill.get("description"), skill.get("isChanneled"),
-                  skill.get("isDamage"), skill.get("isHealer"), skill.get("isTank"), skill.get("ultimate"),
-                  skill.get("cost"), skill.get("duration"), skill.get("castTime"), skill.get("maxRange"),
-                  skill.get("minRange"), skill.get("radius"), skill.get("target"), base_icon, skill.get("enName")))
+                  skill.get("ultimate"), skill.get("cost"), skill.get("duration"), skill.get("castTime"), skill.get("maxRange"),
+                  skill.get("minRange"), skill.get("radius"), skill.get("target"), base_icon, skill.get("enName"), 
+                  skill.get("passive"), "", skill['powerTypes'].get("magickaCost"), skill['powerTypes'].get("staminaCost"),
+                  skill['powerTypes'].get("healthCost")))
 
             skill_id = cursor.lastrowid
 
@@ -59,12 +62,15 @@ for class_data in data:
                 # 插入 skill_variants 表（技能变体）
                 cursor.execute("""
                     INSERT IGNORE INTO skill_variants (skill_id, name, description, newEffect, cost, duration, castTime,
-                                               maxRange, minRange, radius, target, icon, enName)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                               maxRange, minRange, radius, target, icon, enName, passive, ultimate, 
+                                                isChanneled, magickaCost, staminaCost, healthCost)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """, (skill_id, variant["name"], variant.get("description"), variant.get("newEffect"),
                       variant.get("cost"), variant.get("duration"), variant.get("castTime"),
                       variant.get("maxRange"), variant.get("minRange"), variant.get("radius"),
-                      variant.get("target"), variant_icon, variant.get("enName")))
+                      variant.get("target"), variant_icon, variant.get("enName"), variant.get("passive"), 
+                      variant.get("ultimate"), variant.get("isChanneled"), variant['powerTypes'].get("magickaCost"),
+                      variant['powerTypes'].get("staminaCost"), variant['powerTypes'].get("healthCost")))
 
 # 提交事务
 conn.commit()

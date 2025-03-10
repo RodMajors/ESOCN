@@ -2,6 +2,7 @@ import json
 import luadata
 import asyncio
 import aiomysql
+import pdb
 
 # 数据库连接信息
 DB_CONFIG = {
@@ -69,11 +70,48 @@ def convert_to_array(data):
     else:
         return data
 
+def convert_power_types(data):
+    if isinstance(data, dict):
+        # 检查是否是 powerTypes 标签
+        if "powerTypes" in data:
+            new_power_types = {}
+            power_types = data["powerTypes"]
+            if isinstance(power_types, list) and len(power_types) != 0:
+                try:
+                    new_power_types["magickaCost"] = power_types[0] ;
+                except UnboundLocalError:
+                    print(power_types[0])
+            if isinstance(power_types, dict):
+                # 创建一个新的字典来存储转换后的 powerTypes
+                # 转换 [1], [4], [32] 为对应的键
+                new_power_types["magickaCost"] = power_types.get(1, "")
+                print("已经处理magickaCost")
+                new_power_types["staminaCost"] = power_types.get(4, "")
+                print("已经处理staminaCost")
+                new_power_types["healthCost"] = power_types.get(32, "")
+                print("已经处理healthCost")
+                # 替换原来的 powerTypes
+            data["powerTypes"] = new_power_types
+        # 递归处理其他部分
+        for k, v in data.items():
+            data[k] = convert_power_types(v)
+    elif isinstance(data, list):
+        # 如果是列表，递归处理每个元素
+        data = [convert_power_types(item) for item in data]
+    return data
+
+# 修改后的 convert_to_array 函数
+def convert_to_array_with_power_types(data):
+    data = convert_power_types(data)
+    print(data)
+    data = convert_to_array(data)
+    return data
+
 # 异步提取并合并数据
 async def extract_and_merge_data(conn, cn_data, en_data):
     # 移除数字键并转换为数组
-    cn_data_skills = convert_to_array(cn_data["Default"]["@Chicor"]["$AccountWide"]["dataSkills"])
-    en_data_skills = convert_to_array(en_data["Default"]["@Chicor"]["$AccountWide"]["dataSkills"])
+    cn_data_skills = convert_to_array_with_power_types(cn_data["Default"]["@Chicor"]["$AccountWide"]["dataSkills"])
+    en_data_skills = convert_to_array_with_power_types(en_data["Default"]["@Chicor"]["$AccountWide"]["dataSkills"])
 
     # 合并数据
     for i, cn_type in enumerate(cn_data_skills):

@@ -5,7 +5,7 @@ import { RouterLink } from 'vue-router';
 export function parseColorTags2(text: string): string {
   // 忽略掉 \r \n
   text = text.replace(/\\r\\n/g, '<br>')
-
+  text = text.replace(/￼/g, '');
   // 先处理 |cFFFFFF25|r 形式的标记，还原为原始内容
   let formattedText = text.replace(/\|c([0-9a-fA-F]{6})(.*?)\|r/g, (_, __, content) => {
     return content; // 只保留内容，丢弃颜色标记
@@ -26,9 +26,8 @@ export function parseColorTags2(text: string): string {
   for (var i = 0 ; i < BUFFS.length ; i ++){
     formattedText = formattedText.replace(BUFFS[i].name, `<span data-to="/buffs/${BUFFS[i].enName.replace(' ', '-')}" style = "color: #FDFF00" class = "link">${BUFFS[i].name}</span>`);
   }
-
   
-  let keywords = ['魔力恢复', '魔力回复', '魔力上限', '魔力'];
+  let keywords = ['魔力恢复', '魔力回复', '魔力上限', '魔力', ];
   let color = '#0077cc';
 
   
@@ -39,7 +38,7 @@ export function parseColorTags2(text: string): string {
     formattedText = formattedText.replace(regexWithoutNumber, `<span style="color: ${color};">${keyword}</span>`);
   });
 
-  keywords = ['耐力恢复', '耐力回复', '耐力上限', '耐力'];
+  keywords = ['耐力恢复', '耐力回复', '耐力上限', '耐力',];
   color = '#009000';
 
   keywords.forEach((keyword) => {
@@ -60,7 +59,7 @@ export function parseColorTags2(text: string): string {
   });
 
   // “武器伤害”规则，颜色 #CC6600（橙色）
-  keywords = ['武器伤害'];
+  keywords = ['武器伤害', '物理伤害'];
   color = '#AD4E0F';
 
   keywords.forEach((keyword) => {
@@ -71,7 +70,7 @@ export function parseColorTags2(text: string): string {
   });
 
   // “法术伤害”规则，颜色 #990099（紫色）
-  keywords = ['法术伤害'];
+  keywords = ['法术伤害', '魔法伤害'];
   color = '#9856FF';
 
   keywords.forEach((keyword) => {

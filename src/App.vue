@@ -5,7 +5,7 @@
       <main class="main-content">
         <router-view />
       </main>
-      <aside class="sidebar">
+      <aside class="sidebar" v-if="!hideSidebar">
         <SideBar />
       </aside>
     </div>
@@ -14,9 +14,25 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import NavBar from './components/NavBar.vue';
 import Footer from './components/Footer.vue';
 import SideBar from './components/SideBar.vue';
+
+const router = useRouter();
+const route = useRoute(); // 直接使用 route，不需要 ref 包装
+const hideSidebar = ref(false);
+
+// 在组件挂载时初始化 hideSidebar
+onMounted(() => {
+  hideSidebar.value = route.matched.some(record => record.meta?.hideSidebar === true);
+});
+
+// 监听路由变化
+watch(() => router.currentRoute.value, (newRoute) => {
+  hideSidebar.value = newRoute.matched.some(record => record.meta?.hideSidebar === true);
+});
 </script>
 
 <style> /* 无 scoped */

@@ -5,4 +5,8 @@ import './style.css';
 
 const app = createApp(App);
 app.use(router);
-app.mount('#app');
+
+router.isReady().then(() => {
+  console.log("Router ready, mounting app...");
+  app.mount('#app');
+});
