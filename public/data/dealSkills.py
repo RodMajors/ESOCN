@@ -110,8 +110,8 @@ def convert_to_array_with_power_types(data):
 # 异步提取并合并数据
 async def extract_and_merge_data(conn, cn_data, en_data):
     # 移除数字键并转换为数组
-    cn_data_skills = convert_to_array_with_power_types(cn_data["Default"]["@Chicor"]["$AccountWide"]["dataSkills"])
-    en_data_skills = convert_to_array_with_power_types(en_data["Default"]["@Chicor"]["$AccountWide"]["dataSkills"])
+    cn_data_skills = convert_to_array_with_power_types(cn_data["Default"]["@Ha_Ren"]["$AccountWide"]["dataSkills"])
+    en_data_skills = convert_to_array_with_power_types(en_data["Default"]["@Ha_Ren"]["$AccountWide"]["dataSkills"])
 
     # 合并数据
     for i, cn_type in enumerate(cn_data_skills):

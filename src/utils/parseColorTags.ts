@@ -2,8 +2,9 @@ import buffs from '@/Data/buffs.json';
 import { RouterLink } from 'vue-router';
 
 
-export function parseColorTags(text: string): string {
+export function parseColorTags(text: string | null | undefined): string {
   // 忽略掉 \r \n
+  if(text === null || text === undefined) return "" ;
   text = text.replace(/\\r/g, '\r').replace(/\\n/g, '\n');
   text = text.replace(/￼/g, '');
   // 移除 \r 和 \n

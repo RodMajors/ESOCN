@@ -55,14 +55,24 @@ export default defineComponent({
       type: Array as () => { name: string; enName: string; originalEnName: string }[],
       default: () => [],
     },
+    type:{
+      type: String,
+      required: true,
+    }
   },
   setup(props) {
     const router = useRouter();
 
     const goToDetail = (enName?: string) => {
       const targetEnName = enName || props.enName;
+      console.log(props.enName)
       const formattedName = targetEnName.toLowerCase().replace(/\s+/g, '-');
-      router.push(`/dungeons/${formattedName}`);
+      if (props.type == "dungeon")
+        router.push(`/dungeons/${formattedName}`);
+      else if (props.type == "trial")
+        router.push(`/trials/${formattedName}`);
+      else if (props.type == "arena")
+        router.push(`/arena/${formattedName}`);
     };
 
     return {

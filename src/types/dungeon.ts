@@ -7,7 +7,7 @@ export interface Dungeon {
   DLC: string; // DLC 名称
   DLCicon: string; // DLC 图标 URL
   location: string; // 具体位置
-  mini_level: string; // 最低等级
+  mini_level?: string; // 最低等级
   Group_Size: string; // 组队人数
   Bosses: string; // BOSS 数量
   mini_Bosses: string; // 小型 BOSS 数量
@@ -23,7 +23,7 @@ export interface Dungeon {
 }
 
 export interface Boss {
-  name: string;
+  name: string | null;
   enName: string;
   species: string; // 物种
   place: string; // 地点
@@ -36,7 +36,7 @@ export interface Boss {
 }
 
 export interface Skill {
-  name: string;
+  name: string | null;
   enName: string;
   icon: string; // 技能图标 URL
   des: string; // 技能描述

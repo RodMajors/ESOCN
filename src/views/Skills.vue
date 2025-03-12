@@ -29,7 +29,7 @@
         <div v-else-if="error" class="error">{{ error }}</div>
         <div v-else-if="selectedSkillTree" class="skills-list">
           <!-- 终极技能 -->
-          <div class="skill-section">
+          <div class="skill-section" v-if="skills.filter((s) => s.skill_tree_id === selectedSkillTree && s.ultimate === 1).length > 0">
             <h2>终极技能</h2>
             <div
               v-for="skill in skills.filter((s) => s.skill_tree_id === selectedSkillTree && s.ultimate === 1)"
@@ -37,7 +37,7 @@
               class="skill-item"
             >
               <div class="skill-header" @click="toggleSkill(skill.id)">
-                <img :src="skill.icon" alt="skill icon" class="skill-icon" />
+                <img v-lazy="skill.icon" alt="skill icon" class="skill-icon" />
                 <div>
                   <h3>{{ skill.name }} &lt;{{ skill.enName }}&gt;</h3>
                   <p class="skill_des" v-html="parseColorTags(skill.description)"></p>
@@ -51,9 +51,9 @@
                     class="variant-item"
                     @click="selectSkillOrVariant(variant)"
                   >
-                    <img :src="variant.icon" alt="skill icon" class="skill-icon" />
+                    <img v-lazy="variant.icon" alt="skill icon" class="skill-icon" />
                     <div>
-                      <h3>{{ variant.name }} &lt;{{ variant.enName }} &gt;</h3>
+                      <h3>{{ variant.name }} &lt;{{ variant.enName }}&gt;</h3>
                       <p class="variant-desc" v-html="parseColorTags(variant.description)" @click="handleClick"></p>
                     </div>
                   </div>
@@ -61,9 +61,9 @@
               </transition>
             </div>
           </div>
-  
+
           <!-- 主动技能 -->
-          <div class="skill-section">
+          <div class="skill-section" v-if="skills.filter((s) => s.skill_tree_id === selectedSkillTree && s.passive === '0' && s.ultimate !== 1).length > 0">
             <h2>主动技能</h2>
             <div
               v-for="skill in skills.filter((s) => s.skill_tree_id === selectedSkillTree && s.passive === '0' && s.ultimate !== 1)"
@@ -71,7 +71,7 @@
               class="skill-item"
             >
               <div class="skill-header" @click="toggleSkill(skill.id)">
-                <img :src="skill.icon" alt="skill icon" class="skill-icon" />
+                <img v-lazy="skill.icon" alt="skill icon" class="skill-icon" />
                 <div>
                   <h3>{{ skill.name }} &lt;{{ skill.enName }}&gt;</h3>
                   <p class="skill_des" v-html="parseColorTags(skill.description)" @click="handleClick"></p>
@@ -85,7 +85,7 @@
                     class="variant-item"
                     @click="selectSkillOrVariant(variant)"
                   >
-                    <img :src="variant.icon" alt="skill icon" class="skill-icon" />
+                    <img v-lazy="variant.icon" alt="skill icon" class="skill-icon" />
                     <div>
                       <h3>{{ variant.name }} &lt;{{ variant.enName }}&gt;</h3>
                       <p class="variant-desc" v-html="parseColorTags(variant.description)" @click="handleClick"></p>
@@ -95,9 +95,9 @@
               </transition>
             </div>
           </div>
-  
+
           <!-- 被动技能 -->
-          <div class="skill-section">
+          <div class="skill-section" v-if="skills.filter((s) => s.skill_tree_id === selectedSkillTree && s.passive === '1').length > 0">
             <h2>被动技能</h2>
             <div
               v-for="skill in skills.filter((s) => s.skill_tree_id === selectedSkillTree && s.passive === '1')"
@@ -105,7 +105,7 @@
               class="skill-item"
             >
               <div class="skill-header" @click="toggleSkill(skill.id)">
-                <img :src="skill.icon" alt="skill icon" class="skill-icon" />
+                <img v-lazy="skill.icon" alt="skill icon" class="skill-icon" />
                 <div>
                   <h3>{{ skill.name }} &lt;{{ skill.enName }}&gt;</h3>
                   <p class="skill_des" v-html="parseColorTags(skill.description)"></p>
@@ -119,7 +119,7 @@
                     class="variant-item"
                     @click="selectSkillOrVariant(variant)"
                   >
-                    <img :src="variant.icon" alt="skill icon" class="skill-icon" />
+                    <img v-lazy="variant.icon" alt="skill icon" class="skill-icon" />
                     <div>
                       <h3>{{ variant.name }} &lt;{{ variant.enName }}&gt;</h3>
                       <p class="variant-desc" v-html="parseColorTags(variant.description)"></p>
@@ -144,123 +144,126 @@
 </template>
   
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
-  import { parseColorTags } from '@/utils/parseColorTags';
-  import { useRouter, useRoute } from 'vue-router';
-  import SkillArea from '@/components/SkillArea.vue'; // 引入 SkillArea 组件
-  
-  // 数据状态
-  const classes = ref([]);
-  const skillTrees = ref([]);
-  const skills = ref([]);
-  const skillVariants = ref([]);
-  const router = useRouter();
-  const route = useRoute();
-  
-  // 交互状态
-  const expandedClass = ref(null);
-  const selectedSkillTree = ref(null);
-  const expandedSkills = ref([]);
-  const selectedDetail = ref(null);
-  
-  // 加载和错误状态
-  const loading = ref(false);
-  const error = ref(null);
-  
-  // 获取数据并初始化默认选中
-  const fetchData = async () => {
-    loading.value = true;
-    error.value = null;
-    try {
-      const response = await fetch('http://localhost:4000/api/skills');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      classes.value = data.classes;
-      skillTrees.value = data.skill_trees;
-      skills.value = data.skills;
-      skillVariants.value = data.skill_variants;
-  
-      // 初始化默认选中
-      if (classes.value.length > 0) {
-        const firstClass = classes.value[0].id;
-        expandedClass.value = firstClass;
-  
-        const firstTree = skillTrees.value.find((t) => t.class_id === firstClass);
-        if (firstTree) {
-          selectedSkillTree.value = firstTree.id;
-  
-          const firstSkill = skills.value.find((s) => s.skill_tree_id === firstTree.id);
-          if (firstSkill) {
-            expandedSkills.value.push(firstSkill.id);
-            selectedDetail.value = firstSkill;
-          }
-        }
-      }
-    } catch (err) {
-      error.value = `获取数据失败: ${err.message}`;
-      console.error('Fetch error:', err);
-    } finally {
-      loading.value = false;
+import { ref, onMounted } from 'vue';
+import { parseColorTags } from '@/utils/parseColorTags';
+import { useRouter, useRoute } from 'vue-router';
+import SkillArea from '@/components/SkillArea.vue';
+import type { classes, skill_trees, skills, skill_variants } from '@/types/skills';
+
+
+// 数据状态
+const classes = ref<classes[]>([]);
+const skillTrees = ref<skill_trees[]>([]);
+const skills = ref<skills[]>([]);
+const skillVariants = ref<skill_variants[]>([]);
+const router = useRouter();
+const route = useRoute();
+
+// 交互状态
+const expandedClass = ref<number | null>(null);
+const selectedSkillTree = ref<number | null>(null);
+const expandedSkills = ref<number[]>([]);
+const selectedDetail = ref<skills | skill_variants | null>(null);
+
+// 加载和错误状态
+const loading = ref<boolean>(false);
+const error = ref<string | null>(null);
+
+// 获取数据并初始化默认选中
+const fetchData = async () => {
+  loading.value = true;
+  error.value = null;
+  try {
+    const response = await fetch('http://localhost:4000/api/skills');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-  };
-  
-  // 切换职业展开状态并默认选中第一个 skill_tree
-  const toggleClass = (classId) => {
-    if (expandedClass.value === classId) {
-      expandedClass.value = null;
-      selectedSkillTree.value = null;
-      expandedSkills.value = [];
-      selectedDetail.value = null;
-    } else {
-      expandedClass.value = classId;
-      const firstTree = skillTrees.value.find((t) => t.class_id === classId);
+    const data = await response.json();
+    classes.value = data.classes;
+    skillTrees.value = data.skill_trees;
+    skills.value = data.skills;
+    skillVariants.value = data.skill_variants;
+
+    // 初始化默认选中
+    if (classes.value.length > 0) {
+      const firstClass = classes.value[0].id;
+      expandedClass.value = firstClass;
+
+      const firstTree = skillTrees.value.find((t) => t.class_id === firstClass);
       if (firstTree) {
         selectedSkillTree.value = firstTree.id;
-      }
-    }
-  };
-  
-  // 选择技能树
-  const selectSkillTree = (treeId) => {
-    selectedSkillTree.value = treeId;
-    expandedSkills.value = [];
-    selectedDetail.value = null;
-  };
-  
-  // 切换技能展开状态
-  const toggleSkill = (skillId) => {
-    const index = expandedSkills.value.indexOf(skillId);
-    if (index !== -1) {
-      expandedSkills.value.splice(index, 1); // 收起
-    } else {
-      expandedSkills.value.push(skillId); // 展开
-      selectedDetail.value = skills.value.find((s) => s.id === skillId);
-    }
-  };
-  
-  // 选择技能或变体显示详情
-  const selectSkillOrVariant = (item) => {
-    selectedDetail.value = item;
-  };
-  
-  // 初始化加载数据
-  onMounted(() => {
-    fetchData();
-  });
 
-  const handleClick = (event: Event) =>{
-  const target = event.target as HTMLElement;
-    if (target.classList.contains("link")) {
-      const to = target.dataset.to;
-      if (to) {
-        router.push(to); // 使用 Vue Router 跳转
+        const firstSkill = skills.value.find((s) => s.skill_tree_id === firstTree.id);
+        if (firstSkill) {
+          expandedSkills.value.push(firstSkill.id);
+          selectedDetail.value = firstSkill;
+        }
       }
     }
+  } catch (err: unknown) {
+    error.value = `获取数据失败: ${(err as Error).message}`;
+    console.error('Fetch error:', err);
+  } finally {
+    loading.value = false;
+  }
 };
 
-  </script>
+// 切换职业展开状态并默认选中第一个 skill_tree
+const toggleClass = (classId: number) => {
+  if (expandedClass.value === classId) {
+    expandedClass.value = null;
+    selectedSkillTree.value = null;
+    expandedSkills.value = [];
+    selectedDetail.value = null;
+  } else {
+    expandedClass.value = classId;
+    const firstTree = skillTrees.value.find((t) => t.class_id === classId);
+    if (firstTree) {
+      selectedSkillTree.value = firstTree.id;
+    }
+  }
+};
+
+// 选择技能树
+const selectSkillTree = (treeId: number) => {
+  selectedSkillTree.value = treeId;
+  expandedSkills.value = [];
+  selectedDetail.value = null;
+};
+
+// 切换技能展开状态
+const toggleSkill = (skillId: number) => {
+  const index = expandedSkills.value.indexOf(skillId);
+  if (index !== -1) {
+    expandedSkills.value.splice(index, 1); // 收起
+  } else {
+    expandedSkills.value.push(skillId); // 展开
+    selectedDetail.value = skills.value.find((s) => s.id === skillId) || null;
+  }
+};
+
+// 选择技能或变体显示详情
+const selectSkillOrVariant = (item: skills | skill_variants) => {
+  selectedDetail.value = item;
+};
+
+// 初始化加载数据
+onMounted(() => {
+  fetchData();
+});
+
+const handleClick = (event: Event) => {
+  const target = event.target as HTMLElement;
+  console.log('点击目标:', target); // 添加日志以调试
+  if (target.classList.contains("link")) {
+    const to = target.dataset.to;
+    console.log('跳转目标:', to); // 添加日志以调试
+    if (to) {
+      router.push(to); // 使用 Vue Router 跳转
+    }
+  }
+};
+</script>
   
   <style scoped>
   .container {
@@ -302,8 +305,8 @@
     text-shadow: rgb(80, 80, 80) 1px 1px 4px, rgb(80, 80, 80) 1px 1px 4px, rgb(80, 80, 80) 1px 1px 4px;
     background-color: #000000;
     border-radius: 3px;
-    cursor: pointer;
-    font-size: 18px;
+    cursor: pointer ;
+    font-size: 18px ;
   }
   
   .skill-tree-item:hover,
@@ -367,8 +370,8 @@
   }
   
   .variants-list {
-    margin-top: 5px;
-    margin-left: 20px;
+    margin-top: 15px;
+    margin-left: 40px;
   }
   
   .variant-item {

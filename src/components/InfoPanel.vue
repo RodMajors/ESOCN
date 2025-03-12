@@ -33,7 +33,7 @@
             {{ dungeon.DLC }}
           </td>
         </tr>
-        <tr>
+        <tr v-if = "dungeon.mini_level">
           <td class="key-cell">所需等级</td>
           <td class="value-cell">{{ dungeon.mini_level }}</td>
         </tr>

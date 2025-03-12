@@ -43,6 +43,7 @@
                       :background="dungeon.background"
                       :is-dual="dungeon.isDual"
                       :dual-dungeons="dungeon.dualDungeons"
+                      :type="type"
                     />
                   </td>
                   <td class="mystery-column">{{ dungeon.mystery }}</td>
@@ -56,6 +57,7 @@
                       :background="dungeon.background"
                       :is-dual="dungeon.isDual"
                       :dual-dungeons="dungeon.dualDungeons"
+                      :type="type"
                     />
                   </td>
                 </template>
@@ -75,6 +77,7 @@ import dungeonsData from '../data/dungeons.json';
 import DungeonImage from '../components/DungeonImage.vue';
 import type { Dungeon, ProcessedDungeon, DlcGroup } from '../types/dungeon';
 
+const type = "dungeon"
 const router = useRouter();
 const isLoading = ref(true);
 const searchQuery = ref('');

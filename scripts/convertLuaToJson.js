@@ -241,7 +241,7 @@ function extractSetsFromAst(ast, lang) {
 
   console.log(`${lang} - Found DataExtractorSavedVariables`);
 
-  const pathKeys = ['Default', '@Chicor', '$AccountWide', 'dataItems', 'Sets'];
+  const pathKeys = ['Default', '@Ha_Ren', '$AccountWide', 'dataItems', 'Sets'];
   let currentTable = body.init[0];
   for (const key of pathKeys) {
     console.log(`${lang} - Searching for key: "${key}"`);
