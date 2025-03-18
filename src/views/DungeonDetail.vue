@@ -31,7 +31,7 @@
       <!-- BOSS 区域 -->
       <section id="boss-section" class="boss-section">
         <div class="boss-tabs">
-          <span v-for="(boss, index) in dungeon.BOSS" :key="boss.name" @click="selectBoss(index)" :class="{ active: activeBoss === index }">
+          <span v-for="(boss, index) in dungeon.BOSS" :key="index" @click="selectBoss(index)" :class="{ active: activeBoss === index }">
             {{ boss.name }}
           </span>
         </div>
@@ -72,7 +72,7 @@
             </div>
             <div class="boss-skills">
               <ul>
-                <li v-for="(skill, index) in dungeon.BOSS[activeBoss].skills" :key="skill.name" :class="index % 2 === 0 ? 'row-dark' : 'row-light'">
+                <li v-for="(skill, index) in dungeon.BOSS[activeBoss].skills" :key="index" :class="index % 2 === 0 ? 'row-dark' : 'row-light'">
                   <img :src="skill.icon" alt="Skill Icon" class="skill-icon" />
                   <div class="skill-name">
                     {{ skill.name }}<br><span class="skill-en-name">&lt;{{ skill.enName }}&gt;</span>
@@ -127,7 +127,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch  } from 'vue';
 import { useRoute } from 'vue-router';
-import dungeonsData from '../data/dungeons.json';
+import dungeonsData from '../Data/dungeons.json';
 import type { Dungeon } from '../types/dungeon';
 import InfoPanel from '../components/InfoPanel.vue';
 import GearArea from '../components/GearArea.vue';
@@ -194,8 +194,6 @@ const calculateScaleFactor = () => {
     // 计算缩放比例
     const availableWidth = containerWidth - (itemCount - 1) * gap; // 可用宽度
     scaleFactor.value = Math.min(1, availableWidth / totalWidth); // 缩放比例
-    console.log(scaleFactor)
-
   }
 };
 

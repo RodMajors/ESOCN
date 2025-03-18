@@ -9,7 +9,7 @@ const dbConfig = {
   host: 'localhost',
   user: 'root',
   password: 'Lzr@136595755',
-  database: 'esoskills',
+  database: 'eso_skills',
 };
 
 // 中间件

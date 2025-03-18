@@ -38,12 +38,10 @@
                 <template v-if="index % 2 === 0">
                   <td class="icon-column">
                     <DungeonImage
-                      :name="dungeon.name"
-                      :en-name="dungeon.enName"
-                      :background="dungeon.background"
+                      :enName="dungeon.enName"
                       :is-dual="false"
                       :dual-dungeons="dungeon.dualDungeons"
-                      :type="type"
+                      :type="Type"
                     />
                   </td>
                   <td class="mystery-column">{{ dungeon.mystery }}</td>
@@ -51,13 +49,11 @@
                 <template v-else>
                   <td class="mystery-column">{{ dungeon.mystery }}</td>
                   <td class="icon-column">
-                    <DungeonImage
-                      :name="dungeon.name"
+                    <dungeon-image
                       :en-name="dungeon.enName"
-                      :background="dungeon.background"
                       :is-dual="dungeon.isDual"
                       :dual-dungeons="dungeon.dualDungeons"
-                      :type="type"
+                      :type="Type"
                     />
                   </td>
                 </template>
@@ -73,11 +69,11 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import trialsData from '../data/trials.json';
+import trialsData from '../Data/trials.json';
 import DungeonImage from '../components/DungeonImage.vue';
 import type { Dungeon, ProcessedDungeon, DlcGroup } from '../types/trials';
 
-const type = "trial"
+const Type = "trial"
 
 const router = useRouter();
 const isLoading = ref(true);

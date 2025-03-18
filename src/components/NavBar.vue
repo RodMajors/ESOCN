@@ -61,8 +61,8 @@ import { RouterLink } from "vue-router";
 .nav-links li a {
   color: #bca875;
   text-decoration: none;
-  font-size: 1.1rem;
-  font-family: "Microsoft YaHei", "黑体", "宋体", sans-serif;
+  font-size: 20px;
+  font-family: "Einstein Futura PT Cond", impact, charcoal, sans-serif, "Microsoft YaHei", "黑体", "宋体", sans-serif;
   transition: color 0.3s ease; /* 添加颜色过渡效果 */
 }
 
@@ -77,7 +77,7 @@ import { RouterLink } from "vue-router";
 .dropdown-toggle {
   color: #bca875;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 20px;
   font-family: "Microsoft YaHei", "黑体", "宋体", sans-serif;
   display: flex;
   align-items: center;

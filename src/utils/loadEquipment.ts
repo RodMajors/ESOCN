@@ -54,13 +54,11 @@ const parseBonuses2 = (bonuses: { [key: string]: string }): { [key: string]: str
 
 export async function loadAllEquipment(): Promise<any[]> {
   try {
-    console.log(`Fetching /api/equipment/all`);
     const response = await fetch('/api/equipment/all');
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const data = await response.json();
-    console.log('API response:', data);
 
     // 为每个装备加载 bonuses
     const equipmentWithBonuses = await Promise.all(

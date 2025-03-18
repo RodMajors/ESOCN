@@ -6,10 +6,10 @@
       <p class="en-name">{{ skill.enName?.toUpperCase() }}</p>
       <hr class="divider" />
       <div class="skill-stats">
-        <div class="stat-item" v-if="skill.cost">
+        <div class="stat-item" v-if="skill.cost && skill.cost !== '0'">
           <span class="label">消耗:</span>
           <div class="cost-values">
-            <span class="value" v-if="skill.ultimate">{{ formatCost(skill.cost, skill.ultimate) }}</span>
+            <span class="value" v-if="skill.ultimate">{{ formatCost(Number(skill.cost), skill.ultimate) }}</span>
             <span class="value" 
               v-if="skill.magickaCost"
               v-html="parseColorTags2(skill.magickaCost + '魔力')"

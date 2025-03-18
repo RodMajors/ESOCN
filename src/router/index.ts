@@ -1,3 +1,4 @@
+import SideBar from "@/components/SideBar.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 
@@ -16,11 +17,11 @@ const routes: RouteRecordRaw[] = [
     },
     {
         path: "/trials",
-        component: () => import("../views/trialsList.vue"),
+        component: () => import("../views/TrialsList.vue"),
     },
     {
         path: "/trials/:enName",
-        component: () => import("../views/trialDetail.vue"),
+        component: () => import("../views/TrialDetail.vue"),
     },
     {
         path: "/news",
@@ -48,6 +49,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import("../views/Skills.vue"),
         meta: { hideSidebar: true }, // 在此页面隐藏侧边栏
     },
+    {
+        path: "/champions",
+        component: () => import("../views/champions.vue"),
+        meta: {hideSideBar: true}
+    }
 ];
 
 const router = createRouter({

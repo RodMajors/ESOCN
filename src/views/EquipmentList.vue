@@ -158,7 +158,6 @@ const fetchAllEquipment = async () => {
     const data = await loadAllEquipment(); // 一次性加载所有数据
     equipment.value = data;
     totalPages.value = Math.ceil(data.length / itemsPerPage); // 计算总页数
-    console.log("data.length", data.length)
   } catch (error) {
     console.error('加载装备数据失败:', error);
   } finally {

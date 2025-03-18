@@ -15,6 +15,5 @@ app.use(VueLazyload, {
 });
 
 router.isReady().then(() => {
-  console.log("Router ready, mounting app...");
   app.mount('#app');
 });

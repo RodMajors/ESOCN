@@ -16,6 +16,11 @@
   }
   
   h1 {
-    color: #ffcc00;
+    color: #f1c33c;
+    font-size: 60px;
+    text-transform: uppercase;
+    -webkit-text-fill-color: rgba(0, 0, 0, 0);
+    background-image: -webkit-linear-gradient(top, rgba(241, 195, 60, 0.533), rgba(195, 134, 0, 0.933)), url(https://esossl-a.akamaihd.net/uploads/textures/gold.jpg);
+    background-clip: text, text
   }
   </style>

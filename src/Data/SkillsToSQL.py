@@ -6,7 +6,7 @@ conn = pymysql.connect(
     host="localhost",
     user="root",
     password="Lzr@136595755",
-    database="esoskills",
+    database="eso_skills",
     charset="utf8mb4"
 )
 cursor = conn.cursor()
@@ -14,7 +14,7 @@ cursor = conn.cursor()
 # 其余代码保持不变
 
 # 加载 JSON 数据
-with open("E:/projects/ESOCN/src/Data/skills.json", "r", encoding="utf-8") as f:
+with open("C:/projects/ESOCN/src/Data/skills.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
 # 插入数据

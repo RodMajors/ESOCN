@@ -1,12 +1,12 @@
 <!-- src/components/DungeonImage.vue -->
 <template>
   <div class="image-container" :class="{ 'dual-container': isDual }" @click="goToDetail()">
-    <img :src="background" class="dungeon-icon" alt="Dungeon Background" />
+    <img :src="dungeonData.background" class="dungeon-icon" alt="Dungeon Background" />
     
     <!-- 默认名称显示 -->
     <div class="overlay">
       <div class="name-text">
-        <span>{{ name }}</span>
+        <span>{{ dungeonData.name }}</span>
         <br />
         <span class="en-name">{{ enName.toUpperCase() }}</span>
       </div>
@@ -29,21 +29,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import dungeons from '@/Data/dungeons.json';
+import trials from '@/Data/trials.json';
 
 export default defineComponent({
   name: 'DungeonImage',
   props: {
-    name: {
-      type: String,
-      required: true,
-    },
     enName: {
-      type: String,
-      required: true,
-    },
-    background: {
       type: String,
       required: true,
     },
@@ -55,27 +49,36 @@ export default defineComponent({
       type: Array as () => { name: string; enName: string; originalEnName: string }[],
       default: () => [],
     },
-    type:{
+    type: {
       type: String,
-      required: true,
+      default: "dungeon"
     }
   },
+
   setup(props) {
     const router = useRouter();
+    // 根据 enName 和 type 查找对应的 dungeon 或 trial 数据
+    const dungeonData = computed(() => {
+      const dataSource = props.type === 'dungeon' ? dungeons : trials;
+      let TureName = props.enName;  
+      if (props.isDual) TureName = TureName + " I" ;
+      const found = dataSource.find(item => item.enName === TureName);
+      return found || { name: 'Unknown', background: 'adsadasdad' }; // 如果没有找到，返回默认值
+    });
 
     const goToDetail = (enName?: string) => {
       const targetEnName = enName || props.enName;
-      console.log(props.enName)
       const formattedName = targetEnName.toLowerCase().replace(/\s+/g, '-');
-      if (props.type == "dungeon")
+      if (props.type === "dungeon")
         router.push(`/dungeons/${formattedName}`);
-      else if (props.type == "trial")
+      else if (props.type === "trial")
         router.push(`/trials/${formattedName}`);
-      else if (props.type == "arena")
+      else if (props.type === "arena")
         router.push(`/arena/${formattedName}`);
     };
-
+    
     return {
+      dungeonData,
       goToDetail,
     };
   },
@@ -83,6 +86,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+/* 样式保持不变 */
 .image-container {
   position: relative;
   width: 100%;

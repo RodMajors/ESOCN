@@ -5,7 +5,7 @@ export interface skills {
     name: string;
     description?: string | null;
     newEffect?: string | null;
-    cost?: number | null;
+    cost?: string | null;
     duration?: number | null;
     castTime?: number | null;
     maxRange?: number | null;
@@ -14,7 +14,7 @@ export interface skills {
     target?: string | null;
     icon?: string;
     enName?: string | null;
-    passive?: string | null; // 使用字符串，因为数据库中是 varchar(255)
+    passive?: number | null; // 使用字符串，因为数据库中是 varchar(255)
     ultimate?: number | null; // 0 或 1
     isChanneled?: number | null; // 0 或 1
     magickaCost?: string;
@@ -29,7 +29,7 @@ export interface skill_variants {
   name: string;
   description?: string | null;
   newEffect?: string | null;
-  cost?: number | null;
+  cost?: string | null;
   duration?: number | null;
   castTime?: number | null;
   maxRange?: number | null;
@@ -38,7 +38,7 @@ export interface skill_variants {
   target?: string | null;
   icon?: string;
   enName?: string | null;
-  passive?: string | null; // 使用字符串，因为数据库中是 varchar(255)
+  passive?: number | null; // 使用字符串，因为数据库中是 varchar(255)
   ultimate?: number | null; // 0 或 1
   isChanneled?: number | null; // 0 或 1
   magickaCost?: string;

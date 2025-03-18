@@ -38,9 +38,7 @@
                 <template v-if="index % 2 === 0">
                   <td class="icon-column">
                     <DungeonImage
-                      :name="dungeon.name"
-                      :en-name="dungeon.enName"
-                      :background="dungeon.background"
+                      :enName="dungeon.enName"
                       :is-dual="dungeon.isDual"
                       :dual-dungeons="dungeon.dualDungeons"
                       :type="type"
@@ -52,9 +50,7 @@
                   <td class="mystery-column">{{ dungeon.mystery }}</td>
                   <td class="icon-column">
                     <DungeonImage
-                      :name="dungeon.name"
-                      :en-name="dungeon.enName"
-                      :background="dungeon.background"
+                      :enName="dungeon.enName"
                       :is-dual="dungeon.isDual"
                       :dual-dungeons="dungeon.dualDungeons"
                       :type="type"
@@ -73,7 +69,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import dungeonsData from '../data/dungeons.json';
+import dungeonsData from '../Data/dungeons.json';
 import DungeonImage from '../components/DungeonImage.vue';
 import type { Dungeon, ProcessedDungeon, DlcGroup } from '../types/dungeon';
 

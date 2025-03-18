@@ -63,10 +63,10 @@
           </div>
 
           <!-- 主动技能 -->
-          <div class="skill-section" v-if="skills.filter((s) => s.skill_tree_id === selectedSkillTree && s.passive === '0' && s.ultimate !== 1).length > 0">
+          <div class="skill-section" v-if="skills.filter((s) => s.skill_tree_id === selectedSkillTree && s.passive === 0 && s.ultimate !== 1).length > 0">
             <h2>主动技能</h2>
             <div
-              v-for="skill in skills.filter((s) => s.skill_tree_id === selectedSkillTree && s.passive === '0' && s.ultimate !== 1)"
+              v-for="skill in skills.filter((s) => s.skill_tree_id === selectedSkillTree && s.passive === 0 && s.ultimate !== 1)"
               :key="skill.id"
               class="skill-item"
             >
@@ -97,10 +97,10 @@
           </div>
 
           <!-- 被动技能 -->
-          <div class="skill-section" v-if="skills.filter((s) => s.skill_tree_id === selectedSkillTree && s.passive === '1').length > 0">
+          <div class="skill-section" v-if="skills.filter((s) => s.skill_tree_id === selectedSkillTree && s.passive === 1).length > 0">
             <h2>被动技能</h2>
             <div
-              v-for="skill in skills.filter((s) => s.skill_tree_id === selectedSkillTree && s.passive === '1')"
+              v-for="skill in skills.filter((s) => s.skill_tree_id === selectedSkillTree && s.passive === 1)"
               :key="skill.id"
               class="skill-item"
             >
@@ -137,7 +137,9 @@
       <div class="details-panel">
         <div v-if="loading">加载中...</div>
         <div v-else-if="error" class="error">{{ error }}</div>
-        <SkillArea v-else-if="selectedDetail" :skill="selectedDetail" />
+        <SkillArea v-else-if="selectedDetail" 
+        :skill="selectedDetail" 
+        />
         <p v-else class="placeholder">请选择一个技能或变体</p>
       </div>
     </div>
@@ -174,7 +176,7 @@ const fetchData = async () => {
   loading.value = true;
   error.value = null;
   try {
-    const response = await fetch('http://localhost:4000/api/skills');
+    const response = await fetch('http://localhost:3000/api/skills');
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -183,6 +185,8 @@ const fetchData = async () => {
     skillTrees.value = data.skill_trees;
     skills.value = data.skills;
     skillVariants.value = data.skill_variants;
+
+    console.log(skills)
 
     // 初始化默认选中
     if (classes.value.length > 0) {

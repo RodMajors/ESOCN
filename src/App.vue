@@ -59,7 +59,7 @@ body {
 /* App.vue 的 <style> 部分 */
 .main-content {
   flex: 3.5;
-  background-color: #000000;
+  background-color: rgba(0, 0, 0, 0);
   margin: 1rem;
   border-radius: 8px;
 }
