@@ -1,3 +1,4 @@
+// 将装备数据equipment.json导入数据库eso_equipment
 import fs from 'fs';
 import mysql from 'mysql2';
 

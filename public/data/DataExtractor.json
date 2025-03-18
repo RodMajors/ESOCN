@@ -1,0 +1,1765 @@
+{
+    "Default": {
+        "@RodMajors": {
+            "$AccountWide": {
+                "scrapeItems": true,
+                "dataStyles": {},
+                "scrapeSkills": true,
+                "FirstLoad": false,
+                "dataPotions": {},
+                "scrapeFurniture": true,
+                "dataCpSkills": {
+                    "1": {
+                        "index": 1,
+                        "id": 3,
+                        "name": "制作",
+                        "skills": {
+                            "1": {
+                                "isSlottable": false,
+                                "name": "无影无踪 (Out of Sight)",
+                                "description": "潜行时被侦测范围每阶段降低|cffffff1|r米。",
+                                "id": 68,
+                                "clusterName": "",
+                                "index": 1,
+                                "bounsText": {
+                                    "0": "|cffffff0|r米",
+                                    "30": "|cffffff3|r米",
+                                    "10": "|cffffff1|r米",
+                                    "20": "|cffffff2|r米"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "2": {
+                                "isSlottable": true,
+                                "name": "暗中打点 (Friends in Low Places)",
+                                "description": "因犯罪行为而使赏金累加时，每天有一次机会移除|cffffff1000|r悬赏金额。\\r\\n\\r\\n等级达到50，且当前赏金必须大于等于|cffffff1000|r金币时才能激活此被动技能。",
+                                "id": 76,
+                                "clusterName": "",
+                                "index": 2,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "3": {
+                                "isSlottable": true,
+                                "name": "淡出视线 (Fade Away)",
+                                "description": "从守卫处脱逃可降|cffffff25|r%热度，但无法消除被悬赏缉拿。",
+                                "id": 84,
+                                "clusterName": "",
+                                "index": 3,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "4": {
+                                "isSlottable": false,
+                                "name": "扒手技艺 (Cutpurse's Art)",
+                                "description": "提高扒窃时获得更高品质战利品的几率。",
+                                "id": 90,
+                                "clusterName": "",
+                                "index": 4,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "5": {
+                                "isSlottable": true,
+                                "name": "暗影打击 (Shadowstrike)",
+                                "description": "使用哀伤匕首击杀敌人时，短时间后变为隐形，持续|cffffff5|r秒，同时分散附近敌人或潜在目击者的注意力。受该效果影响时，你可施放哀伤匕首。",
+                                "id": 80,
+                                "clusterName": "",
+                                "index": 5,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "6": {
+                                "isSlottable": true,
+                                "name": "采集大师 (Master Gatherer)",
+                                "description": "采集耗时每阶段降低 |cffffff10|r %。",
+                                "id": 78,
+                                "clusterName": "",
+                                "index": 6,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%时间减少",
+                                    "75": "|cffffff50|r%时间减少",
+                                    "60": "|cffffff40|r%时间减少",
+                                    "45": "|cffffff30|r%时间减少",
+                                    "30": "|cffffff20|r%时间减少",
+                                    "15": "|cffffff10|r%时间减少"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "7": {
+                                "isSlottable": false,
+                                "name": "寻宝猎人 (Treasure Hunter)",
+                                "description": "提高宝箱内的物品质量。",
+                                "id": 79,
+                                "clusterName": "",
+                                "index": 7,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "8": {
+                                "isSlottable": false,
+                                "name": "稳固附魔 (Steadfast Enchantment)",
+                                "description": "生效时，每阶段武器附魔有 |cffffff10|r %几率不消耗充能。",
+                                "id": 75,
+                                "clusterName": "",
+                                "index": 8,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%几率",
+                                    "10": "|cffffff10|r%几率",
+                                    "20": "|cffffff20|r%几率",
+                                    "50": "|cffffff50|r%几率",
+                                    "30": "|cffffff30|r%几率",
+                                    "40": "|cffffff40|r%几率"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "9": {
+                                "isSlottable": false,
+                                "name": "合理膳食 (Rationer)",
+                                "description": "任何能增加主角每阶段属性的食物或饮料持续时间增加|cffffff10|r分钟。",
+                                "id": 85,
+                                "clusterName": "",
+                                "index": 9,
+                                "bounsText": {
+                                    "0": "|cffffff0|r分钟",
+                                    "30": "|cffffff30|r分钟",
+                                    "10": "|cffffff10|r分钟",
+                                    "20": "|cffffff20|r分钟"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "10": {
+                                "isSlottable": false,
+                                "name": "高效用药 (Liquid Efficiency)",
+                                "description": "使用药水或毒药时，有 |cffffff10|r %几率不消耗它。",
+                                "id": 86,
+                                "clusterName": "",
+                                "index": 10,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "11": {
+                                "isSlottable": true,
+                                "name": "垂钓者本能 (Angler's Instincts)",
+                                "description": "提高钓到更高品质鱼类的几率，类似于和其他玩家一起钓鱼的效果。该效果可以与其他类似的加成叠加。",
+                                "id": 89,
+                                "clusterName": "",
+                                "index": 11,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "12": {
+                                "isSlottable": true,
+                                "name": "拉钩技术 (Reel Technique)",
+                                "description": "鱼类咬钩耗时降低 |cffffff25|r %。",
+                                "id": 88,
+                                "clusterName": "",
+                                "index": 12,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "13": {
+                                "isSlottable": false,
+                                "name": "自制达人 (Homemaker)",
+                                "description": "在世界中每找到一张家具图纸，就有 |cffffff10|r %几率找到第二张。",
+                                "id": 91,
+                                "clusterName": "",
+                                "index": 13,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "14": {
+                                "isSlottable": false,
+                                "name": "流浪者 (Wanderer)",
+                                "description": "路点神龛的使用成本每阶段降低 |cffffff10|r %。",
+                                "id": 70,
+                                "clusterName": "",
+                                "index": 14,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%消耗减免",
+                                    "75": "|cffffff50|r%消耗减免",
+                                    "60": "|cffffff40|r%消耗减免",
+                                    "45": "|cffffff30|r%消耗减免",
+                                    "30": "|cffffff20|r%消耗减免",
+                                    "15": "|cffffff10|r%消耗减免"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "15": {
+                                "isSlottable": false,
+                                "name": "大丰收 (Plentiful Harvest)",
+                                "description": "每阶段有 |cffffff10|r %几率从普通资源点中获得双倍收益。",
+                                "id": 81,
+                                "clusterName": "",
+                                "index": 15,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%几率",
+                                    "10": "|cffffff10|r%几率",
+                                    "20": "|cffffff20|r%几率",
+                                    "50": "|cffffff50|r%几率",
+                                    "30": "|cffffff30|r%几率",
+                                    "40": "|cffffff40|r%几率"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "16": {
+                                "isSlottable": true,
+                                "name": "战争坐骑 (War Mount)",
+                                "description": "精通骑术，移除战斗外坐骑的所有耐力消耗。",
+                                "id": 82,
+                                "clusterName": "",
+                                "index": 16,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "17": {
+                                "isSlottable": true,
+                                "name": "天赋骑手 (Gifted Rider)",
+                                "description": "骑乘速度每阶段提高 |cffffff2|r %。",
+                                "id": 92,
+                                "clusterName": "",
+                                "index": 17,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%坐骑速度",
+                                    "100": "|cffffff10|r%坐骑速度",
+                                    "60": "|cffffff6|r%坐骑速度",
+                                    "80": "|cffffff8|r%坐骑速度",
+                                    "20": "|cffffff2|r%坐骑速度",
+                                    "40": "|cffffff4|r%坐骑速度"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "18": {
+                                "isSlottable": false,
+                                "name": "细致拆装 (Meticulous Disassembly)",
+                                "description": "提高提取出木工、锻造、制衣和珠宝工艺原料的几率，并可以从原材料中精炼出更优质的树脂、钢材、鞣酸和镀层。",
+                                "id": 83,
+                                "clusterName": "",
+                                "index": 18,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "19": {
+                                "isSlottable": false,
+                                "name": "灵感增强 (Inspiration Boost)",
+                                "description": "获得的制作灵感每阶段提高 |cffffff10|r %。",
+                                "id": 72,
+                                "clusterName": "",
+                                "index": 19,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%提升",
+                                    "45": "|cffffff30|r%提升",
+                                    "30": "|cffffff20|r%提升",
+                                    "15": "|cffffff10|r%提升"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "20": {
+                                "isSlottable": false,
+                                "name": "幸运的眷顾 (Fortune's Favor)",
+                                "description": "在宝箱和保险箱中找到的金币数量每阶段提高 |cffffff10|r %。",
+                                "id": 71,
+                                "clusterName": "",
+                                "index": 20,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%提升的金币寻得率",
+                                    "10": "|cffffff10|r%提升的金币寻得率",
+                                    "20": "|cffffff20|r%提升的金币寻得率",
+                                    "50": "|cffffff50|r%提升的金币寻得率",
+                                    "30": "|cffffff30|r%提升的金币寻得率",
+                                    "40": "|cffffff40|r%提升的金币寻得率"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "21": {
+                                "isSlottable": false,
+                                "name": "臭名昭著 (Infamous)",
+                                "description": "赃物价值提高 |cffffff25|r %。",
+                                "id": 77,
+                                "clusterName": "",
+                                "index": 21,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "22": {
+                                "isSlottable": false,
+                                "name": "迅捷幻影 (Fleet Phantom)",
+                                "description": "潜行的移动速度惩罚每阶段降低 |cffffff5|r%。",
+                                "id": 67,
+                                "clusterName": "",
+                                "index": 22,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%减少的处罚",
+                                    "40": "|cffffff25|r%减少的处罚",
+                                    "32": "|cffffff20|r%减少的处罚",
+                                    "8": "|cffffff5|r%减少的处罚",
+                                    "24": "|cffffff15|r%减少的处罚",
+                                    "16": "|cffffff10|r%减少的处罚"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "23": {
+                                "isSlottable": false,
+                                "name": "镀金手指 (Gilded Fingers)",
+                                "description": "金币获取量每阶段提高 |cffffff2|r %。",
+                                "id": 74,
+                                "clusterName": "",
+                                "index": 23,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%提升的金币",
+                                    "10": "|cffffff2|r%提升的金币",
+                                    "20": "|cffffff4|r%提升的金币",
+                                    "50": "|cffffff10|r%提升的金币",
+                                    "30": "|cffffff6|r%提升的金币",
+                                    "40": "|cffffff8|r%提升的金币"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "24": {
+                                "isSlottable": false,
+                                "name": "坠落 (Breakfall)",
+                                "description": "受到的坠落伤害每阶段降低 |cffffff7|r %。",
+                                "id": 69,
+                                "clusterName": "",
+                                "index": 24,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%减少的伤害",
+                                    "10": "|cffffff7|r%减少的伤害",
+                                    "20": "|cffffff14|r%减少的伤害",
+                                    "50": "|cffffff35|r%减少的伤害",
+                                    "30": "|cffffff21|r%减少的伤害",
+                                    "40": "|cffffff28|r%减少的伤害"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "25": {
+                                "isSlottable": false,
+                                "name": "灵魂库存 (Soul Reservoir)",
+                                "description": "复活自己或其他玩家时，有 |cffffff33|r %几率不消耗灵魂石。",
+                                "id": 87,
+                                "clusterName": "",
+                                "index": 25,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "26": {
+                                "isSlottable": true,
+                                "name": "天马赐福 (Steed's Blessing)",
+                                "description": "脱战移动速度每阶段提高 |cffffff.4|r %。",
+                                "id": 66,
+                                "clusterName": "",
+                                "index": 26,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 2
+                            },
+                            "27": {
+                                "isSlottable": true,
+                                "name": "维持阴影 (Sustaining Shadows)",
+                                "description": "潜行消耗每阶段降低 |cffffff1|r %。",
+                                "id": 65,
+                                "clusterName": "",
+                                "index": 27,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 2
+                            },
+                            "28": {
+                                "isSlottable": false,
+                                "name": "专业保养 (Professional Upkeep)",
+                                "description": "护甲修复消耗每阶段降低|cffffff1|r%。",
+                                "id": 1,
+                                "clusterName": "",
+                                "index": 28,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 0
+                            }
+                        }
+                    },
+                    "2": {
+                        "index": 2,
+                        "id": 1,
+                        "name": "战争",
+                        "skills": {
+                            "1": {
+                                "isSlottable": false,
+                                "name": "精准 (Precision)",
+                                "description": "每阶段提高|cffffff160|r暴击率。",
+                                "id": 11,
+                                "clusterName": "",
+                                "index": 1,
+                                "bounsText": {
+                                    "0": "|cffffff0|r暴击率",
+                                    "10": "|cffffff160|r暴击率",
+                                    "20": "|cffffff320|r暴击率"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "2": {
+                                "isSlottable": true,
+                                "name": "战斗技巧 (Fighting Finesse)",
+                                "description": "暴击伤害和暴击治疗每阶段提高|cffffff4|r%。",
+                                "id": 12,
+                                "clusterName": "",
+                                "index": 2,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%暴击伤害和暴击治疗",
+                                    "25": "|cffffff4|r%暴击伤害和暴击治疗",
+                                    "50": "|cffffff8|r%暴击伤害和暴击治疗"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "3": {
+                                "isSlottable": false,
+                                "name": "神佑 (Blessed)",
+                                "description": "造成的治疗每阶段提高 |cffffff1|r %。",
+                                "id": 108,
+                                "clusterName": "",
+                                "index": 3,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%造成的治疗",
+                                    "10": "|cffffff1|r%造成的治疗",
+                                    "20": "|cffffff2|r%造成的治疗"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "4": {
+                                "isSlottable": true,
+                                "name": "命悬一线 (From the Brink)",
+                                "description": "每当你治疗自己或生命低于|cffffff25|r%的盟友时，每阶段会赋予目标吸收|cffffff2200|r伤害的伤害护盾，持续|cffffff6|r秒。该效果对每个目标每|cffffff30|r秒可生效一次。",
+                                "id": 262,
+                                "clusterName": "精通治疗",
+                                "index": 4,
+                                "bounsText": {
+                                    "0": "|cffffff0|r伤害吸收",
+                                    "10": "|cffffff2200|r伤害吸收",
+                                    "20": "|cffffff4400|r伤害吸收",
+                                    "50": "|cffffff11000|r伤害吸收",
+                                    "30": "|cffffff6600|r伤害吸收",
+                                    "40": "|cffffff8800|r伤害吸收"
+                                },
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "5": {
+                                "isSlottable": true,
+                                "name": "活力溢流 (Enlivening Overflow)",
+                                "description": "过量治疗自身或盟友，并赋予生命回复、魔力回复和耐力回复，赋予的值等同于你|cffffff.5|r%的魔力上限，最高|cffffff150|r，持续|cffffff6|r秒。该效果对每个目标每|cffffff12|r秒可生效一次。\\r\\n\\r\\n当前加成：|cffffff73|r",
+                                "id": 263,
+                                "clusterName": "精通治疗",
+                                "index": 5,
+                                "bounsText": {},
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "6": {
+                                "isSlottable": true,
+                                "name": "希望灌注 (Hope Infusion)",
+                                "description": "治疗自身或低于 |cffffff50|r %生命的友方，并赋予次级英勇，你每拥有 |cffffff300|r 魔力回复，效果持续时间加 |cffffff1|r 秒。该效果对每个目标每|cffffff10|r秒可触发一次。\\r\\n\\r\\n当前持续时间：|cffffff2|r秒。",
+                                "id": 261,
+                                "clusterName": "精通治疗",
+                                "index": 6,
+                                "bounsText": {},
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "7": {
+                                "isSlottable": true,
+                                "name": "净化药膏 (Salve of Renewal)",
+                                "description": "每当你从自身或盟友身上移除有害效果时，你将圣化目标脚下的土地，每阶段为目标和|cffffff8|r米内的盟友治疗|cffffff1280|r生命。该效果每|cffffff10|r秒可触发一次。",
+                                "id": 260,
+                                "clusterName": "精通治疗",
+                                "index": 7,
+                                "bounsText": {
+                                    "0": "|cffffff0|r生命",
+                                    "10": "|cffffff1280|r生命",
+                                    "20": "|cffffff2560|r生命",
+                                    "50": "|cffffff6400|r生命",
+                                    "30": "|cffffff3840|r生命",
+                                    "40": "|cffffff5120|r生命"
+                                },
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "8": {
+                                "isSlottable": true,
+                                "name": "抚慰浪潮 (Soothing Tide)",
+                                "description": "范围治疗造成的治疗每阶段提高|cffffff2|r%。",
+                                "id": 24,
+                                "clusterName": "",
+                                "index": 8,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%造成的治疗",
+                                    "10": "|cffffff2|r%造成的治疗",
+                                    "20": "|cffffff4|r%造成的治疗",
+                                    "50": "|cffffff10|r%造成的治疗",
+                                    "30": "|cffffff6|r%造成的治疗",
+                                    "40": "|cffffff8|r%造成的治疗"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "9": {
+                                "isSlottable": true,
+                                "name": "复苏 (Rejuvenator)",
+                                "description": "治疗技能每阶段提高|cffffff41|r武器伤害和法术伤害。",
+                                "id": 9,
+                                "clusterName": "",
+                                "index": 9,
+                                "bounsText": {
+                                    "0": "|cffffff0|r武器伤害和法术伤害",
+                                    "10": "|cffffff41|r武器伤害和法术伤害",
+                                    "20": "|cffffff82|r武器伤害和法术伤害",
+                                    "50": "|cffffff205|r武器伤害和法术伤害",
+                                    "30": "|cffffff123|r武器伤害和法术伤害",
+                                    "40": "|cffffff164|r武器伤害和法术伤害"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "10": {
+                                "isSlottable": true,
+                                "name": "预知 (Foresight)",
+                                "description": "喝下药水后，你在|cffffff6|r秒内释放的魔力和耐力治疗技能的消耗降低|cffffff75|r%。",
+                                "id": 163,
+                                "clusterName": "",
+                                "index": 10,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "11": {
+                                "isSlottable": true,
+                                "name": "净化重生 (Cleansing Revival)",
+                                "description": "治疗生命低于|cffffff25|r%的目标时，移除其所有负面效果。该效果每|cffffff24|r秒可触发一次。",
+                                "id": 29,
+                                "clusterName": "",
+                                "index": 11,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "12": {
+                                "isSlottable": true,
+                                "name": "专注修复 (Focused Mending)",
+                                "description": "单体治疗造成的治疗每阶段提高 |cffffff2|r %。",
+                                "id": 26,
+                                "clusterName": "",
+                                "index": 12,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%造成的治疗",
+                                    "10": "|cffffff2|r%造成的治疗",
+                                    "20": "|cffffff4|r%造成的治疗",
+                                    "50": "|cffffff10|r%造成的治疗",
+                                    "30": "|cffffff6|r%造成的治疗",
+                                    "40": "|cffffff8|r%造成的治疗"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "13": {
+                                "isSlottable": true,
+                                "name": "迅速新生 (Swift Renewal)",
+                                "description": "持续治疗效果造成的治疗每阶段提高 |cffffff2|r %。",
+                                "id": 28,
+                                "clusterName": "",
+                                "index": 13,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%造成的治疗",
+                                    "10": "|cffffff2|r%造成的治疗",
+                                    "20": "|cffffff4|r%造成的治疗",
+                                    "50": "|cffffff10|r%造成的治疗",
+                                    "30": "|cffffff6|r%造成的治疗",
+                                    "40": "|cffffff8|r%造成的治疗"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "14": {
+                                "isSlottable": false,
+                                "name": "穿刺 (Piercing)",
+                                "description": "每阶段提高|cffffff350|r攻击穿透。",
+                                "id": 10,
+                                "clusterName": "",
+                                "index": 14,
+                                "bounsText": {
+                                    "0": "|cffffff0|r攻击穿透",
+                                    "10": "|cffffff350|r攻击穿透",
+                                    "20": "|cffffff700|r攻击穿透"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "15": {
+                                "isSlottable": true,
+                                "name": "利用者 (Exploiter)",
+                                "description": "对失衡的敌人造成的伤害每阶段提高 |cffffff2|r %。",
+                                "id": 277,
+                                "clusterName": "扩展力量",
+                                "index": 15,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%造成的伤害",
+                                    "10": "|cffffff2|r%造成的伤害",
+                                    "20": "|cffffff4|r%造成的伤害",
+                                    "50": "|cffffff10|r%造成的伤害",
+                                    "30": "|cffffff6|r%造成的伤害",
+                                    "40": "|cffffff8|r%造成的伤害"
+                                },
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "16": {
+                                "isSlottable": true,
+                                "name": "自然之力 (Force of Nature)",
+                                "description": "你的目标每拥有一个状态效果，就将你的攻击穿透提升|cffffff660|r。",
+                                "id": 276,
+                                "clusterName": "扩展力量",
+                                "index": 16,
+                                "bounsText": {},
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "17": {
+                                "isSlottable": true,
+                                "name": "军师 (Master-at-Arms)",
+                                "description": "直接攻击造成的伤害每阶段提高 |cffffff3|r%。",
+                                "id": 264,
+                                "clusterName": "",
+                                "index": 17,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%造成的伤害",
+                                    "25": "|cffffff3|r%造成的伤害",
+                                    "50": "|cffffff6|r%造成的伤害"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "18": {
+                                "isSlottable": true,
+                                "name": "武器专家 (Weapons Expert)",
+                                "description": "轻攻击和重攻击造成的伤害每阶段提高 |cffffff4|r %。",
+                                "id": 259,
+                                "clusterName": "扩展力量",
+                                "index": 18,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%造成的伤害",
+                                    "10": "|cffffff4|r%造成的伤害",
+                                    "20": "|cffffff8|r%造成的伤害",
+                                    "50": "|cffffff20|r%造成的伤害",
+                                    "30": "|cffffff12|r%造成的伤害",
+                                    "40": "|cffffff16|r%造成的伤害"
+                                },
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "19": {
+                                "isSlottable": false,
+                                "name": "无瑕仪式 (Flawless Ritual)",
+                                "description": "施加魔法状态效果的几率每阶段提高 |cffffff30|r %。",
+                                "id": 17,
+                                "clusterName": "扩展力量",
+                                "index": 19,
+                                "bounsText": {
+                                    "20": "|cffffff30|r%提高的几率",
+                                    "40": "|cffffff60|r%提高的几率",
+                                    "0": "|cffffff0|r%提高的几率"
+                                },
+                                "isInCluster": true,
+                                "type": 0
+                            },
+                            "20": {
+                                "isSlottable": false,
+                                "name": "战争法师 (War Mage)",
+                                "description": "魔法攻击获得|cffffff100|r武器伤害和法术伤害。\\r\\n\\r\\n影响魔法、火焰、寒霜以及电击伤害。",
+                                "id": 21,
+                                "clusterName": "扩展力量",
+                                "index": 20,
+                                "bounsText": {},
+                                "isInCluster": true,
+                                "type": 0
+                            },
+                            "21": {
+                                "isSlottable": false,
+                                "name": "战斗专精 (Battle Mastery)",
+                                "description": "施加实体状态效果的几率每阶段提高 |cffffff30|r%。",
+                                "id": 18,
+                                "clusterName": "扩展力量",
+                                "index": 21,
+                                "bounsText": {
+                                    "20": "|cffffff30|r%提高的几率",
+                                    "40": "|cffffff60|r%提高的几率",
+                                    "0": "|cffffff0|r%提高的几率"
+                                },
+                                "isInCluster": true,
+                                "type": 0
+                            },
+                            "22": {
+                                "isSlottable": false,
+                                "name": "非凡之力 (Mighty)",
+                                "description": "实体攻击获得|cffffff100|r武器伤害和法术伤害。\\r\\n\\r\\n影响物理、毒素、疾病以及流血伤害。",
+                                "id": 22,
+                                "clusterName": "扩展力量",
+                                "index": 22,
+                                "bounsText": {},
+                                "isInCluster": true,
+                                "type": 0
+                            },
+                            "23": {
+                                "isSlottable": true,
+                                "name": "致命瞄准 (Deadly Aim)",
+                                "description": "单体攻击造成的伤害每阶段提高 |cffffff3|r %。",
+                                "id": 25,
+                                "clusterName": "",
+                                "index": 23,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%造成的伤害",
+                                    "25": "|cffffff3|r%造成的伤害",
+                                    "50": "|cffffff6|r%造成的伤害"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "24": {
+                                "isSlottable": true,
+                                "name": "蛰咬光环 (Biting Aura)",
+                                "description": "范围攻击造成的伤害每阶段提高|cffffff3|r%。",
+                                "id": 23,
+                                "clusterName": "",
+                                "index": 24,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%造成的伤害",
+                                    "25": "|cffffff3|r%造成的伤害",
+                                    "50": "|cffffff6|r%造成的伤害"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "25": {
+                                "isSlottable": true,
+                                "name": "咒术士 (Thaumaturge)",
+                                "description": "持续伤害效果造成的伤害每阶段提高 |cffffff3|r %。",
+                                "id": 27,
+                                "clusterName": "",
+                                "index": 25,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%造成的伤害",
+                                    "25": "|cffffff3|r%造成的伤害",
+                                    "50": "|cffffff6|r%造成的伤害"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "26": {
+                                "isSlottable": true,
+                                "name": "掠夺一击 (Reaving Blows)",
+                                "description": "造成直接伤害时，治疗造成伤害的|cffffff7|r%。",
+                                "id": 30,
+                                "clusterName": "",
+                                "index": 26,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "27": {
+                                "isSlottable": true,
+                                "name": "愤怒打击 (Wrathful Strikes)",
+                                "description": "伤害技能每阶段提高|cffffff41|r武器伤害和法术伤害。",
+                                "id": 8,
+                                "clusterName": "",
+                                "index": 27,
+                                "bounsText": {
+                                    "0": "|cffffff0|r武器伤害和法术伤害",
+                                    "10": "|cffffff41|r武器伤害和法术伤害",
+                                    "20": "|cffffff82|r武器伤害和法术伤害",
+                                    "50": "|cffffff205|r武器伤害和法术伤害",
+                                    "30": "|cffffff123|r武器伤害和法术伤害",
+                                    "40": "|cffffff164|r武器伤害和法术伤害"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "28": {
+                                "isSlottable": true,
+                                "name": "奥秘过载 (Occult Overload)",
+                                "description": "在状态效果的影响下杀死敌人，会使敌人猛烈爆炸，每阶段对|cffffff4|r米范围内的其他敌人造成|cffffff1037|r湮灭伤害，在每次击中敌人时施加一个随即状态效果。该效果每秒可触发一次。",
+                                "id": 32,
+                                "clusterName": "",
+                                "index": 28,
+                                "bounsText": {
+                                    "0": "|cffffff0|r湮灭伤害",
+                                    "10": "|cffffff1037|r湮灭伤害",
+                                    "20": "|cffffff2074|r湮灭伤害",
+                                    "50": "|cffffff5185|r湮灭伤害",
+                                    "30": "|cffffff3111|r湮灭伤害",
+                                    "40": "|cffffff4148|r湮灭伤害"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "29": {
+                                "isSlottable": true,
+                                "name": "背刺者 (Backstabber)",
+                                "description": "侧袭敌人时，对其的暴击伤害每阶段提高|cffffff2|r%。",
+                                "id": 31,
+                                "clusterName": "",
+                                "index": 29,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%暴击伤害",
+                                    "10": "|cffffff2|r%暴击伤害",
+                                    "20": "|cffffff4|r%暴击伤害",
+                                    "50": "|cffffff10|r%暴击伤害",
+                                    "30": "|cffffff6|r%暴击伤害",
+                                    "40": "|cffffff8|r%暴击伤害"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "30": {
+                                "isSlottable": false,
+                                "name": "不懈训练 (Tireless Discipline)",
+                                "description": "每阶段提高|cffffff260|r耐力上限。",
+                                "id": 6,
+                                "clusterName": "",
+                                "index": 30,
+                                "bounsText": {
+                                    "0": "|cffffff0|r耐力上限",
+                                    "10": "|cffffff260|r耐力上限",
+                                    "20": "|cffffff520|r耐力上限"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "31": {
+                                "isSlottable": false,
+                                "name": "快速回复 (Quick Recovery)",
+                                "description": "受到的治疗每阶段提高|cffffff1|r%。",
+                                "id": 20,
+                                "clusterName": "",
+                                "index": 31,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%受到的治疗",
+                                    "10": "|cffffff1|r%受到的治疗",
+                                    "20": "|cffffff2|r%受到的治疗"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "32": {
+                                "isSlottable": true,
+                                "name": "坚不可摧 (Ironclad)",
+                                "description": "受到的直接伤害每阶段降低 |cffffff3|r %。",
+                                "id": 265,
+                                "clusterName": "避免死亡",
+                                "index": 32,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%伤害减免",
+                                    "25": "|cffffff3|r%伤害减免",
+                                    "50": "|cffffff6|r%伤害减免"
+                                },
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "33": {
+                                "isSlottable": true,
+                                "name": "坚韧 (Resilience)",
+                                "description": "每阶段提高|cffffff132|r暴击抗性。",
+                                "id": 13,
+                                "clusterName": "避免死亡",
+                                "index": 33,
+                                "bounsText": {
+                                    "0": "|cffffff0|r暴击抗性",
+                                    "10": "|cffffff132|r暴击抗性",
+                                    "20": "|cffffff264|r暴击抗性",
+                                    "50": "|cffffff660|r暴击抗性",
+                                    "30": "|cffffff396|r暴击抗性",
+                                    "40": "|cffffff528|r暴击抗性"
+                                },
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "34": {
+                                "isSlottable": false,
+                                "name": "准备就绪 (Preparation)",
+                                "description": "受到的非玩家伤害每阶段降低 |cffffff5|r %。",
+                                "id": 14,
+                                "clusterName": "避免死亡",
+                                "index": 34,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%伤害减免",
+                                    "10": "|cffffff5|r%伤害减免",
+                                    "20": "|cffffff10|r%伤害减免"
+                                },
+                                "isInCluster": true,
+                                "type": 0
+                            },
+                            "35": {
+                                "isSlottable": false,
+                                "name": "元素庇佑 (Elemental Aegis)",
+                                "description": "受到的魔法攻击伤害每阶段降低 |cffffff1|r %。\\r\\n\\r\\n影响魔法、火焰、寒霜以及电击伤害。",
+                                "id": 15,
+                                "clusterName": "避免死亡",
+                                "index": 35,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%伤害减免",
+                                    "10": "|cffffff1|r%伤害减免",
+                                    "20": "|cffffff2|r%伤害减免"
+                                },
+                                "isInCluster": true,
+                                "type": 0
+                            },
+                            "36": {
+                                "isSlottable": false,
+                                "name": "强固 (Hardy)",
+                                "description": "受到的实体攻击伤害每阶段降低 |cffffff1|r%。\\r\\n\\r\\n影响物理、毒素、疾病以及流血伤害。",
+                                "id": 16,
+                                "clusterName": "避免死亡",
+                                "index": 36,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%伤害减免",
+                                    "10": "|cffffff1|r%伤害减免",
+                                    "20": "|cffffff2|r%伤害减免"
+                                },
+                                "isInCluster": true,
+                                "type": 0
+                            },
+                            "37": {
+                                "isSlottable": true,
+                                "name": "持久信念 (Enduring Resolve)",
+                                "description": "受到的持续伤害每阶段降低 |cffffff3|r %。",
+                                "id": 136,
+                                "clusterName": "",
+                                "index": 37,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%伤害减免",
+                                    "25": "|cffffff3|r%伤害减免",
+                                    "50": "|cffffff6|r%伤害减免"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "38": {
+                                "isSlottable": true,
+                                "name": "加固 (Reinforced)",
+                                "description": "当你开始进行招架时，你将获得一个吸收|cffffff5140|r伤害的伤害护盾，持续|cffffff3|r秒。该效果每|cffffff10|r秒可生效一次。",
+                                "id": 160,
+                                "clusterName": "",
+                                "index": 38,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "39": {
+                                "isSlottable": true,
+                                "name": "回击 (Riposte)",
+                                "description": "当你阻挡|cffffff7|r米内敌人的攻击时，你在|cffffff5|r秒米内的下一次直接攻击会造成|cffffff33|r%额外伤害。此效果每|cffffff5|r秒发生一次。",
+                                "id": 162,
+                                "clusterName": "",
+                                "index": 39,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "40": {
+                                "isSlottable": true,
+                                "name": "壁垒 (Bulwark)",
+                                "description": "装备盾牌或寒霜法杖时，你的法术和物理抗性提高|cffffff1900|r。",
+                                "id": 159,
+                                "clusterName": "",
+                                "index": 40,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "41": {
+                                "isSlottable": true,
+                                "name": "背水一战 (Last Stand)",
+                                "description": "如果在生命值低于|cffffff20|r%时受到伤害，将获得高级英勇，每|cffffff1.5|r秒赠予你|cffffff3|r点终极点，持续|cffffff9|r秒。此效果每|cffffff9|r秒可触发一次。",
+                                "id": 161,
+                                "clusterName": "",
+                                "index": 41,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "42": {
+                                "isSlottable": true,
+                                "name": "削弱防御 (Cutting Defense)",
+                                "description": "当攻击者在|cffffff7|r米内对你造成直接伤害时，你会对他们造成|cffffff258|r魔法伤害。该效果受物理抗性或法术抗性中较高的数值影响，且可以激活你的武器附魔和毒药。",
+                                "id": 33,
+                                "clusterName": "",
+                                "index": 42,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "43": {
+                                "isSlottable": true,
+                                "name": "决斗者的不屑 (Duelist's Rebuff)",
+                                "description": "受到的单体攻击伤害每阶段降低 |cffffff3|r %。",
+                                "id": 134,
+                                "clusterName": "",
+                                "index": 43,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%伤害减免",
+                                    "25": "|cffffff3|r%伤害减免",
+                                    "50": "|cffffff6|r%伤害减免"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "44": {
+                                "isSlottable": true,
+                                "name": "无懈可击 (Unassailable)",
+                                "description": "受到的范围攻击伤害每阶段降低|cffffff3|r%。",
+                                "id": 133,
+                                "clusterName": "",
+                                "index": 44,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%伤害减免",
+                                    "25": "|cffffff3|r%伤害减免",
+                                    "50": "|cffffff6|r%伤害减免"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "45": {
+                                "isSlottable": false,
+                                "name": "魔能洞察 (Eldritch Insight)",
+                                "description": "魔力上限每阶段提高|cffffff260|r。",
+                                "id": 99,
+                                "clusterName": "",
+                                "index": 45,
+                                "bounsText": {
+                                    "0": "|cffffff0|r魔力上限",
+                                    "10": "|cffffff260|r魔力上限",
+                                    "20": "|cffffff520|r魔力上限"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "46": {
+                                "isSlottable": true,
+                                "name": "无尽耐力 (Endless Endurance)",
+                                "description": "耐力上限每阶段提高|cffffff26|r。",
+                                "id": 5,
+                                "clusterName": "",
+                                "index": 46,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 2
+                            },
+                            "47": {
+                                "isSlottable": true,
+                                "name": "狂野侵袭 (Untamed Aggression)",
+                                "description": "武器伤害与法术伤害每阶段提高|cffffff3|r。",
+                                "id": 4,
+                                "clusterName": "",
+                                "index": 47,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 2
+                            },
+                            "48": {
+                                "isSlottable": true,
+                                "name": "奥术优势 (Arcane Supremacy)",
+                                "description": "魔力上限每阶段提高|cffffff26|r。",
+                                "id": 3,
+                                "clusterName": "",
+                                "index": 48,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 2
+                            }
+                        }
+                    },
+                    "3": {
+                        "index": 3,
+                        "id": 2,
+                        "name": "强健",
+                        "skills": {
+                            "1": {
+                                "isSlottable": false,
+                                "name": "冲刺者 (Sprinter)",
+                                "description": "冲刺的耐力消耗每阶段降低|cffffff20|r。",
+                                "id": 38,
+                                "clusterName": "",
+                                "index": 1,
+                                "bounsText": {
+                                    "0": "|cffffff0|r消耗减免",
+                                    "10": "|cffffff20|r消耗减免",
+                                    "20": "|cffffff40|r消耗减免"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "2": {
+                                "isSlottable": false,
+                                "name": "神速 (Hasty)",
+                                "description": "冲刺的移动速度每阶段提高 |cffffff2|r %。",
+                                "id": 42,
+                                "clusterName": "",
+                                "index": 2,
+                                "bounsText": {
+                                    "8": "|cffffff2|r%移动速度",
+                                    "16": "|cffffff4|r%移动速度",
+                                    "0": "|cffffff0|r%移动速度"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "3": {
+                                "isSlottable": true,
+                                "name": "狩猎快感 (Thrill of the Hunt)",
+                                "description": "每击杀一名敌人，每阶段获得持续|cffffff3|r秒的高级迅敏，使移动速度提高|cffffff30|r%。",
+                                "id": 272,
+                                "clusterName": "追风者",
+                                "index": 3,
+                                "bounsText": {
+                                    "0": "|cffffff0|r每秒击杀数",
+                                    "25": "|cffffff3|r每秒击杀数",
+                                    "50": "|cffffff6|r每秒击杀数"
+                                },
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "4": {
+                                "isSlottable": true,
+                                "name": "敏捷 (Celerity)",
+                                "description": "每阶段移动速度提高 |cffffff2|r %。",
+                                "id": 270,
+                                "clusterName": "追风者",
+                                "index": 4,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%移动速度",
+                                    "10": "|cffffff2|r%移动速度",
+                                    "20": "|cffffff4|r%移动速度",
+                                    "50": "|cffffff10|r%移动速度",
+                                    "30": "|cffffff6|r%移动速度",
+                                    "40": "|cffffff8|r%移动速度"
+                                },
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "5": {
+                                "isSlottable": true,
+                                "name": "大步向前 (Refreshing Stride)",
+                                "description": "疾跑时每阶段获得|cffffff100|r生命与魔力回复。",
+                                "id": 271,
+                                "clusterName": "追风者",
+                                "index": 5,
+                                "bounsText": {
+                                    "0": "|cffffff0|r生命和魔力回复",
+                                    "10": "|cffffff100|r生命和魔力回复",
+                                    "20": "|cffffff200|r生命和魔力回复",
+                                    "50": "|cffffff500|r生命和魔力回复",
+                                    "30": "|cffffff300|r生命和魔力回复",
+                                    "40": "|cffffff400|r生命和魔力回复"
+                                },
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "6": {
+                                "isSlottable": false,
+                                "name": "英雄的活力 (Hero's Vigor)",
+                                "description": "生命上限每阶段提高|cffffff280|r。",
+                                "id": 113,
+                                "clusterName": "",
+                                "index": 6,
+                                "bounsText": {
+                                    "0": "|cffffff0|r生命上限",
+                                    "10": "|cffffff280|r生命上限",
+                                    "20": "|cffffff560|r生命上限"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "7": {
+                                "isSlottable": true,
+                                "name": "护盾大师 (Shield Master)",
+                                "description": "伤害护盾技能的消耗每阶段降低|cffffff2|r。",
+                                "id": 63,
+                                "clusterName": "",
+                                "index": 7,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%消耗减免",
+                                    "10": "|cffffff2|r%消耗减免",
+                                    "20": "|cffffff4|r%消耗减免",
+                                    "50": "|cffffff10|r%消耗减免",
+                                    "30": "|cffffff6|r%消耗减免",
+                                    "40": "|cffffff8|r%消耗减免"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "8": {
+                                "isSlottable": true,
+                                "name": "棱堡 (Bastion)",
+                                "description": "伤害护盾的效能和对持盾敌人的伤害每阶段提高 |cffffff3|r %。",
+                                "id": 46,
+                                "clusterName": "",
+                                "index": 8,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%造成的效果和伤害",
+                                    "10": "|cffffff3|r%造成的效果和伤害",
+                                    "20": "|cffffff6|r%造成的效果和伤害",
+                                    "50": "|cffffff15|r%造成的效果和伤害",
+                                    "30": "|cffffff9|r%造成的效果和伤害",
+                                    "40": "|cffffff12|r%造成的效果和伤害"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "9": {
+                                "isSlottable": false,
+                                "name": "魂力淬炼 (Tempered Soul)",
+                                "description": "复活后获得的资源每阶段增加 |cffffff5|r %。",
+                                "id": 58,
+                                "clusterName": "",
+                                "index": 9,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%更多的资源",
+                                    "25": "|cffffff5|r%更多的资源",
+                                    "50": "|cffffff10|r%更多的资源"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "10": {
+                                "isSlottable": true,
+                                "name": "生存本能 (Survival Instincts)",
+                                "description": "受状态效果影响时，核心战斗技能消耗每阶段降低 |cffffff5|r %。",
+                                "id": 57,
+                                "clusterName": "",
+                                "index": 10,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%消耗减免",
+                                    "10": "|cffffff5|r%消耗减免",
+                                    "20": "|cffffff10|r%消耗减免",
+                                    "50": "|cffffff25|r%消耗减免",
+                                    "30": "|cffffff15|r%消耗减免",
+                                    "40": "|cffffff20|r%消耗减免"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "11": {
+                                "isSlottable": true,
+                                "name": "通灵专精 (Spirit Mastery)",
+                                "description": "友方复活耗时降低33%。",
+                                "id": 56,
+                                "clusterName": "",
+                                "index": 11,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "12": {
+                                "isSlottable": true,
+                                "name": "奥术迅捷 (Arcane Alacrity)",
+                                "description": "受伤害护盾效果影响时，翻滚闪避的耐力消耗每阶段降低|cffffff160|r。",
+                                "id": 61,
+                                "clusterName": "",
+                                "index": 12,
+                                "bounsText": {
+                                    "0": "|cffffff0|r消耗减免",
+                                    "10": "|cffffff160|r消耗减免",
+                                    "20": "|cffffff320|r消耗减免",
+                                    "50": "|cffffff800|r消耗减免",
+                                    "30": "|cffffff480|r消耗减免",
+                                    "40": "|cffffff640|r消耗减免"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "13": {
+                                "isSlottable": false,
+                                "name": "锐利凝视 (Piercing Gaze)",
+                                "description": "潜行侦测每阶段提高|cffffff1|r米。",
+                                "id": 45,
+                                "clusterName": "",
+                                "index": 13,
+                                "bounsText": {
+                                    "0": "|cffffff0|r米",
+                                    "30": "|cffffff3|r米",
+                                    "10": "|cffffff1|r米",
+                                    "20": "|cffffff2|r米"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "14": {
+                                "isSlottable": true,
+                                "name": "血腥复苏 (Bloody Renewal)",
+                                "description": "击杀一名敌人，每阶段回复|cffffff300|r耐力。",
+                                "id": 48,
+                                "clusterName": "",
+                                "index": 14,
+                                "bounsText": {
+                                    "0": "|cffffff0|r耐力",
+                                    "10": "|cffffff300|r耐力",
+                                    "20": "|cffffff600|r耐力",
+                                    "50": "|cffffff1500|r耐力",
+                                    "30": "|cffffff900|r耐力",
+                                    "40": "|cffffff1200|r耐力"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "15": {
+                                "isSlottable": true,
+                                "name": "战略储备 (Strategic Reserve)",
+                                "description": "每拥有10终极点，提高|cffffff30|r生命回复。",
+                                "id": 49,
+                                "clusterName": "",
+                                "index": 15,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "16": {
+                                "isSlottable": false,
+                                "name": "奥秘坚韧 (Mystic Tenacity)",
+                                "description": "施加于自身的元素状态效果持续时间每阶段降低 |cffffff5|r %。",
+                                "id": 53,
+                                "clusterName": "",
+                                "index": 16,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%减少的持续时间",
+                                    "10": "|cffffff5|r%减少的持续时间",
+                                    "20": "|cffffff10|r%减少的持续时间",
+                                    "50": "|cffffff25|r%减少的持续时间",
+                                    "30": "|cffffff15|r%减少的持续时间",
+                                    "40": "|cffffff20|r%减少的持续时间"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "17": {
+                                "isSlottable": true,
+                                "name": "无情 (Relentlessness)",
+                                "description": "被眩晕或恐吓时获得一个高级守护，持续|cffffff3|r秒，并使你的所受伤害减少|cffffff10|r%。",
+                                "id": 274,
+                                "clusterName": "幸存者的怨恨",
+                                "index": 17,
+                                "bounsText": {},
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "18": {
+                                "isSlottable": true,
+                                "name": "痛苦庇护 (Pain's Refuge)",
+                                "description": "身上有负面效果生效时，每 |cffffff2|r 降低 |cffffff2|r %所受伤害，最高达 |cffffff20|r %。",
+                                "id": 275,
+                                "clusterName": "幸存者的怨恨",
+                                "index": 18,
+                                "bounsText": {},
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "19": {
+                                "isSlottable": true,
+                                "name": "深陷痛苦 (Sustained by Suffering)",
+                                "description": "身上有负面效果时，每阶段生命回复、魔力回复和耐力回复提高|cffffff30|r。",
+                                "id": 273,
+                                "clusterName": "幸存者的怨恨",
+                                "index": 19,
+                                "bounsText": {
+                                    "0": "|cffffff0|r生命回复、魔力回复和耐力回复",
+                                    "10": "|cffffff30|r生命回复、魔力回复和耐力回复",
+                                    "20": "|cffffff60|r生命回复、魔力回复和耐力回复",
+                                    "50": "|cffffff150|r生命回复、魔力回复和耐力回复",
+                                    "30": "|cffffff90|r生命回复、魔力回复和耐力回复",
+                                    "40": "|cffffff120|r生命回复、魔力回复和耐力回复"
+                                },
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "20": {
+                                "isSlottable": true,
+                                "name": "虹吸法术 (Siphoning Spells)",
+                                "description": "击杀一名敌人，每阶段回复|cffffff300|r魔力。",
+                                "id": 47,
+                                "clusterName": "",
+                                "index": 20,
+                                "bounsText": {
+                                    "0": "|cffffff0|r魔力",
+                                    "10": "|cffffff300|r魔力",
+                                    "20": "|cffffff600|r魔力",
+                                    "50": "|cffffff1500|r魔力",
+                                    "30": "|cffffff900|r魔力",
+                                    "40": "|cffffff1200|r魔力"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "21": {
+                                "isSlottable": true,
+                                "name": "速度觉醒 (Rousing Speed)",
+                                "description": "受群体控制免疫效果影响时，冲刺的耐力消耗每阶段降低|cffffff50|r耐力。",
+                                "id": 62,
+                                "clusterName": "",
+                                "index": 21,
+                                "bounsText": {
+                                    "0": "|cffffff0|r消耗减免",
+                                    "10": "|cffffff50|r消耗减免",
+                                    "20": "|cffffff100|r消耗减免",
+                                    "50": "|cffffff250|r消耗减免",
+                                    "30": "|cffffff150|r消耗减免",
+                                    "40": "|cffffff200|r消耗减免"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "22": {
+                                "isSlottable": false,
+                                "name": "不倦守卫 (Tireless Guardian)",
+                                "description": "格挡的耐力消耗每阶段降低|cffffff20|r。",
+                                "id": 39,
+                                "clusterName": "",
+                                "index": 22,
+                                "bounsText": {
+                                    "0": "|cffffff0|r格挡消耗减少",
+                                    "10": "|cffffff20|r格挡消耗减少",
+                                    "20": "|cffffff40|r格挡消耗减少"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "23": {
+                                "isSlottable": false,
+                                "name": "野蛮防御 (Savage Defense)",
+                                "description": "猛击的耐力消耗每阶段降低|cffffff45|r。",
+                                "id": 40,
+                                "clusterName": "",
+                                "index": 23,
+                                "bounsText": {
+                                    "0": "|cffffff0|r消耗减免",
+                                    "30": "|cffffff90|r消耗减免",
+                                    "15": "|cffffff45|r消耗减免"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "24": {
+                                "isSlottable": false,
+                                "name": "残暴猛击 (Bashing Brutality)",
+                                "description": "猛击伤害每阶段提高|cffffff60|r。",
+                                "id": 50,
+                                "clusterName": "",
+                                "index": 24,
+                                "bounsText": {
+                                    "0": "|cffffff0|r增加的伤害",
+                                    "10": "|cffffff60|r增加的伤害",
+                                    "20": "|cffffff120|r增加的伤害"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "25": {
+                                "isSlottable": false,
+                                "name": "灵敏防护 (Nimble Protector)",
+                                "description": "在进行招架时，移动速度每阶段提高 |cffffff3|r %。",
+                                "id": 44,
+                                "clusterName": "",
+                                "index": 25,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%移动速度",
+                                    "6": "|cffffff6|r%移动速度",
+                                    "3": "|cffffff3|r%移动速度"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "26": {
+                                "isSlottable": true,
+                                "name": "安抚之盾 (Soothing Shield)",
+                                "description": "当你成功格挡一次攻击时，每阶段你有|cffffff147|r的几率恢复|cffffff15|r生命值。",
+                                "id": 268,
+                                "clusterName": "移动堡垒",
+                                "index": 26,
+                                "bounsText": {
+                                    "0": "|cffffff0|r生命",
+                                    "10": "|cffffff147|r生命",
+                                    "20": "|cffffff294|r生命",
+                                    "50": "|cffffff735|r生命",
+                                    "30": "|cffffff441|r生命",
+                                    "40": "|cffffff588|r生命"
+                                },
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "27": {
+                                "isSlottable": true,
+                                "name": "支撑点 (Bracing Anchor)",
+                                "description": "战斗时每阶段提高格挡伤害值 |cffffff4|r %，但降低所有阶段移动速度 |cffffff16|r %。",
+                                "id": 267,
+                                "clusterName": "移动堡垒",
+                                "index": 27,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%格挡减免",
+                                    "10": "|cffffff4|r%格挡减免",
+                                    "20": "|cffffff8|r%格挡减免",
+                                    "50": "|cffffff20|r%格挡减免",
+                                    "30": "|cffffff12|r%格挡减免",
+                                    "40": "|cffffff16|r%格挡减免"
+                                },
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "28": {
+                                "isSlottable": true,
+                                "name": "结界大师 (Ward Master)",
+                                "description": "在格挡与伤害护盾作用下，每阶段降低 |cffffff2|r %自身所受伤害。",
+                                "id": 266,
+                                "clusterName": "移动堡垒",
+                                "index": 28,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%伤害减免",
+                                    "10": "|cffffff2|r%伤害减免",
+                                    "20": "|cffffff4|r%伤害减免",
+                                    "50": "|cffffff10|r%伤害减免",
+                                    "30": "|cffffff6|r%伤害减免",
+                                    "40": "|cffffff8|r%伤害减免"
+                                },
+                                "isInCluster": true,
+                                "type": 1
+                            },
+                            "29": {
+                                "isSlottable": true,
+                                "name": "警戒 (On Guard)",
+                                "description": "受群体控制免疫效果影响时，格挡的伤害量每阶段提高 |cffffff2|r %。",
+                                "id": 60,
+                                "clusterName": "",
+                                "index": 29,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%格挡减免",
+                                    "10": "|cffffff2|r%格挡减免",
+                                    "20": "|cffffff4|r%格挡减免",
+                                    "50": "|cffffff10|r%格挡减免",
+                                    "30": "|cffffff6|r%格挡减免",
+                                    "40": "|cffffff8|r%格挡减免"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "30": {
+                                "isSlottable": false,
+                                "name": "防御工事 (Fortification)",
+                                "description": "可以格挡的伤害量每阶段提高 |cffffff2|r %",
+                                "id": 43,
+                                "clusterName": "",
+                                "index": 30,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%格挡减免",
+                                    "30": "|cffffff4|r%格挡减免",
+                                    "15": "|cffffff2|r%格挡减免"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "31": {
+                                "isSlottable": false,
+                                "name": "灵巧翻滚 (Tumbling)",
+                                "description": "翻滚闪避的耐力消耗每阶段降低|cffffff120|r。",
+                                "id": 37,
+                                "clusterName": "",
+                                "index": 31,
+                                "bounsText": {
+                                    "0": "|cffffff0|r消耗减免",
+                                    "30": "|cffffff240|r消耗减免",
+                                    "15": "|cffffff120|r消耗减免"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "32": {
+                                "isSlottable": true,
+                                "name": "专家闪避 (Expert Evasion)",
+                                "description": "下一次翻滚闪避不产生消耗。该效果使用后，|cffffff30|r秒内无法再次获得。",
+                                "id": 51,
+                                "clusterName": "",
+                                "index": 32,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "33": {
+                                "isSlottable": false,
+                                "name": "抗争 (Defiance)",
+                                "description": "挣脱束缚的消耗每阶段降低|cffffff110|r耐力。",
+                                "id": 128,
+                                "clusterName": "",
+                                "index": 33,
+                                "bounsText": {
+                                    "0": "|cffffff0|r消耗减免",
+                                    "10": "|cffffff110|r消耗减免",
+                                    "20": "|cffffff220|r消耗减免"
+                                },
+                                "isInCluster": false,
+                                "type": 0
+                            },
+                            "34": {
+                                "isSlottable": true,
+                                "name": "矫健 (Slippery)",
+                                "description": "被失能效果影响后，可无消耗自动挣脱束缚。触发该效果后会获得疲惫效果，并在|cffffff21|r秒内无法再次触发该效果或其他与之类似的效果。",
+                                "id": 52,
+                                "clusterName": "",
+                                "index": 34,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "35": {
+                                "isSlottable": true,
+                                "name": "碎链 (Unchained)",
+                                "description": "使用挣脱束缚时，|cffffff5|r秒内使用的下个耐力技能的消耗每阶段降低|cffffff11%|r。",
+                                "id": 64,
+                                "clusterName": "",
+                                "index": 35,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%消耗减免",
+                                    "10": "|cffffff11|r%消耗减免",
+                                    "20": "|cffffff22|r%消耗减免",
+                                    "50": "|cffffff55|r%消耗减免",
+                                    "30": "|cffffff33|r%消耗减免",
+                                    "40": "|cffffff44|r%消耗减免"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "36": {
+                                "isSlottable": true,
+                                "name": "坚韧不拔 (Juggernaut)",
+                                "description": "受群体控制免疫效果影响时，受到的伤害每阶段降低 |cffffff1|r %。",
+                                "id": 59,
+                                "clusterName": "",
+                                "index": 36,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%伤害减免",
+                                    "10": "|cffffff1|r%伤害减免",
+                                    "20": "|cffffff2|r%伤害减免",
+                                    "50": "|cffffff5|r%伤害减免",
+                                    "30": "|cffffff3|r%伤害减免",
+                                    "40": "|cffffff4|r%伤害减免"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "37": {
+                                "isSlottable": true,
+                                "name": "心如止水 (Peace of Mind)",
+                                "description": "受群体控制免疫效果影响时，魔力回复和生命回复每阶段提高|cffffff40|r。",
+                                "id": 54,
+                                "clusterName": "",
+                                "index": 37,
+                                "bounsText": {
+                                    "0": "|cffffff0|r生命和魔力回复",
+                                    "10": "|cffffff40|r生命和魔力回复",
+                                    "20": "|cffffff80|r生命和魔力回复",
+                                    "50": "|cffffff200|r生命和魔力回复",
+                                    "30": "|cffffff120|r生命和魔力回复",
+                                    "40": "|cffffff160|r生命和魔力回复"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "38": {
+                                "isSlottable": true,
+                                "name": "硬化 (Hardened)",
+                                "description": "群体控制免疫持续时间每阶段提高|cffffff3%|r。",
+                                "id": 55,
+                                "clusterName": "",
+                                "index": 38,
+                                "bounsText": {
+                                    "0": "|cffffff0|r%增加的持续时间",
+                                    "10": "|cffffff3|r%增加的持续时间",
+                                    "20": "|cffffff6|r%增加的持续时间",
+                                    "50": "|cffffff15|r%增加的持续时间",
+                                    "30": "|cffffff9|r%增加的持续时间",
+                                    "40": "|cffffff12|r%增加的持续时间"
+                                },
+                                "isInCluster": false,
+                                "type": 1
+                            },
+                            "39": {
+                                "isSlottable": true,
+                                "name": "回春 (Rejuvenation)",
+                                "description": "每阶段提高|cffffff1.8|r生命回复、魔力回复和耐力回复。",
+                                "id": 35,
+                                "clusterName": "",
+                                "index": 39,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 2
+                            },
+                            "40": {
+                                "isSlottable": true,
+                                "name": "强化 (Fortified)",
+                                "description": "每阶段提高|cffffff34.6|r护甲。",
+                                "id": 34,
+                                "clusterName": "",
+                                "index": 40,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 2
+                            },
+                            "41": {
+                                "isSlottable": true,
+                                "name": "无限活力 (Boundless Vitality)",
+                                "description": "每阶段提高|cffffff28|r生命上限。",
+                                "id": 2,
+                                "clusterName": "",
+                                "index": 41,
+                                "bounsText": {},
+                                "isInCluster": false,
+                                "type": 2
+                            }
+                        }
+                    }
+                },
+                "scrapeSets": true,
+                "dataAchievs": {},
+                "scrapeAchievs": true,
+                "version": 1,
+                "scrapeRecipes": true,
+                "dataItems": {
+                    "Foods": {},
+                    "CollectibleFurniture": {},
+                    "Sets": {},
+                    "Recipes": {},
+                    "Furniture": {}
+                },
+                "dataSkills": {}
+            }
+        }
+    }
+}

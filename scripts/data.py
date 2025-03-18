@@ -1,3 +1,4 @@
+# 合并中英文CSV文件导入数据库esodata/esotext
 import pandas as pd
 from sqlalchemy import create_engine
 import time
@@ -7,8 +8,8 @@ import re  # 导入正则表达式模块
 # 记录开始时间
 start_time = time.time()
 
-en_file_path = 'E:/projects/ESOCN/public/en.lang.csv'
-zh_file_path = 'E:/projects/ESOCN/public/zh.lang.csv'
+en_file_path = 'C:/projects/ESOCN/public/data/en.lang.csv'
+zh_file_path = 'C:/projects/ESOCN/public/data/zh.lang.csv'
 
 # 读取 CSV 文件
 df_en = pd.read_csv(en_file_path, usecols=['ID', 'Index', 'Text'])
@@ -20,7 +21,7 @@ df_zh = df_zh.rename(columns={'Text': 'zhText'})
 
 # 定义清理函数，移除 ^ 及其后面的部分
 def clean_text(text):
-    if pd.isna(text):  # 检查是否为 NaN
+    if pd.isna(text):  # 检查是否为 NaN=    
         return text
     return re.sub(r'\^.*$', '', str(text))  # 移除 ^ 及其后面的所有字符
 

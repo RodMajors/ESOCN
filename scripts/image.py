@@ -1,8 +1,8 @@
 from PIL import Image
 import os
 
-input_dir = 'E:/esoui/esoui/art/icons'
-output_dir = 'E:/esoui/esoui/art/icon'
+input_dir = 'C:/Users/Pro-v/Desktop/新建文件夹/esoui/art/icons'
+output_dir = 'C:/Users/Pro-v/Desktop/新建文件夹/esoui/art/icon'
 
 for filename in os.listdir(input_dir):
     if filename.endswith('.dds'):
