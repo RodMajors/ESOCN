@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1366 768">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #8c8d91;
+        stroke: #8c8d91;
+        stroke-miterlimit: 10;
+      }
+    </style>
+    <image id="image" width="112" height="112" xlink:href="/background/cp/blue.png"/>
+  </defs>
+  <g id="background">
+    <image id="subcon_mage1" width="2048" height="1024" transform="translate(-342 -58)" xlink:href="/background/cp/subcon_mage1.png"/>
+  </g>
+  <g id="lines">
+    <path class="cls-1" d="M456.5,602.5c77-51.67,154-103.33,231-155"/>
+    <path class="cls-1" d="M659.5,223.5c8.67,74.33,17.33,148.67,26,223"/>
+    <path class="cls-1" d="M684.5,624.5c.33-59.33.67-118.67,1-178"/>
+    <path class="cls-1" d="M877.5,503.5c-63.33-18.67-126.67-37.33-190-56"/>
+    <path class="cls-1" d="M912.5,685.5c-11.67-60.67-23.33-121.33-35-182"/>
+    <path class="cls-1" d="M687.5,447.5c97.33-62,194.67-124,292-186"/>
+  </g>
+  <g id="champions">
+    <use id="Force_of_Nature" transform="translate(601 166)" xlink:href="#image"/>
+    <use id="Piercing" transform="translate(626 389)" xlink:href="#image"/>
+    <use id="Weapons_Expert" transform="translate(626 565)" xlink:href="#image"/>
+    <use id="Battle_Mastery" transform="translate(818 445)" xlink:href="#image"/>
+    <use id="Mighty" transform="translate(852 626)" xlink:href="#image"/>
+    <use id="War_Mage" transform="translate(396 545)" xlink:href="#image"/>
+    <use id="Exploiter" transform="translate(919 203)" xlink:href="#image"/>
+    <use id="Flawless_Ritual" transform="translate(529 457)" xlink:href="#image"/>
+  </g>
+</svg>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1366 768">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke: #8c8d91;
+        stroke-miterlimit: 10;
+      }
+    </style>
+    <image id="image" width="115" height="115" xlink:href="/background/cp/red.png"/>
+  </defs>
+  <g id="background">
+    <image id="subcon_warrior3" width="2048" height="1024" transform="translate(-307 -27)" xlink:href="/background/cp/subcon_warrior3.png"/>
+  </g>
+  <g id="lines">
+    <path class="cls-1" d="M721.5,487.5c-11.67,63-23.33,126-35,189"/>
+    <path class="cls-1" d="M575.5,339.5c49.33,49.67,98.67,99.33,148,149"/>
+    <path class="cls-1" d="M759.5,282.5c-12.67,68.33-25.33,136.67-38,205"/>
+  </g>
+  <g id="champions">
+    <use id="Hasty" transform="translate(660 427)" xlink:href="#image"/>
+    <use id="Thrill_of_the_Hunt" transform="translate(696 221)" xlink:href="#image"/>
+    <use id="Refreshing_Stride" transform="translate(512 279)" xlink:href="#image"/>
+    <use id="Celerity" transform="translate(625 615)" xlink:href="#image"/>
+  </g>
+</svg>

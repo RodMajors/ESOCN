@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1366 768">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #8c8d91;
+        stroke: #8c8d91;
+        stroke-miterlimit: 10;
+      }
+    </style>
+    <image id="image" width="112" height="112" xlink:href="/background/cp/blue.png"/>
+    <image id="image-2" width="115" height="115" xlink:href="/background/cp/cluster.png"/>
+  </defs>
+  <g id="background">
+    <image id="mage_normal" width="2048" height="1024" transform="translate(-341 -43)" xlink:href="/background/cp/mage_normal.png"/>
+  </g>
+  <g id="lines">
+    <path class="cls-1" d="M453.5,485.5c-22.33-62-44.67-124-67-186"/>
+    <path class="cls-1" d="M318.5,190.5c22.67,36.33,45.33,72.67,68,109"/>
+    <path class="cls-1" d="M220.5,155.5c32.67,11.67,65.33,23.33,98,35"/>
+    <path class="cls-1" d="M238.5,243.5c-6-29.33-12-58.67-18-88"/>
+    <path class="cls-1" d="M302.5,353.5c-21.33-36.67-42.67-73.33-64-110"/>
+    <path class="cls-1" d="M313.5,271.5c46.33,70.67,92.67,141.33,139,212"/>
+    <path class="cls-1" d="M220.5,155.5c31,38.67,62,77.33,93,116"/>
+    <path class="cls-1" d="M302.5,353.5c50.33,44,100.67,88,151,132"/>
+    <path class="cls-1" d="M711.5,355.5l-256,128"/>
+    <path class="cls-1" d="M592.5,328.5c39.67,9,79.33,18,119,27"/>
+    <path class="cls-1" d="M588.5,222.5c1.33,35.33,2.67,70.67,4,106"/>
+    <path class="cls-1" d="M656.5,158.5c-22.67,21.33-45.33,42.67-68,64"/>
+    <path class="cls-1" d="M747.5,211.5c-30.33-17.67-60.67-35.33-91-53"/>
+    <path class="cls-1" d="M785.5,290.5c-12.67-26.33-25.33-52.67-38-79"/>
+    <path class="cls-1" d="M711.5,355.5c24.67-21.67,49.33-43.33,74-65"/>
+    <path class="cls-1" d="M588.5,222.5c41,44.33,82,88.67,123,133"/>
+    <path class="cls-1" d="M656.5,158.5c18.33,65.67,36.67,131.33,55,197"/>
+    <path class="cls-1" d="M747.5,211.5l-36,144"/>
+    <path class="cls-1" d="M453.5,485.5c47-13.67,94-27.33,141-41"/>
+    <path class="cls-1" d="M899.5,288.5c-101.67,52-203.33,104-305,156"/>
+    <path class="cls-1" d="M711.5,355.5c62.67-22.33,125.33-44.67,188-67"/>
+    <path class="cls-1" d="M712.5,442.5c-39.33.67-78.67,1.33-118,2"/>
+    <path class="cls-1" d="M796.5,401.5c-28,13.67-56,27.33-84,41"/>
+    <path class="cls-1" d="M899.5,288.5c-34.33,37.67-68.67,75.33-103,113"/>
+    <path class="cls-1" d="M712.5,444.5c1,28.67,2,57.33,3,86"/>
+    <path class="cls-1" d="M793.5,488.5c-27-14.67-54-29.33-81-44"/>
+    <path class="cls-1" d="M792.5,563.5c.33-25,.67-50,1-75"/>
+    <path class="cls-1" d="M635.5,493.5c3.33,30.33,6.67,60.67,10,91"/>
+    <path class="cls-1" d="M644.5,658.5c.33-24.67.67-49.33,1-74"/>
+    <path class="cls-1" d="M726.5,614.5l-81-30"/>
+    <path class="cls-1" d="M715.5,530.5c4,28.67,8,57.33,12,86"/>
+    <path class="cls-1" d="M793.5,566.5c-22,16.67-44,33.33-66,50"/>
+    <path class="cls-1" d="M799.5,650.5l-6-84"/>
+    <path class="cls-1" d="M644.5,655.5c27.67-13,55.33-26,83-39"/>
+    <path class="cls-1" d="M801.5,651.5c-24.67-11.67-49.33-23.33-74-35"/>
+    <path class="cls-1" d="M644.5,658.5c52.33-2.33,104.67-4.67,157-7"/>
+    <path class="cls-1" d="M985.5,160.5c-28.67,42.67-57.33,85.33-86,128"/>
+    <path class="cls-1" d="M1041.5,222.5c-46.67,21.33-93.33,42.67-140,64"/>
+    <path class="cls-1" d="M1086.5,169.5c-61.67,39-123.33,78-185,117"/>
+    <path class="cls-1" d="M1059.5,95.5c-52.67,63.67-105.33,127.33-158,191"/>
+  </g>
+  <g id="champions">
+    <use id="Occult_Overload" transform="translate(598 101)" xlink:href="#image"/>
+    <use id="Backstabber" transform="translate(688 153)" xlink:href="#image"/>
+    <use id="Wrathful_Strikes" transform="translate(529 164)" xlink:href="#image"/>
+    <use id="Reaving_Blows" transform="translate(534 270)" xlink:href="#image"/>
+    <use id="Precision" transform="translate(651 297)" xlink:href="#image"/>
+    <use id="Fighting_Finesse" transform="translate(726 232)" xlink:href="#image"/>
+    <use id="Eldritch_Insight" transform="translate(535 385)" xlink:href="#image"/>
+    <use id="Tireless_Discipline" transform="translate(737 344)" xlink:href="#image"/>
+    <use id="Unassailable" transform="translate(733 430)" xlink:href="#image"/>
+    <use id="Enduring_Resolve" transform="translate(657 471)" xlink:href="#image"/>
+    <use id="Duelist_s_Rebuff" data-name="Duelist&amp;apos;s_Rebuff" transform="translate(576 438)" xlink:href="#image"/>
+    <use id="Riposte" transform="translate(585 527)" xlink:href="#image"/>
+    <use id="Reinforced" transform="translate(667 557)" xlink:href="#image"/>
+    <use id="Last_Stand" transform="translate(585 598)" xlink:href="#image"/>
+    <use id="Cutting_Defense" transform="translate(741 591)" xlink:href="#image"/>
+    <use id="Bulwark" transform="translate(733 504)" xlink:href="#image"/>
+    <use id="Arcane_Supremacy" transform="translate(916 357)" xlink:href="#image"/>
+    <use id="Untamed_Aggression" transform="translate(992 438)" xlink:href="#image"/>
+    <use id="Endless_Endurance" transform="translate(880 494)" xlink:href="#image"/>
+    <use id="Extended_Might" transform="translate(838 224)" xlink:href="#image-2"/>
+    <use id="Staving_Death" transform="translate(650 381)" xlink:href="#image-2"/>
+    <use id="Mastered_Curation" transform="translate(393 422)" xlink:href="#image-2"/>
+    <use id="Focused_Mending" transform="translate(242 294)" xlink:href="#image"/>
+    <use id="Cleansing_Revival" transform="translate(179 185)" xlink:href="#image"/>
+    <use id="Foresight" transform="translate(162 97)" xlink:href="#image"/>
+    <use id="Rejuvenator" transform="translate(258 132)" xlink:href="#image"/>
+    <use id="Swift_Renewal" transform="translate(254 214)" xlink:href="#image"/>
+    <use id="Soothing_Tide" transform="translate(327 241)" xlink:href="#image"/>
+    <use id="Deadly_Aim" transform="translate(926 101)" xlink:href="#image"/>
+    <use id="Thaumaturge" transform="translate(1000 39)" xlink:href="#image"/>
+    <use id="Master-at-Arms" transform="translate(1028 112)" xlink:href="#image"/>
+    <use id="Biting_Aura" transform="translate(982 164)" xlink:href="#image"/>
+  </g>
+</svg>

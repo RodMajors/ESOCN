@@ -2,26 +2,35 @@
 import express from 'express';
 import mysql from 'mysql2/promise';
 import cors from 'cors';
-import {load} from 'cheerio'
-import fetch from 'node-fetch'
-import { transformWithEsbuild } from 'vite';
-
+import { load } from 'cheerio';
+import fetch from 'node-fetch';
 
 const app = express();
 app.use(cors()); // 启用 CORS
 
-
-// 创建数据库连接池
-const pool = mysql.createPool({
+// 创建数据库连接池 - eso_equipment
+const equipmentPool = mysql.createPool({
   host: 'localhost',
-  user: 'root', // 替换为你的 MySQL 用户名
-  password: 'Lzr@136595755', // 替换为你的 MySQL 密码
+  user: 'root',
+  password: 'Lzr@136595755',
   database: 'eso_equipment',
   waitForConnections: true,
-  connectionLimit: 10, // 连接池大小
+  connectionLimit: 10,
   queueLimit: 0,
 });
 
+// 创建数据库连接池 - esocp (用于cp_skills)
+const cpSkillsPool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: 'Lzr@136595755',
+  database: 'esocp',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+});
+
+// 现有的技能数据库配置（未使用连接池，保留以兼容现有代码）
 const dbConfig = {
   host: 'localhost',
   user: 'root',
@@ -29,82 +38,45 @@ const dbConfig = {
   database: 'eso_skills',
 };
 
+// 无畏者誓约列表
 const PledgeList1 = [
-  "Spindleclutch II",
-  "The Banished Cells I",
-  "Fungal Grotto II",
-  "Spindleclutch I",
-  "Darkshade Caverns II",
-  "Elden Hollow I",
-  "Wayrest Sewers II",
-  "Fungal Grotto I",
-  "The Banished Cells II",
-  "Darkshade Caverns I",
-  "Elden Hollow II",
-  "Wayrest Sewers I"
+  "Spindleclutch II", "The Banished Cells I", "Fungal Grotto II", "Spindleclutch I",
+  "Darkshade Caverns II", "Elden Hollow I", "Wayrest Sewers II", "Fungal Grotto I",
+  "The Banished Cells II", "Darkshade Caverns I", "Elden Hollow II", "Wayrest Sewers I"
 ];
 
 const PledgeList2 = [
-  "Direfrost Keep",
-  "Vaults of Madness",
-  "Crypt of Hearts II",
-  "City of Ash I",
-  "Tempest Island",
-  "Blackheart Haven",
-  "Arx Corinium",
-  "Selene's Web",
-  "City of Ash II",
-  "Crypt of Hearts I",
-  "Volenfell",
-  "Blessed Crucible"
+  "Direfrost Keep", "Vaults of Madness", "Crypt of Hearts II", "City of Ash I",
+  "Tempest Island", "Blackheart Haven", "Arx Corinium", "Selene's Web",
+  "City of Ash II", "Crypt of Hearts I", "Volenfell", "Blessed Crucible"
 ];
 
 const PledgeList3 = [
-  "Imperial City Prison",
-  "Ruins of Mazzatun",
-  "White-Gold Tower",
-  "Cradle of Shadows",
-  "Bloodroot Forge",
-  "Falkreath Hold",
-  "Fang Lair",
-  "Scalecaller Peak",
-  "Moon Hunter Keep",
-  "March of Sacrifices",
-  "Depths of Malatar",
-  "Frostvault",
-  "Moongrave Fane",
-  "Lair of Maarselok",
-  "Icereach",
-  "Unhallowed Grave",
-  "Stone Garden",
-  "Castle Thorn",
-  "Black Drake Villa",
-  "The Cauldron",
-  "Red Petal Bastion",
-  "The Dread Cellar",
-  "Coral Aerie",
-  "Shipwright's Regret",
-  "Earthen Root Enclave",
-  "Graven Deep"
+  "Imperial City Prison", "Ruins of Mazzatun", "White-Gold Tower", "Cradle of Shadows",
+  "Bloodroot Forge", "Falkreath Hold", "Fang Lair", "Scalecaller Peak",
+  "Moon Hunter Keep", "March of Sacrifices", "Depths of Malatar", "Frostvault",
+  "Moongrave Fane", "Lair of Maarselok", "Icereach", "Unhallowed Grave",
+  "Stone Garden", "Castle Thorn", "Black Drake Villa", "The Cauldron",
+  "Red Petal Bastion", "The Dread Cellar", "Coral Aerie", "Shipwright's Regret",
+  "Earthen Root Enclave", "Graven Deep", "Scrivener's Hall", "Bal Sunnar", "Bedlam Veil", 
+  "Oathsworn Pit"
 ];
 
-//计算无畏者更新
+// 计算无畏者更新
 function getDailyPledges() {
-  const startIndex1 = PledgeList1.indexOf("Spindleclutch I");
-  const startIndex2 = PledgeList2.indexOf("City of Ash I");
-  const startIndex3 = PledgeList3.indexOf("Imperial City Prison");
+  const startIndex1 = PledgeList1.indexOf("Darkshade Caverns II");
+  const startIndex2 = PledgeList2.indexOf("Tempest Island");
+  const startIndex3 = PledgeList3.indexOf("Bedlam Veil");
 
   const now = new Date();
-  
-  const startDate = new Date('2025-03-12T18:00:00');
+  const startDate = new Date('2025-05-13T18:00:00');
 
   const timeDiff = now.getTime() - startDate.getTime();
   const hoursDiff = timeDiff / (1000 * 3600);
   const daysDiff = Math.floor(hoursDiff / 24);
   let rotationCount = daysDiff;
-  rotationCount -- ;
   if (now.getHours() < 18) {
-      rotationCount--;
+    rotationCount--;
   }
   rotationCount = Math.max(0, rotationCount);
 
@@ -113,58 +85,41 @@ function getDailyPledges() {
   const index3 = (startIndex3 + rotationCount) % PledgeList3.length;
 
   return {
-      dailyPledges: [
-          PledgeList1[index1],
-          PledgeList2[index2],
-          PledgeList3[index3]
-      ],
-      currentDate: now.toISOString()
+    dailyPledges: [
+      PledgeList1[index1],
+      PledgeList2[index2],
+      PledgeList3[index3]
+    ],
+    currentDate: now.toISOString()
   };
 }
 
+// 爬取服务器状态
 async function scrapeServerStatus() {
   try {
     const statusList = {
-      "PCEU": "",
-      "PCNA": "",
-      "PCPTS": "",
-      "XBOXEU": "",
-      "XBOXNA": "",
-      "PSEU": "",
-      "PSNA": "",
+      "PCEU": "", "PCNA": "", "PCPTS": "", "XBOXEU": "", "XBOXNA": "", "PSEU": "", "PSNA": ""
     };
-    let url = 'https://esoserverstatus.net/' ;
-    let res = await fetch(url)
-    let statusData = await res.text()
-    //PC美服
-    var tempData = statusData.split('PC-NA')[1].split('PC-PTS')[0].split('<b>')[1].split('</b>')[0];
-    statusList.PCNA = tempData;
-    //PC欧服
-    var tempData = statusData.split('PC-EU')[1].split('PC-NA')[0].split('<b>')[1].split('</b>')[0];
-    statusList.PCEU = tempData;
-    //PC测试服
-    var tempData = statusData.split('PC-PTS')[1].split('XBOX-EU')[0].split('<b>')[1].split('</b>')[0];
-    statusList.PCPTS = tempData;
-    //XBOX欧服
-    var tempData = statusData.split('XBOX-EU')[1].split('XBOX-NA')[0].split('<b>')[1].split('</b>')[0];
-    statusList.XBOXEU = tempData;
-    //XBOX美服
-    var tempData = statusData.split('XBOX-NA')[1].split('PS4-EU')[0].split('<b>')[1].split('</b>')[0];
-    statusList.XBOXNA= tempData;
-    //PS4欧服
-    var tempData = statusData.split('PS4-EU')[1].split('PS4-NA')[0].split('<b>')[1].split('</b>')[0];
-    statusList.PSEU= tempData;
-    //PS5美服
-    var tempData = statusData.split('PS4-NA')[1].split('/span')[0].split('<b>')[1].split('</b>')[0];
-    statusList.PSNA= tempData;
-    return statusList
+    const url = 'https://esoserverstatus.net/';
+    const res = await fetch(url);
+    const statusData = await res.text();
+
+    statusList.PCNA = statusData.split('PC-NA')[1].split('PC-PTS')[0].split('<b>')[1].split('</b>')[0];
+    statusList.PCEU = statusData.split('PC-EU')[1].split('PC-NA')[0].split('<b>')[1].split('</b>')[0];
+    statusList.PCPTS = statusData.split('PC-PTS')[1].split('XBOX-EU')[0].split('<b>')[1].split('</b>')[0];
+    statusList.XBOXEU = statusData.split('XBOX-EU')[1].split('XBOX-NA')[0].split('<b>')[1].split('</b>')[0];
+    statusList.XBOXNA = statusData.split('XBOX-NA')[1].split('PS4-EU')[0].split('<b>')[1].split('</b>')[0];
+    statusList.PSEU = statusData.split('PS4-EU')[1].split('PS4-NA')[0].split('<b>')[1].split('</b>')[0];
+    statusList.PSNA = statusData.split('PS4-NA')[1].split('/span')[0].split('<b>')[1].split('</b>')[0];
+
+    return statusList;
   } catch (error) {
     console.error('爬取服务器状态失败:', error);
     return Array(7).fill('error');
   }
 }
 
-// 一次性获取所有装备数据（包括 bonuses 和 styles）
+// 一次性获取所有装备数据
 app.get('/api/equipment/all', async (req, res) => {
   const query = `
     SELECT sets.*, 
@@ -178,37 +133,38 @@ app.get('/api/equipment/all', async (req, res) => {
   `;
 
   try {
-    const [rows] = await pool.query(query); // 查询所有数据
+    const [rows] = await equipmentPool.query(query);
     res.json(rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// 分页查询套装列表（保留原有逻辑）
+// 分页查询套装列表
 app.get('/api/equipment', async (req, res) => {
   const { page = 1, limit = 20 } = req.query;
   const offset = (page - 1) * limit;
 
   const query = `
     SELECT * FROM sets
-    ORDER BY id desc
+    ORDER BY id DESC
     LIMIT ? OFFSET ?
   `;
   const values = [parseInt(limit), parseInt(offset)];
 
   try {
-    const [sets] = await pool.query(query, values); // 使用 pool.query
+    const [sets] = await equipmentPool.query(query, values);
     res.json(sets);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
+// 根据地点查询相关套装
 app.get('/api/equipment/related/:place', async (req, res) => {
   const { place } = req.params;
-  const formattedPlace = decodeURIComponent(place).trim(); // 去掉多余空格
-  const hexPlace = Buffer.from(formattedPlace, 'utf8').toString('hex').toUpperCase(); // 转换为十六进制
+  const formattedPlace = decodeURIComponent(place).trim();
+  const hexPlace = Buffer.from(formattedPlace, 'utf8').toString('hex').toUpperCase();
 
   const query = `
     SELECT sets.*, 
@@ -224,17 +180,17 @@ app.get('/api/equipment/related/:place', async (req, res) => {
   `;
 
   try {
-    const [rows] = await pool.query(query, [hexPlace]);
+    const [rows] = await equipmentPool.query(query, [hexPlace]);
     res.json(rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// 根据 enName 查询套装详情（保留原有逻辑）
+// 根据英文名查询套装详情
 app.get('/api/equipment/:enName', async (req, res) => {
   const { enName } = req.params;
-  const formattedEnName = decodeURIComponent(enName.replace(/_/g, '%20')); // 将下划线替换为空格
+  const formattedEnName = decodeURIComponent(enName.replace(/_/g, '%20'));
 
   const query = `
     SELECT sets.*, 
@@ -245,23 +201,21 @@ app.get('/api/equipment/:enName', async (req, res) => {
     FROM sets
     LEFT JOIN bonuses ON sets.id = bonuses.set_id
     WHERE sets.enName = ?
-    GROUP BY sets.id;
+    GROUP BY sets.id
   `;
 
   try {
-    const [rows] = await pool.query(query, [formattedEnName]); // 使用 pool.query
-
+    const [rows] = await equipmentPool.query(query, [formattedEnName]);
     if (rows.length === 0) {
       return res.status(404).json({ error: '未找到套装' });
     }
-
     res.json(rows[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// 获取所有技能数据
+// 获取所有技能数据（现有技能表）
 app.get('/api/skills', async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
@@ -283,12 +237,95 @@ app.get('/api/skills', async (req, res) => {
   }
 });
 
-// API 端点
+// 新增：获取所有CP技能数据
+app.get('/api/cp', async (req, res) => {
+  const query = `
+    SELECT *
+    FROM cp_skills
+    ORDER BY category_id, skill_index
+  `;
+
+  try {
+    const [rows] = await cpSkillsPool.query(query);
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 新增：根据类别ID获取CP技能数据
+app.get('/api/cp/:categoryId(\\d+)', async (req, res) => {
+  const { categoryId } = req.params;
+
+  const query = `
+    SELECT *
+    FROM cp_skills
+    WHERE category_id = ?
+    ORDER BY skill_index
+  `;
+
+  try {
+    const parsedCategoryId = parseInt(categoryId);
+    if (isNaN(parsedCategoryId)) {
+      return res.status(400).json({ error: 'categoryId 必须是数字' });
+    }
+    const [rows] = await cpSkillsPool.query(query, [parsedCategoryId]);
+    if (rows.length === 0) {
+      return res.status(404).json({ error: '未找到该类别的技能' });
+    }
+    res.json(rows);
+  } catch (err) {
+    console.error('Error in /api/cp/:categoryId:', { categoryId, error: err.message, stack: err.stack });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 按en_name获取单个技能
+app.get('/api/cp/:enName', async (req, res) => {
+  const { enName } = req.params;
+  if (!enName || typeof enName !== 'string') {
+    console.warn('Invalid enName:', { enName });
+    return res.status(400).json({ error: '无效的技能名称' });
+  }
+
+  const normalizedEnName = enName.replace(/_/g, ' ').trim();
+  if (!normalizedEnName) {
+    console.warn('Normalized enName is empty:', { enName, normalizedEnName });
+    return res.status(400).json({ error: '技能名称不能为空' });
+  }
+
+  const query = `
+    SELECT *
+    FROM cp_skills
+    WHERE en_name = ?
+  `;
+
+  try {
+    const [rows] = await cpSkillsPool.query(query, [normalizedEnName]);
+    if (rows.length === 0) {
+      console.warn('Skill not found:', { enName, normalizedEnName });
+      return res.status(404).json({ error: `未找到技能: ${enName}` });
+    }
+    res.json(rows[0]);
+  } catch (err) {
+    console.error('Error in /api/cp/:enName:', {
+      enName,
+      normalizedEnName,
+      query,
+      error: err.message,
+      stack: err.stack
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 获取每日无畏者誓约
 app.get('/api/daily-pledges', (req, res) => {
   const result = getDailyPledges();
   res.json(result);
 });
 
+// 获取服务器状态
 app.get('/api/server-status', async (req, res) => {
   const statusList = await scrapeServerStatus();
   res.json({

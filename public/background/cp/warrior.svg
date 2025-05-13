@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1366 768">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke: #8c8d91;
+        stroke-miterlimit: 10;
+      }
+    </style>
+    <image id="image" width="115" height="115" xlink:href="/background/cp/red.png"/>
+    <image id="image-2" width="115" height="115" xlink:href="/background/cp/cluster.png"/>
+  </defs>
+  <g id="background">
+    <image id="warrior_normal" width="2048" height="1024" transform="translate(-343 -85)" xlink:href="/background/cp/warrior_normal.png"/>
+  </g>
+  <g id="lines">
+    <path class="cls-1" d="M695.5,450.5c-13.67-27.67-27.33-55.33-41-83"/>
+    <path class="cls-1" d="M716.5,363.5l-21,87"/>
+    <path class="cls-1" d="M723.5,258.5c-2.33,35-4.67,70-7,105"/>
+    <path class="cls-1" d="M613.5,271.5c14.33,32,28.67,64,43,96"/>
+    <path class="cls-1" d="M584.5,193.5c10,26.33,20,52.67,30,79"/>
+    <path class="cls-1" d="M729.5,185.5c-2,24.33-4,48.67-6,73"/>
+    <path class="cls-1" d="M695.5,450.5l117-150"/>
+    <path class="cls-1" d="M886.5,329.5c-63.67,40.33-127.33,80.67-191,121"/>
+    <path class="cls-1" d="M899.5,418.5c-68,10.67-136,21.33-204,32"/>
+    <path class="cls-1" d="M613.5,271.5c36.67-4.33,73.33-8.67,110-13"/>
+    <path class="cls-1" d="M812.5,300.5c-29.67-14-59.33-28-89-42"/>
+    <path class="cls-1" d="M886.5,329.5c-24.67-9.67-49.33-19.33-74-29"/>
+    <path class="cls-1" d="M899.5,419.5c-4-30.33-8-60.67-12-91"/>
+    <path class="cls-1" d="M695.5,450.5c-52.33-12-104.67-24-157-36"/>
+    <path class="cls-1" d="M585.5,344.5c-15,23.33-30,46.67-45,70"/>
+    <path class="cls-1" d="M614.5,272.5l-30,72"/>
+    <path class="cls-1" d="M541.5,415.5c-12.33,33-24.67,66-37,99"/>
+    <path class="cls-1" d="M481.5,600.5c7.67-28.67,15.33-57.33,23-86"/>
+    <path class="cls-1" d="M555.5,582.5c54.33-15.67,108.67-31.33,163-47"/>
+    <path class="cls-1" d="M911.5,491.5c-64.33,14.67-128.67,29.33-193,44"/>
+    <path class="cls-1" d="M1065.5,442.5c-51.33,16.33-102.67,32.67-154,49"/>
+    <path class="cls-1" d="M1070.5,356.5c-1.67,28.67-3.33,57.33-5,86"/>
+    <path class="cls-1" d="M1058.5,573.5c2.33-44,4.67-88,7-132"/>
+    <path class="cls-1" d="M1095.5,116.5c-8.33,80-16.67,160-25,240"/>
+    <path class="cls-1" d="M1144.5,316.5c-24.67,13.33-49.33,26.67-74,40"/>
+    <path class="cls-1" d="M1065.5,442.5c34-11.67,68-23.33,102-35"/>
+    <path class="cls-1" d="M504.5,514.5l-195-105"/>
+    <path class="cls-1" d="M241.5,301.5c21.67,35.33,43.33,70.67,65,106"/>
+    <path class="cls-1" d="M297.5,574.5l12-165"/>
+    <path class="cls-1" d="M463.5,334.5c-52.33,24.33-104.67,48.67-157,73"/>
+    <path class="cls-1" d="M449.5,212.5c4.67,41.33,9.33,82.67,14,124"/>
+    <path class="cls-1" d="M330.5,290.5c-7.33,39.33-14.67,78.67-22,118"/>
+  </g>
+  <g id="champions">
+    <use id="Hero_s_Vigor" data-name="Hero&amp;apos;s_Vigor" transform="translate(633 389)" xlink:href="#image"/>
+    <use id="Piercing_Gaze" transform="translate(594 306)" xlink:href="#image"/>
+    <use id="Shield_Master" transform="translate(655 302)" xlink:href="#image"/>
+    <use id="Bastion" transform="translate(661 197)" xlink:href="#image"/>
+    <use id="Arcane_Alacrity" transform="translate(667 124)" xlink:href="#image"/>
+    <use id="Tempered_Soul" transform="translate(552 211)" xlink:href="#image"/>
+    <use id="Spirit_Mastery" transform="translate(523 133)" xlink:href="#image"/>
+    <use id="Survival_Instincts" transform="translate(523 283)" xlink:href="#image"/>
+    <use id="Strategic_Reserve" transform="translate(750 239)" xlink:href="#image"/>
+    <use id="Siphoning_Spells" transform="translate(825 268)" xlink:href="#image"/>
+    <use id="Bloody_Renewal" transform="translate(837 359)" xlink:href="#image"/>
+    <use id="Sprinter" transform="translate(655 475)" xlink:href="#image"/>
+    <use id="Rousing_Speed" transform="translate(494 522)" xlink:href="#image"/>
+    <use id="Survivor_s_Spite" data-name="Survival&amp;apos;s_Spite" transform="translate(475 347) scale(1.11)" xlink:href="#image-2"/>
+    <use id="Wind_Chaser" transform="translate(843 422) scale(1.11)" xlink:href="#image-2"/>
+    <use id="Walking_Fortress" transform="translate(1099 341) scale(1.11)" xlink:href="#image-2"/>
+    <use id="Tumbling" transform="translate(435 444) scale(1.11)" xlink:href="#image"/>
+    <use id="Expert_Evasion" transform="translate(414 526) scale(1.11)" xlink:href="#image"/>
+    <use id="Defiance" transform="translate(240 341) scale(1.11)" xlink:href="#image"/>
+    <use id="Juggernaut" transform="translate(230 500) scale(1.11)" xlink:href="#image"/>
+    <use id="Hardened" transform="translate(170 226) scale(1.11)" xlink:href="#image"/>
+    <use id="Slippery" transform="translate(391 266) scale(1.11)" xlink:href="#image"/>
+    <use id="Unchained" transform="translate(381 137) scale(1.11)" xlink:href="#image"/>
+    <use id="Rejuvenation" transform="translate(355 29) scale(1.11)" xlink:href="#image"/>
+    <use id="Fortified" transform="translate(256 126) scale(1.11)" xlink:href="#image"/>
+    <use id="Boundless_Vitality" transform="translate(117 152) scale(1.11)" xlink:href="#image"/>
+    <use id="Tireless_Guardian" transform="translate(998 374) scale(1.11)" xlink:href="#image"/>
+    <use id="Savage_Defense" transform="translate(1001 286) scale(1.11)" xlink:href="#image"/>
+    <use id="Bashing_Brutality" transform="translate(1027 47) scale(1.11)" xlink:href="#image"/>
+    <use id="On_Guard" transform="translate(1071 251) scale(1.11)" xlink:href="#image"/>
+    <use id="Fortification" transform="translate(989 502) scale(1.11)" xlink:href="#image"/>
+    <use id="Peace_of_Mind" transform="translate(269 229)" xlink:href="#image"/>
+  </g>
+</svg>

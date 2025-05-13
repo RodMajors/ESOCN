@@ -22,16 +22,18 @@ import SideBar from './components/SideBar.vue';
 
 const router = useRouter();
 const route = useRoute(); // 直接使用 route，不需要 ref 包装
-const hideSidebar = ref(false);
+const hideSidebar = ref();
 
 // 在组件挂载时初始化 hideSidebar
 onMounted(() => {
   hideSidebar.value = route.matched.some(record => record.meta?.hideSidebar === true);
+  console.log(hideSidebar.value)
 });
 
 // 监听路由变化
 watch(() => router.currentRoute.value, (newRoute) => {
   hideSidebar.value = newRoute.matched.some(record => record.meta?.hideSidebar === true);
+  console.log(hideSidebar.value)
 });
 </script>
 

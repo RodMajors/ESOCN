@@ -39,20 +39,35 @@ const routes: RouteRecordRaw[] = [
         path: "/equipment/:enName",
         component: () => import("../views/EquipmentDetail.vue"),
     },
-    { path: "/buffs", component: () => import("../views/BuffsList.vue") },
+    { 
+        path: "/buffs", 
+        component: () => import("../views/BuffsList.vue") 
+    },
     {
         path: "/buffs/:enName",
         component: () => import("../views/BuffsDetail.vue"),
+        
     },
     {
         path: "/skills",
         component: () => import("../views/Skills.vue"),
-        meta: { hideSidebar: true }, // 在此页面隐藏侧边栏
+        meta: { 
+            hideSidebar: true 
+        },
     },
     {
         path: "/champions",
         component: () => import("../views/champions.vue"),
-        meta: {hideSideBar: true}
+        meta: { 
+            hideSidebar: true
+        }
+    },
+    {
+        path: "/champions/:enName",
+        component: () => import("../views/CPDetail.vue"),
+        meta: { 
+            hideSidebar: false
+        }
     }
 ];
 

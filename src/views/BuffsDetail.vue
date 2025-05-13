@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import buffsData from '@/data/buffs.json';
+import buffsData from '@/Data/buffs.json';
 import BuffArea from '@/components/BuffArea.vue';
 
 interface Buff {

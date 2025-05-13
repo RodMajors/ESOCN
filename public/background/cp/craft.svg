@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1366 768">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #8e9192;
+        stroke: #8e9192;
+        stroke-miterlimit: 10;
+      }
+    </style>
+    <image id="image" width="101" height="101" xlink:href="/background/cp/green.png"/>
+  </defs>
+  <g id="background">
+    <image id="thief_normal" width="2048" height="1024" transform="translate(-355 -79)" xlink:href="/background/cp/thief_normal.png"/>
+  </g>
+  <g id="lines">
+    <path class="cls-1" d="M420.5,423.5c-69.33,6.33-138.67,12.67-208,19"/>
+    <path class="cls-1" d="M354.5,597.5c-47.33-51.67-94.67-103.33-142-155"/>
+    <path class="cls-1" d="M354.5,597.5c82.67-45,165.33-90,248-135"/>
+    <path class="cls-1" d="M420.5,423.5c53.33-42.33,106.67-84.67,160-127"/>
+    <path class="cls-1" d="M602.5,462.5c-7.33-55.33-14.67-110.67-22-166"/>
+    <path class="cls-1" d="M679.5,354.5c-33-19.33-66-38.67-99-58"/>
+    <path class="cls-1" d="M671.5,245.5c-30.33,17-60.67,34-91,51"/>
+    <path class="cls-1" d="M593.5,187.5c26,19.33,52,38.67,78,58"/>
+    <path class="cls-1" d="M664.5,95.5c-23.67,30.67-47.33,61.33-71,92"/>
+    <path class="cls-1" d="M739.5,186.5c-25-30.33-50-60.67-75-91"/>
+    <path class="cls-1" d="M824.5,278.5c-28.33-30.67-56.67-61.33-85-92"/>
+    <path class="cls-1" d="M678.5,429.5c.33-25,.67-50,1-75"/>
+    <path class="cls-1" d="M749.5,302.5c-25.33-18.67-50.67-37.33-76-56"/>
+    <path class="cls-1" d="M679.5,354.5c23.33-17.33,46.67-34.67,70-52"/>
+    <path class="cls-1" d="M678.5,429.5c.33,26,.67,52,1,78"/>
+    <path class="cls-1" d="M605.5,463.5c24.67,15.33,49.33,30.67,74,46"/>
+    <path class="cls-1" d="M530.5,612.5c-21.33-17.67-42.67-35.33-64-53"/>
+    <path class="cls-1" d="M602.5,463.5c-24,49.67-48,99.33-72,149"/>
+    <path class="cls-1" d="M652.5,568.5c9.33-20,18.67-40,28-60"/>
+    <path class="cls-1" d="M758.5,470.5c-26.33,12.33-52.67,24.67-79,37"/>
+    <path class="cls-1" d="M790.5,372.5c-10.67,32.67-21.33,65.33-32,98"/>
+    <path class="cls-1" d="M749.5,302.5c13.67,23.33,27.33,46.67,41,70"/>
+    <path class="cls-1" d="M928.5,414.5c-34-44.67-68-89.33-102-134"/>
+    <path class="cls-1" d="M790.5,372.5c57.33,83.67,114.67,167.33,172,251"/>
+    <path class="cls-1" d="M1049.5,432.5c-40.33-6-80.67-12-121-18"/>
+    <path class="cls-1" d="M1150.5,558.5c-33.67-42-67.33-84-101-126"/>
+    <path class="cls-1" d="M962.5,623.5c62.67-21.67,125.33-43.33,188-65"/>
+  </g>
+  <g id="champions">
+    <use id="Fleet_Phantom" transform="translate(421 511)" xlink:href="#image"/>
+    <use id="Steed_s_Blessing" data-name="Steed&amp;apos;s_Blessing" transform="translate(1113 380)" xlink:href="#image"/>
+    <use id="Professional_Upkeep" transform="translate(1113 282)" xlink:href="#image"/>
+    <use id="Sustaining_Shadows" transform="translate(999 274)" xlink:href="#image"/>
+    <use id="Steadfast_Enchantment" transform="translate(742 324)" xlink:href="#image"/>
+    <use id="Cutpurse_s_Art" data-name="Cutpurse&amp;apos;s_Art" transform="translate(373 374)" xlink:href="#image"/>
+    <use id="Shadowstrike" transform="translate(166 395)" xlink:href="#image"/>
+    <use id="Infamous" transform="translate(307 551)" xlink:href="#image"/>
+    <use id="Out_of_Sight" transform="translate(483 564)" xlink:href="#image"/>
+    <use id="Gilded_Fingers" transform="translate(605 520)" xlink:href="#image"/>
+    <use id="Wanderer" transform="translate(710 422)" xlink:href="#image"/>
+    <use id="Fortune_s_Favor" data-name="Fortune&amp;apos;s_Favor" transform="translate(633 460)" xlink:href="#image"/>
+    <use id="Friends_in_Low_Places" transform="translate(555 416)" xlink:href="#image"/>
+    <use id="Inspiration_Boost" transform="translate(632 382)" xlink:href="#image"/>
+    <use id="Meticulous_Disassembly" transform="translate(632 307)" xlink:href="#image"/>
+    <use id="Treasure_Hunter" transform="translate(702 254)" xlink:href="#image"/>
+    <use id="Fade_Away" transform="translate(534 249)" xlink:href="#image"/>
+    <use id="Master_Gatherer" transform="translate(623 198)" xlink:href="#image"/>
+    <use id="Plentiful_Harvest" transform="translate(692 139)" xlink:href="#image"/>
+    <use id="Gifted_Rider" transform="translate(547 139)" xlink:href="#image"/>
+    <use id="War_Mount" transform="translate(618 48)" xlink:href="#image"/>
+    <use id="Homemaker" transform="translate(779 232)" xlink:href="#image"/>
+    <use id="Reel_Technique" transform="translate(880 366)" xlink:href="#image"/>
+    <use id="Angler_s_Instincts" data-name="Angler&amp;apos;s_Instincts" transform="translate(1002 384)" xlink:href="#image"/>
+    <use id="Rationer" transform="translate(915 575)" xlink:href="#image"/>
+    <use id="Liquid_Efficiency" transform="translate(1103 510)" xlink:href="#image"/>
+  </g>
+</svg>
