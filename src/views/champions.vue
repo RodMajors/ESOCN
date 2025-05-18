@@ -504,6 +504,11 @@ export default defineComponent({
   margin: 0 auto 20px;
   display: block;
   cursor: pointer;
+  transition: transform 0.6s ease;
+}
+
+.columns:hover .background {
+  transform: scale(1.1);
 }
 
 .svg-container {

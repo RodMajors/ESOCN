@@ -37,6 +37,12 @@ import trials from '@/Data/trials.json';
 export default defineComponent({
   name: 'DungeonImage',
   props: {
+    name: {
+      type: String
+    },
+    background: {
+      type: String
+    },
     enName: {
       type: String,
       required: true,
@@ -52,6 +58,10 @@ export default defineComponent({
     type: {
       type: String,
       default: "dungeon"
+    },
+    link: {
+      type: String,
+      default: "/"
     }
   },
 
@@ -59,6 +69,13 @@ export default defineComponent({
     const router = useRouter();
     // 根据 enName 和 type 查找对应的 dungeon 或 trial 数据
     const dungeonData = computed(() => {
+      if (props.type === "default") {
+        return {
+          "name": props.name,
+          "enName": props.enName,
+          "background": props.background
+        }
+      }
       const dataSource = props.type === 'dungeon' ? dungeons : trials;
       let TureName = props.enName;  
       if (props.isDual) TureName = TureName + " I" ;
@@ -69,7 +86,9 @@ export default defineComponent({
     const goToDetail = (enName?: string) => {
       const targetEnName = enName || props.enName;
       const formattedName = targetEnName.toLowerCase().replace(/\s+/g, '-');
-      if (props.type === "dungeon")
+      if (props.type === "default") 
+        router.push(props.link)
+      else if (props.type === "dungeon")
         router.push(`/dungeons/${formattedName}`);
       else if (props.type === "trial")
         router.push(`/trials/${formattedName}`);

@@ -54,6 +54,9 @@
   
   // 获取图标路径，根据 isDebuff 区分 buff 和 debuff
   const getIconPath = (enName: string, isDebuff: boolean = false): string => {
+    if (enName == "Empower") {
+      return '/esoui/art/icons/ability_buff_major_empower.webp'
+    }
     const formattedName = enName.replace(/\s+/g, '_').toLowerCase();
     const prefix = isDebuff ? 'debuff' : 'buff';
     return `/esoui/art/icons/ability_${prefix}_${formattedName}.webp`;

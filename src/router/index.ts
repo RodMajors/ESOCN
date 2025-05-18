@@ -68,6 +68,48 @@ const routes: RouteRecordRaw[] = [
         meta: { 
             hideSidebar: false
         }
+    },
+    {
+        path: "/golden-vendor",
+        component: () => import("../views/Vendors/GoldenVendor.vue"),
+        meta: { 
+            hideSidebar: false
+        }
+    },
+    {
+        path: "/infinite-archieve-vendor",
+        component: () => import("../views/Vendors/Archieve.vue"),
+        meta: { 
+            hideSidebar: false
+        }
+    },
+    {
+        path: "/telvar-vendor",
+        component: () => import("../views/Vendors/TelVar.vue"),
+        meta: { 
+            hideSidebar: false
+        }
+    },
+    {
+        path: "/luxury-furnisher",
+        component: () => import("../views/Vendors/Furnisher.vue"),
+        meta: { 
+            hideSidebar: false
+        }
+    },
+    {
+        path: "/endeavors",
+        component: () => import("../views/Daily/Endeavor.vue"),
+        meta: { 
+            hideSidebar: false
+        }
+    },
+    {
+        path: "/login-reward",
+        component: () => import("../views/Daily/LoginReward.vue"),
+        meta: { 
+            hideSidebar: false
+        }
     }
 ];
 

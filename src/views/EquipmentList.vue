@@ -6,7 +6,7 @@
         <input
           v-model="searchQuery"
           type="text"
-          placeholder="请输入装备中/英文名或者出处地点名称"
+          placeholder="请输入装备中/英文名、昵称或中/英文出处"
           class="search-input"
         />
         <button v-if="searchQuery" @click="clearSearch" class="clear-search-btn">×</button>
@@ -31,22 +31,6 @@
               </span>
             </div>
           </div>
-          <!-- 部件过滤暂时禁用，因为 API 不返回 styles -->
-          <!--
-          <div class="filter-column">
-            <h4>部件</h4>
-            <div class="filter-options">
-              <span
-                v-for="part in partOptions"
-                :key="part"
-                @click="togglePartFilter(part)"
-                :class="{ active: activePartFilters.includes(part) }"
-              >
-                {{ part }}
-              </span>
-            </div>
-          </div>
-          -->
         </div>
       </div>
     </transition>
@@ -81,7 +65,7 @@
             <td @click="filterByType(set.type)" class="type-link">{{ getTypeText(set.type) }}</td>
             <td>
               <ul id="bonuses">
-                <li v-for="(effect, key) in set.bonuses" :key="key" v-html="effect" @click = "handleClick"></li>
+                <li v-for="(effect, key) in set.bonuses" :key="key" v-html="effect" @click="handleClick"></li>
               </ul>
             </td>
           </tr>
@@ -130,7 +114,7 @@ import { ref, onMounted, computed, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { loadEquipment } from '../utils/loadEquipment';
 import { parseColorTags } from '@/utils/parseColorTags';
-import { loadAllEquipment } from '../utils/loadEquipment'
+import { loadAllEquipment } from '../utils/loadEquipment';
 import { RouterLink } from 'vue-router';
 import BuffLink from "@/components/BuffLink.vue";
 
@@ -139,25 +123,56 @@ const router = useRouter();
 const route = useRoute();
 const currentPage = ref(1);
 const itemsPerPage = 20;
-const totalPages = ref(0); // 暂时手动设置，后续需后端支持
+const totalPages = ref(0);
 const isLoading = ref(true);
 const searchQuery = ref('');
 const showFilter = ref(false);
 const activeTypeFilters = ref<string[]>([]);
-// const activePartFilters = ref<string[]>([]); // 暂时禁用部件过滤
 
 const typeOptions = ['制造', '试炼', '副本', '竞技场', 'PVP', '怪物', '区域', '神器', '职业'];
-const partOptions = ['重甲', '中甲', '轻甲']; // 保留但未使用
+const partOptions = ['重甲', '中甲', '轻甲'];
 
 const inputPage = ref('');
+
+// 定义昵称/缩写映射
+const nicknameMap = ref<{
+  [key: string]: string[];
+}>({
+  'spc': ['Spell Power Cure'],
+  'pp': ["Pillager's Profit", "Perfected Pillager's Profit"],
+  'pa': ['Powerful Assault'],
+  'pw': ['Pearlescent Ward', 'Perfected Pearlescent Ward'],
+  'le': ['Lucent Echoes', 'Perfected Lucent Echoes'],
+  'ro': ['Roaring Opportunist', 'Perfected Roaring Opportunist'],
+  'jo': ["Jorvuld's Guidance"],
+  'rojo': ["Jorvuld's Guidance", 'Roaring Opportunist', 'Perfected Roaring Opportunist'],
+  'DR': ["Drake's Rush"],
+  'zen': ["Z'en's Redress"],
+  'mk': ['Way of Martial Knowledge'],
+  'ec': ['Elemental Catalyst'],
+  'tt': ['Turning Tide'],
+  'yol': ['Claw of Yolnahkriin'],
+  'co': ["Crimson Oath's Rive"],
+  'sax': ['Saxhleel Champion', 'Perfected Saxhleel Champion'],
+  'wm': ['War Machine'],
+  'ma': ['Master Architect'],
+
+  '大鳄鱼': ['Maw of the Infernal'],
+  '小鳄鱼': ['Slimecraw'],
+  '鳄鱼': ['Maw of the Infernal', 'Slimecraw'],
+  '泽恩': ["Z'en's Redress"],
+  '火伤': ["Encratis's Behemoth"],
+  '压耐': ['Coral Riptide', 'Perfected Coral Riptide'],
+  '压蓝': ["Bahsei's Mania", "Perfected Bahsei's Mania"]
+});
 
 // 加载所有装备数据
 const fetchAllEquipment = async () => {
   isLoading.value = true;
   try {
-    const data = await loadAllEquipment(); // 一次性加载所有数据
+    const data = await loadAllEquipment();
     equipment.value = data;
-    totalPages.value = Math.ceil(data.length / itemsPerPage); // 计算总页数
+    totalPages.value = Math.ceil(data.length / itemsPerPage);
   } catch (error) {
     console.error('加载装备数据失败:', error);
   } finally {
@@ -169,17 +184,17 @@ const fetchAllEquipment = async () => {
 const paginatedEquipment = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-  return filteredEquipment.value.slice(start, end); // 只返回当前页的数据
+  return filteredEquipment.value.slice(start, end);
 });
 
-const handleClick = (event: Event) =>{
+const handleClick = (event: Event) => {
   const target = event.target as HTMLElement;
-    if (target.classList.contains("link")) {
-      const to = target.dataset.to;
-      if (to) {
-        router.push(to); // 使用 Vue Router 跳转
-      }
+  if (target.classList.contains("link")) {
+    const to = target.dataset.to;
+    if (to) {
+      router.push(to);
     }
+  }
 };
 
 // 筛选逻辑
@@ -187,11 +202,23 @@ const filteredEquipment = computed(() => {
   let filtered = equipment.value;
 
   if (searchQuery.value) {
-    filtered = filtered.filter(set =>
-      set.name.includes(searchQuery.value) ||
-      set.enName.includes(searchQuery.value) ||
-      set.place.includes(searchQuery.value)
-    );
+    const query = searchQuery.value.toLowerCase();
+    filtered = filtered.filter(set => {
+      // 匹配标准字段
+      const matchesStandardFields =
+        set.name.toLowerCase().includes(query) ||
+        set.enName.toLowerCase().includes(query) ||
+        set.place.toLowerCase().includes(query) ||
+        set.enplace.toLowerCase().includes(query);
+
+      // 匹配昵称/缩写
+      const matchesNickname = Object.keys(nicknameMap.value).some(nickname =>
+        nickname.toLowerCase().includes(query) &&
+        nicknameMap.value[nickname].includes(set.enName)
+      );
+
+      return matchesStandardFields || matchesNickname;
+    });
   }
 
   if (activeTypeFilters.value.length > 0) {
@@ -202,7 +229,6 @@ const filteredEquipment = computed(() => {
 
   return filtered;
 });
-
 
 onMounted(() => {
   fetchAllEquipment();
@@ -217,7 +243,6 @@ const savePageState = () => {
     scrollPosition: window.scrollY,
     searchQuery: searchQuery.value,
     activeTypeFilters: activeTypeFilters.value,
-    // activePartFilters: activePartFilters.value, // 禁用
   };
   localStorage.setItem('equipmentListState', JSON.stringify(state));
 };
@@ -230,7 +255,6 @@ const restorePageState = () => {
     currentPage.value = state.currentPage || 1;
     searchQuery.value = state.searchQuery || '';
     activeTypeFilters.value = state.activeTypeFilters || [];
-    // activePartFilters.value = state.activePartFilters || [];
   }
 };
 
@@ -318,8 +342,6 @@ const toggleTypeFilter = (type: string) => {
   }
 };
 
-// const togglePartFilter = (part: string) => { /* 禁用 */ };
-
 const filterByType = (type: number) => {
   const typeText = getTypeText(type);
   toggleTypeFilter(typeText);
@@ -389,34 +411,17 @@ const filterByPlace = (place: string) => {
 
 .filter-row {
   display: flex;
-  gap: 2rem; /* 类型和部件之间的间距 */
+  gap: 2rem;
 }
 
 .filter-column {
-  
-  flex: auto; 
-
+  flex: auto;
 }
 
 .filter-column h4 {
-  margin-bottom: 0.5rem; /* 缩小标题与选项列表的距离 */
-  margin: 1rem 1rem
+  margin-bottom: 0.5rem;
+  margin: 1rem 1rem;
 }
-
-.filter-section {
-  display: flex;
-  align-items: center;
-  gap: 1rem; /* 类型和部件之间的间距 */
-  
-  margin-bottom: 0.5rem; /* 缩小与上方的距离 */
-  
-}
-
-.filter-section h4 {
-  margin: 0; /* 去掉 h4 的默认 margin */
-  
-}
-
 
 .filter-options {
   display: flex;
@@ -459,8 +464,8 @@ td {
 
 .name-column {
   width: 22%;
-  text-align: center; /* 改为居中，原为left */
-  padding: 0 0.5rem; /* 调整padding以保持居中对齐 */
+  text-align: center;
+  padding: 0 0.5rem;
 }
 
 td:nth-child(3) {
@@ -486,34 +491,31 @@ td:nth-child(5) {
   background-color: #1A1A1A;
 }
 
-/* 套装名称悬停效果 */
 .name-link {
   cursor: pointer;
-  text-decoration: none; /* 默认无下划线 */
+  text-decoration: none;
 }
 
 .name-link:hover {
-  text-decoration: underline; /* 鼠标悬停时显示下划线 */
+  text-decoration: underline;
 }
 
-/* 类型悬停效果 */
 .type-link {
   cursor: pointer;
-  text-decoration: none; /* 默认无下划线 */
+  text-decoration: none;
 }
 
 .type-link:hover {
-  text-decoration: underline; /* 鼠标悬停时显示下划线 */
+  text-decoration: underline;
 }
 
-/* 出处悬停效果 */
 .place-link {
   cursor: pointer;
-  text-decoration: none; /* 默认无下划线 */
+  text-decoration: none;
 }
 
 .place-link:hover {
-  text-decoration: underline; /* 鼠标悬停时显示下划线 */
+  text-decoration: underline;
 }
 
 .no-data {
@@ -597,12 +599,12 @@ table {
   background-color: #262626;
   color: #C5C29E;
   text-align: center;
-  appearance: textfield; /* 隐藏增减按钮 */
+  appearance: textfield;
 }
 
 .page-input::-webkit-inner-spin-button,
 .page-input::-webkit-outer-spin-button {
-  -webkit-appearance: none; /* 隐藏 WebKit 浏览器的增减按钮 */
+  -webkit-appearance: none;
   margin: 0;
 }
 
@@ -613,19 +615,17 @@ table {
 
 #bonuses {
   margin: 0;
-  padding-left: 1.5rem; /* 保持缩进 */
-  font-size: 0.85rem; /* 缩小文字大小，原默认可能是1rem */
-  line-height: 1.2; /* 缩小行高，原默认可能是1.5或更高 */
-  list-style-type: none; /* 移除圆点标记 */
+  padding-left: 1.5rem;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  list-style-type: none;
 }
 
 #bonuses li {
-  margin-bottom: 0.2rem; /* 减小列表项间距 */
+  margin-bottom: 0.2rem;
 }
 
-/* 修改英文名称样式 */
 .en-name {
-  font-size: 0.80rem; /* 缩小字体，原默认可能是1rem */
+  font-size: 0.80rem;
 }
-
 </style>

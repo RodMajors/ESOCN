@@ -58,8 +58,8 @@ const PledgeList3 = [
   "Moongrave Fane", "Lair of Maarselok", "Icereach", "Unhallowed Grave",
   "Stone Garden", "Castle Thorn", "Black Drake Villa", "The Cauldron",
   "Red Petal Bastion", "The Dread Cellar", "Coral Aerie", "Shipwright's Regret",
-  "Earthen Root Enclave", "Graven Deep", "Scrivener's Hall", "Bal Sunnar", "Bedlam Veil", 
-  "Oathsworn Pit"
+  "Earthen Root Enclave", "Graven Deep", "Scrivener's Hall", "Bal Sunnar", "Oathsworn Pit", 
+  "Bedlam Veil", 
 ];
 
 // 计算无畏者更新
@@ -116,6 +116,68 @@ async function scrapeServerStatus() {
   } catch (error) {
     console.error('爬取服务器状态失败:', error);
     return Array(7).fill('error');
+  }
+}
+
+let cache = null;
+
+// 计算下一次周一 18:00 CST
+function getNextRefreshTime(now) {
+  const date = new Date(now);
+  const day = date.getDay(); // 0=周日，1=周一，...
+  // 距离下周一的天数（如果今天是周一，+7天）
+  const daysToNextMonday = day === 1 ? 7 : (8 - day) % 7;
+  // 设置为下周一 18:00:00
+  const nextMonday = new Date(date);
+  nextMonday.setDate(date.getDate() + daysToNextMonday);
+  nextMonday.setHours(18, 0, 0, 0);
+  return nextMonday;
+}
+
+// 爬取函数
+async function scrapeWeekTrialStatus() {
+  const now = new Date();
+  const defaultData = { PCNA: 'error', PCEU: 'error' };
+
+  // 检查缓存
+  if (cache && now >= cache.lastScraped && now < cache.nextRefresh) {
+    console.log('使用缓存数据:', cache.data);
+    return cache.data;
+  }
+
+  try {
+    const url = 'https://eso-hub.com/';
+    let res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+    res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } })
+    if (!res.ok) throw new Error(`HTTP 错误: ${res.status}`);
+
+    const weekData = await res.text();
+    const trialsSection = weekData.split('Weekly Trials')[1];
+    if (!trialsSection) throw new Error('未找到 Weekly Trials 部分');
+
+    // 提取 PCNA 和 PCEU
+    const pcnaMatch = trialsSection.split('PC NA')[1]?.split('span')[1]?.split('>')[1]?.split('</span>')[0]?.split('<')[0];
+    const pceuMatch = trialsSection.split('PC EU')[1]?.split('span')[1]?.split('>')[1]?.split('</span>')[0]?.split('<')[0];
+
+    if (!pcnaMatch || !pceuMatch) throw new Error('解析 PCNA 或 PCEU 失败');
+
+    const data = {
+      PCNA: pcnaMatch.trim(),
+      PCEU: pceuMatch.trim(),
+    };
+
+    // 更新缓存
+    cache = {
+      data,
+      lastScraped: now,
+      nextRefresh: getNextRefreshTime(now),
+    };
+    console.log('爬取成功:', data, '下次刷新:', cache.nextRefresh.toISOString());
+
+    return data;
+  } catch (error) {
+    console.error('爬取服务器状态失败:', error);
+    return defaultData;
   }
 }
 
@@ -328,6 +390,14 @@ app.get('/api/daily-pledges', (req, res) => {
 // 获取服务器状态
 app.get('/api/server-status', async (req, res) => {
   const statusList = await scrapeServerStatus();
+  res.json({
+    status: statusList,
+    timestamp: new Date().toISOString()
+  });
+});
+
+app.get('/api/week-trial', async (req, res) => {
+  const statusList = await scrapeWeekTrialStatus();
   res.json({
     status: statusList,
     timestamp: new Date().toISOString()

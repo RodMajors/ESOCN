@@ -1,8 +1,17 @@
 ```vue
 <template>
-  <div class="image-container" @click="navigateToConstellation">
-    <img :src="background" class="background-image" alt="" />
-  </div>
+      <header 
+        class="champion-header"  
+        :style="{ backgroundImage: `url(${background})`}"  
+        @click="navigateToConstellation"
+      >
+      <div class="title-overlay">
+        <h1>{{ skill?.category_name }}</h1>
+        <p class="en-name">{{ enName?.toUpperCase() }}</p>
+      </div>
+    </header>
+
+
   <div class="champion-detail">
     <ChampionArea v-if="skill" :skill="skill" />
   </div>
@@ -52,6 +61,17 @@ export default defineComponent({
           return '/background/cp/ON-champion-mageHeader.png'; // 默认值
       }
     });
+
+    const enName = computed(() => {
+      switch (skill.value?.category_id) {
+        case 1:
+          return 'Warfare';
+        case 2:
+          return 'fitness';
+        case 3:
+          return 'craft';
+      }
+    })
 
     // 跳转到单栏星座页面
     const navigateToConstellation = () => {
@@ -132,12 +152,44 @@ export default defineComponent({
 
     onMounted(fetchSkill);
 
-    return { skill, background, navigateToConstellation };
+    return { skill, background, navigateToConstellation, enName };
   }
 });
 </script>
 
 <style scoped>
+.champion-header {
+  position: relative;
+  height: 150px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.title-overlay {
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+}
+
+.title-overlay h1 {
+  font-size: 2.2rem;
+  text-shadow: rgb(0, 0, 0) -1px 1px 4px, rgb(0, 0, 0) -2px 2px 4px, rgb(0, 0, 0) -3px 3px 4px;
+  margin: 0;
+}
+
+.en-name {
+  font-size: 1.4rem;
+  margin: 0.5rem 0 0;
+  font-weight: 600;
+  text-shadow: rgb(0, 0, 0) -1px 1px 4px, rgb(0, 0, 0) -2px 2px 4px, rgb(0, 0, 0) -3px 3px 4px;
+}
+
 .champion-detail {
   min-height: 100vh;
   background: #000;
@@ -153,25 +205,6 @@ export default defineComponent({
 .skill-details p {
   margin: 5px 0;
   font-size: 1em;
-}
-
-.image-container {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  cursor: pointer; /* 提示可点击 */
-}
-
-.background-image {
-  width: 100%;
-  max-height: 150px;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.6s ease;
-}
-
-.image-container:hover .background-image {
-  transform: scale(1.1);
 }
 
 @media (max-width: 768px) {
