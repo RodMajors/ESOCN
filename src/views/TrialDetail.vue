@@ -127,7 +127,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch  } from 'vue';
 import { useRoute } from 'vue-router';
-import trialsData from '../data/trials.json';
+import trialsData from '../Data/trials.json';
 import type { Dungeon } from '../types/trials';
 import InfoPanel from '../components/InfoPanel.vue';
 import GearArea from '../components/GearArea.vue';
@@ -301,7 +301,8 @@ watch(equipmentSets, () => {
 }
 
 .dungeon-picture {
-  max-height: 200px; /* 添加最大高度限制 */
+  max-height: 400px; /* 添加最大高度限制 */ 
+  max-width: 650px;
   object-fit: contain; /* 保持宽高比，不拉伸 */
   display: block;
 }

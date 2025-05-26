@@ -18,3 +18,10 @@ body {
 .link:hover{
   text-decoration: underline;
 }
+
+.content {
+  background-color: #141414;
+  padding: 1rem;
+  border-radius: 5px;
+  border: #3a3a3a solid 1px;
+}

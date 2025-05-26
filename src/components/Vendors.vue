@@ -102,7 +102,6 @@ export default {
                     throw new Error("网络请求失败");
                 }
                 const result = await response.json();
-                console.log(result.status)
                 this.currentDate = result.currentDate || "";
             } catch (error) {
                 console.error("获取每日誓约失败:", error);

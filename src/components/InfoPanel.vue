@@ -72,7 +72,6 @@
   }
   .info-panel-wrapper {
     width: 350px;
-    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
     border: 2px solid transparent;
     border-image: linear-gradient(to bottom right, #806F4d, #d4af37) 1;
     border-radius: 8px;

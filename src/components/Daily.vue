@@ -1,6 +1,6 @@
 <template>
     <div class="pledges">
-        <h2>每周商人</h2>
+        <h2>每日任务</h2>
         <div class="line1">
             <div class="line2">
                 <DungeonImage
@@ -68,7 +68,6 @@ export default {
                     throw new Error("网络请求失败");
                 }
                 const result = await response.json();
-                console.log(result.status)
                 this.currentDate = result.currentDate || "";
             } catch (error) {
                 console.error("获取每日誓约失败:", error);

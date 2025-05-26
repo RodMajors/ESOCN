@@ -24,7 +24,7 @@ const cpSkillsPool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: 'Lzr@136595755',
-  database: 'esocp',
+  database: 'esocp2',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
@@ -59,17 +59,17 @@ const PledgeList3 = [
   "Stone Garden", "Castle Thorn", "Black Drake Villa", "The Cauldron",
   "Red Petal Bastion", "The Dread Cellar", "Coral Aerie", "Shipwright's Regret",
   "Earthen Root Enclave", "Graven Deep", "Scrivener's Hall", "Bal Sunnar", "Oathsworn Pit", 
-  "Bedlam Veil", 
+  "Bedlam Veil", "Lep Seclusa", "Exiled Redoubt"
 ];
 
 // 计算无畏者更新
 function getDailyPledges() {
-  const startIndex1 = PledgeList1.indexOf("Darkshade Caverns II");
-  const startIndex2 = PledgeList2.indexOf("Tempest Island");
-  const startIndex3 = PledgeList3.indexOf("Bedlam Veil");
+  const startIndex1 = PledgeList1.indexOf("Fungal Grotto II");
+  const startIndex2 = PledgeList2.indexOf("Crypt of Hearts II");
+  const startIndex3 = PledgeList3.indexOf("Scalecaller Peak");
 
   const now = new Date();
-  const startDate = new Date('2025-05-13T18:00:00');
+  const startDate = new Date('2025-05-22T18:00:00');
 
   const timeDiff = now.getTime() - startDate.getTime();
   const hoursDiff = timeDiff / (1000 * 3600);
@@ -119,64 +119,251 @@ async function scrapeServerStatus() {
   }
 }
 
-let cache = null;
+let WeekTrialCache = null;
+let patchNotesCache = null;
+let goldenVendorCache = null; // 新增缓存变量
 
 // 计算下一次周一 18:00 CST
 function getNextRefreshTime(now) {
   const date = new Date(now);
   const day = date.getDay(); // 0=周日，1=周一，...
-  // 距离下周一的天数（如果今天是周一，+7天）
   const daysToNextMonday = day === 1 ? 7 : (8 - day) % 7;
-  // 设置为下周一 18:00:00
   const nextMonday = new Date(date);
   nextMonday.setDate(date.getDate() + daysToNextMonday);
   nextMonday.setHours(18, 0, 0, 0);
   return nextMonday;
 }
 
-// 爬取函数
+// 计算下一次周六 08:00 CST
+function getNextSaturdayRefreshTime(now) {
+  const date = new Date(now);
+  const day = date.getDay(); // 0=周日，1=周一，...，6=周六
+  const daysToNextSaturday = day === 6 ? 7 : (6 - day + 7) % 7;
+  const nextSaturday = new Date(date);
+  nextSaturday.setDate(date.getDate() + daysToNextSaturday);
+  nextSaturday.setHours(8, 0, 0, 0);
+  return nextSaturday;
+}
+
+// 爬取周试炼状态
 async function scrapeWeekTrialStatus() {
   const now = new Date();
   const defaultData = { PCNA: 'error', PCEU: 'error' };
 
-  // 检查缓存
-  if (cache && now >= cache.lastScraped && now < cache.nextRefresh) {
-    console.log('使用缓存数据:', cache.data);
-    return cache.data;
+  if (WeekTrialCache && now >= WeekTrialCache.lastScraped && now < WeekTrialCache.nextRefresh) {
+    console.log('使用缓存数据:', WeekTrialCache.data);
+    return WeekTrialCache.data;
   }
 
   try {
     const url = 'https://eso-hub.com/';
     let res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
-    res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } })
+    res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
     if (!res.ok) throw new Error(`HTTP 错误: ${res.status}`);
 
     const weekData = await res.text();
     const trialsSection = weekData.split('Weekly Trials')[1];
     if (!trialsSection) throw new Error('未找到 Weekly Trials 部分');
 
-    // 提取 PCNA 和 PCEU
     const pcnaMatch = trialsSection.split('PC NA')[1]?.split('span')[1]?.split('>')[1]?.split('</span>')[0]?.split('<')[0];
     const pceuMatch = trialsSection.split('PC EU')[1]?.split('span')[1]?.split('>')[1]?.split('</span>')[0]?.split('<')[0];
 
     if (!pcnaMatch || !pceuMatch) throw new Error('解析 PCNA 或 PCEU 失败');
 
     const data = {
-      PCNA: pcnaMatch.trim(),
-      PCEU: pceuMatch.trim(),
+      PCNA: pcnaMatch.trim().replace(/&#039;/g, "'"),
+      PCEU: pceuMatch.trim().replace(/&#039;/g, "'"),
     };
 
-    // 更新缓存
-    cache = {
+    WeekTrialCache = {
       data,
       lastScraped: now,
       nextRefresh: getNextRefreshTime(now),
     };
-    console.log('爬取成功:', data, '下次刷新:', cache.nextRefresh.toISOString());
+    console.log('爬取成功:', data, '下次刷新:', WeekTrialCache.nextRefresh.toISOString());
 
     return data;
   } catch (error) {
     console.error('爬取服务器状态失败:', error);
+    return defaultData;
+  }
+}
+
+// 爬取补丁笔记数据
+async function scrapePatchNotes() {
+  const now = new Date();
+  const defaultData = { PC: { href: 'error', img: 'error' }, XBOX: { href: 'error', img: 'error' }, PS: { href: 'error', img: 'error' }, PTS: { href: 'error', img: 'error' } };
+
+  if (patchNotesCache && now >= patchNotesCache.lastScraped && now < patchNotesCache.nextRefresh) {
+    console.log('使用缓存数据:', patchNotesCache.data);
+    return patchNotesCache.data;
+  }
+
+  try {
+    const patchNotesUrl = 'https://forums.elderscrollsonline.com/en/categories/patch-notes';
+    const patchNotesRes = await fetch(patchNotesUrl, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+    const patchNotesHtml = await patchNotesRes.text();
+    const $patchNotes = load(patchNotesHtml);
+
+    const trs = $patchNotes('table tbody tr');
+    const psHref = trs.eq(0).find('.DiscussionName .Wrap a').attr('href');
+    const xboxHref = trs.eq(1).find('.DiscussionName .Wrap a').attr('href');
+    const pcHref = trs.eq(2).find('.DiscussionName .Wrap a').attr('href');
+
+    const ptsUrl = 'https://forums.elderscrollsonline.com/en/categories/pts';
+    const ptsRes = await fetch(ptsUrl, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+    const ptsHtml = await ptsRes.text();
+    const $pts = load(ptsHtml);
+    const ptsHref = $pts('table tbody tr').eq(0).find('.DiscussionName .Wrap a').attr('href');
+
+    async function getImg(href) {
+      if (!href) return 'error';
+      const res = await fetch(href, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+      const html = await res.text();
+      const $ = load(html);
+      return $('img').eq(1).attr('src') || 'error';
+    }
+
+    const [psImg, xboxImg, pcImg, ptsImg] = await Promise.all([
+      getImg(psHref),
+      getImg(xboxHref),
+      getImg(pcHref),
+      getImg(ptsHref)
+    ]);
+
+    const data = {
+      PS: { href: psHref || 'error', img: psImg },
+      XBOX: { href: xboxHref || 'error', img: xboxImg },
+      PC: { href: pcHref || 'error', img: pcImg },
+      PTS: { href: ptsHref || 'error', img: ptsImg }
+    };
+
+    patchNotesCache = {
+      data,
+      lastScraped: now,
+      nextRefresh: getNextRefreshTime(now),
+    };
+    console.log('爬取成功:', data, '下次刷新:', patchNotesCache.nextRefresh.toISOString());
+
+    return data;
+  } catch (error) {
+    console.error('爬取补丁笔记失败:', error);
+    return defaultData;
+  }
+}
+
+// 新增：爬取金色商人数据
+async function scrapeGoldenVendor() {
+  const now = new Date();
+  const defaultData = { items: [], time: 'error' };
+
+  if (goldenVendorCache && now >= goldenVendorCache.lastScraped && now < goldenVendorCache.nextRefresh) {
+    console.log('使用缓存数据:', goldenVendorCache.data);
+    return goldenVendorCache.data;
+  }
+
+  try {
+    const url = 'https://esoitem.uesp.net/goldenVendor.php';
+    const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+    if (!res.ok) throw new Error(`HTTP 错误: ${res.status}`);
+    const html = await res.text();
+    const $ = load(html);
+
+    // 提取时间
+    let time = 'error';
+    const h4Text = $('h4').first().text().trim();
+    const dateMatch = h4Text.replace('Vendor Items for ', '');
+    if (dateMatch) {
+      const startDate = new Date(dateMatch);
+      if (!isNaN(startDate)) {
+        const endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 1);
+        const formatDate = (date) => `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+        time = `${formatDate(startDate)}-${formatDate(endDate)}`;
+      }
+    }
+
+    // 英中特质对照表
+    const traitMap = {
+      "Divines": "神性",
+      "Nirnhoned": "奈恩磨砺",
+      "Sturdy": "强韧",
+      "Impenetrable": "牢不可破",
+      "Reinforced": "强化防御",
+      "Well-Fitted": "合身",
+      "Training": "训练",
+      "Infused": "注魔",
+      "Invigorating": "活力再生",
+      "Precise": "精准",
+      "Sharpened": "锋锐",
+      "Charged": "充能",
+      "Defending": "防御",
+      "Decisive": "决意",
+      "Powered": "动力",
+      "Harmony": "和谐",
+      "Bloodthirsty": "嗜血",
+      "Arcane": "奥术",
+      "Healthy": "健康",
+      "Robust": "强壮",
+      "Protective": "保护",
+      "Swift": "轻灵",
+      "Triune": "三体"
+    };
+
+    const items = [];
+    const listItems = $('h4').first().next('ul.uespesoGoldenItemList').find('li');
+
+    for (let i = 0; i < listItems.length; i++) {
+      const li = listItems.eq(i);
+      const raw = li.find('span.uespesoGoldenItem').text().trim();
+      const href = li.find('a.uespesoItemLink').attr('href');
+
+      // 提取 gp 和 ap
+      const priceText = li.text().split('--')[1]?.trim();
+      const gpMatch = priceText?.match(/(\d+)\s*gp/)?.[1];
+      const apMatch = priceText?.match(/(\d+)\s*AP/)?.[1];
+
+      // 解析 traits
+      let traits = [];
+      const match = raw.match(/^(.*?)\s*\((.*?)\)$/);
+      if (match) {
+        traits = match[2].split('/').map(t => t.trim()).filter(t => t);
+        traits = traits.map(t => traitMap[t] || t); // 转换为中文，未匹配的特质保持原样
+      }
+
+      // 获取 setName 和 icon
+      let setName = 'error';
+      let icon = 'error';
+      if (href) {
+        const itemRes = await fetch(href, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+        const itemHtml = await itemRes.text();
+        const $item = load(itemHtml);
+        setName = $item('td#esoil_rawdata_setName').text().trim() || 'error';
+        const iconText = $item('td#esoil_rawdata_icon').text().trim();
+        const iconMatch = iconText.match(/(\/esoui\/art\/icons\/[^ ]+\.dds)/);
+        icon = iconMatch ? iconMatch[1].replace('.dds', '.webp') : 'error';
+      }
+
+      items.push({
+        setName,
+        traits,
+        gp: gpMatch || 'error',
+        ap: apMatch || 'error',
+        icon
+      });
+    }
+
+    const data = { items, time };
+    goldenVendorCache = {
+      data,
+      lastScraped: now,
+      nextRefresh: getNextSaturdayRefreshTime(now),
+    };
+    console.log('爬取金色商人成功:', data, '下次刷新:', goldenVendorCache.nextRefresh.toISOString());
+
+    return data;
+  } catch (error) {
+    console.error('爬取金色商人失败:', error);
     return defaultData;
   }
 }
@@ -299,7 +486,7 @@ app.get('/api/skills', async (req, res) => {
   }
 });
 
-// 新增：获取所有CP技能数据
+// 获取所有CP技能数据
 app.get('/api/cp', async (req, res) => {
   const query = `
     SELECT *
@@ -315,7 +502,7 @@ app.get('/api/cp', async (req, res) => {
   }
 });
 
-// 新增：根据类别ID获取CP技能数据
+// 根据类别ID获取CP技能数据
 app.get('/api/cp/:categoryId(\\d+)', async (req, res) => {
   const { categoryId } = req.params;
 
@@ -396,10 +583,30 @@ app.get('/api/server-status', async (req, res) => {
   });
 });
 
+// 获取周试炼状态
 app.get('/api/week-trial', async (req, res) => {
   const statusList = await scrapeWeekTrialStatus();
   res.json({
     status: statusList,
+    timestamp: new Date().toISOString()
+  });
+});
+
+// 获取补丁笔记数据
+app.get('/api/patch-notes', async (req, res) => {
+  const data = await scrapePatchNotes();
+  res.json({
+    data,
+    timestamp: new Date().toISOString()
+  });
+});
+
+// 新增：获取金色商人数据
+app.get('/api/golden-vendor', async (req, res) => {
+  const data = await scrapeGoldenVendor();
+  res.json({
+    data: data.items,
+    time: data.time,
     timestamp: new Date().toISOString()
   });
 });

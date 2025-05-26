@@ -1,6 +1,6 @@
 <template>
   <div
-    class="gear-area"
+    class="gear-area" 
     :style="{
       width: `${scaledWidth}px`, // 动态调整宽度
       padding: `${scaledPadding}px`, // 动态调整 padding

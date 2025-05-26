@@ -5,6 +5,7 @@
       <Vendors />
       <ServerStatus />
       <daily />
+      <patch/>
     </div>
   </template>
   
@@ -14,6 +15,7 @@
   import WeeklyTrials from './WeeklyTrials.vue';
   import Vendors from './Vendors.vue'
   import Daily from './Daily.vue';
+  import Patch from './Patch.vue';
   </script>
   
   <style scoped>

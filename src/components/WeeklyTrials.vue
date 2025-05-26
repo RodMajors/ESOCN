@@ -5,21 +5,22 @@
             <div class="line2 dungeon-wrapper">
                 <DungeonImage
                     class="dungeon"
-                    :en-name="weeklytrials.PCEU"
-                    :is-dual="false"
-                    :type="Type"
-                />
-                <div class="label">PC EU</div>
-            </div>
-            <div class="line2 dungeon-wrapper">
-                <DungeonImage
-                    class="dungeon"
                     :en-name="weeklytrials.PCNA"
                     :is-dual="false"
                     :type="Type"
                 />
                 <div class="label">PC NA</div>
             </div>
+            <div class="line2 dungeon-wrapper">
+                <DungeonImage
+                    class="dungeon"
+                    :en-name="weeklytrials.PCEU"
+                    :is-dual="false"
+                    :type="Type"
+                />
+                <div class="label">PC EU</div>
+            </div>
+            
         </div>
     </div>
 </template>
@@ -52,12 +53,11 @@ export default {
                     throw new Error("网络请求失败");
                 }
                 const result = await response.json();
-                this.weeklytrials.PCNA = result.status.PCNA;
-                this.weeklytrials.PCEU = result.status.PCEU;
-                console.log(result.status)
+                this.weeklytrials.PCNA = result.status.PCNA.replace(/&#039;/g, "'");
+                this.weeklytrials.PCEU = result.status.PCEU.replace(/&#039;/g, "'");
                 this.currentDate = result.currentDate || "";
             } catch (error) {
-                console.error("获取每日誓约失败:", error);
+                console.error("获取周常试炼失败:", error);
             }
         },
     },

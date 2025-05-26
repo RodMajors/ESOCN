@@ -1,3 +1,4 @@
+#将目标文件夹下的所有dds图标转化为webp格式
 from PIL import Image
 import os
 

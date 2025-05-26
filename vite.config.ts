@@ -19,5 +19,8 @@ export default defineConfig({
         ws: false, // 禁用 WebSocket 代理
       },
     },
+    headers: {
+      'Cache-Control': 'public, max-age=3600',
+    },
   },
 });

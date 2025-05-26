@@ -10,7 +10,7 @@
     <main v-if="dungeon" class="dungeon-main">
       <!-- 顶部区域：图片和描述 -->
       <div class="top-section">
-        <div class="content">
+        <div class="dungeon-content">
           <div class="dungeon-preview">
             <img v-if="dungeon.picture" :src="dungeon.picture" alt="Dungeon Picture" class="dungeon-picture" />
           </div>
@@ -266,7 +266,7 @@ watch(equipmentSets, () => {
   padding: 0;
 }
 
-.content {
+.dungeon-content {
   flex: 1;
   padding: 1rem;
 }
@@ -288,7 +288,8 @@ watch(equipmentSets, () => {
 }
 
 .dungeon-picture {
-  max-height: 200px; /* 添加最大高度限制 */
+  max-height: 400px; /* 添加最大高度限制 */ 
+  max-width: 650px;
   object-fit: contain; /* 保持宽高比，不拉伸 */
   display: block;
 }
@@ -309,7 +310,6 @@ watch(equipmentSets, () => {
 
 .section-nav span {
   padding: 0.5rem 1rem;
-  background-color: #262626;
   color: #fff;
   border-radius: 4px;
   cursor: pointer;
@@ -332,7 +332,6 @@ watch(equipmentSets, () => {
 
 .boss-tabs span {
   padding: 0.5rem 1rem;
-  background-color: #262626;
   color: #fff;
   border-radius: 4px;
   cursor: pointer;
