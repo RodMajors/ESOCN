@@ -292,7 +292,7 @@ def insert_furniture_data(connection, furniture_data):
 
     try:
         for furniture_item in furniture_data.get('furniture', []):
-            # 插入套装数据到 sets 表
+            # 插入套装数据到 furniture 表
             furniture_query = """
                 INSERT IGNORE INTO furniture (id, name, enName, icon, quality, description, canBeCrafted)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
@@ -333,7 +333,7 @@ def insert_cpSkills_data(connection, skills):
     
     # SQL 更新语句，包含 max_points 等新字段
     sql = """
-    INSERT INTO cp_skills (
+    INSERT IGNORE INTO cp_skills (
         id, category_id, category_name, skill_index, name, en_name, description,
         is_slottable, cluster_name, bonus_text, is_in_cluster, type,
         max_points, jump_points, num_jump_points, jump_point_delta
@@ -513,6 +513,46 @@ def insert_foods_data(connection, foods_data):
         raise
     finally:
         cursor.close()
+        
+def insert_news_data(connection, news_data):
+    """将 news.json 数据插入数据库"""
+    cursor = connection.cursor()
+    inserted_news = 0
+
+    try:
+        for news_item in news_data:
+            # 插入新闻数据到 news 表
+            news_query = """
+                INSERT IGNORE INTO newsList (id, name, des, date, cover)
+                VALUES (%s, %s, %s, %s, %s)
+            """
+            news_values = (
+                news_item['id'],
+                news_item['name'],
+                news_item['des'],
+                news_item['date'],
+                news_item['cover']
+            )
+            cursor.execute(news_query, news_values)
+            if cursor.rowcount == 0:
+                logger.debug(f"Skipped news (possible duplicate): id={news_item['id']}, name={news_item['name']}")
+            else:
+                logger.debug(f"Inserted news: id={news_item['id']}, title={news_item['name']}")
+            inserted_news += cursor.rowcount
+
+        connection.commit()
+        logger.info(f"News import completed: {inserted_news} items inserted")
+
+    except mysql.connector.Error as err:
+        logger.error(f"Database error during news insertion: {err}")
+        connection.rollback()
+        raise
+    except Exception as err:
+        logger.error(f"Unexpected error in news insertion: {err}")
+        connection.rollback()
+        raise
+    finally:
+        cursor.close()
 
 def process_equipment_json(json_path):
     """处理 equipment.json 文件并导入数据库"""
@@ -675,6 +715,33 @@ def process_foods_json(json_path):
     except Exception as err:
         logger.error(f"Error processing foods.json: {err}")
         raise
+    
+def process_news_json(json_path):
+    """处理 news.json 文件并导入数据库"""
+    try:
+        # 读取 JSON 文件
+        with open(json_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        logger.info(f"Loaded JSON file: {json_path}")
+
+        # 连接数据库
+        connection = connect_to_database('esonews')
+        try:
+            # 插入数据
+            insert_news_data(connection, data)
+        finally:
+            connection.close()
+            logger.info("Database connection closed for news")
+
+    except FileNotFoundError:
+        logger.error(f"JSON file not found: {json_path}")
+        raise
+    except json.JSONDecodeError as err:
+        logger.error(f"Invalid JSON format in {json_path}: {err}")
+        raise
+    except Exception as err:
+        logger.error(f"Error processing news.json: {err}")
+        raise
 
 def main():
     base_path = Path("C:/projects/ESOCN")
@@ -685,6 +752,7 @@ def main():
         'cpSkills': base_path / "src/Data/cpSkills.json",
         'buffs': base_path / "src/Data/buffs.json",
         'foods': base_path / "src/Data/foods.json",
+        'news': base_path / "src/Data/news.json"
     }
 
     logger.info("Starting JSON to DATABASE import process")
@@ -701,6 +769,8 @@ def main():
             process_buffs_json(json_path)
         elif category == 'foods':
             process_foods_json(json_path)
+        elif category == 'news':
+            process_news_json(json_path)
     logger.info("Import process completed")
 
 if __name__ == "__main__":

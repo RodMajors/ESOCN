@@ -15,7 +15,7 @@ const equipmentPool = mysql.createPool({
   password: 'Lzr@136595755',
   database: 'eso_equipment',
   waitForConnections: true,
-  connectionLimit: 10,
+  connectionLimit: 1000 ,
   queueLimit: 0,
 });
 
@@ -26,7 +26,38 @@ const cpSkillsPool = mysql.createPool({
   password: 'Lzr@136595755',
   database: 'esocp2',
   waitForConnections: true,
-  connectionLimit: 10,
+  connectionLimit: 1000 ,
+  queueLimit: 0,
+});
+
+// 创建数据库连接池 - esocp (用于cp_skills)
+const foodPool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: 'Lzr@136595755',
+  database: 'eso_foods',
+  waitForConnections: true,
+  connectionLimit: 1000 ,
+  queueLimit: 0,
+});
+
+const furniturePool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: 'Lzr@136595755',
+  database: 'eso_furniture',
+  waitForConnections: true,
+  connectionLimit: 1000 ,
+  queueLimit: 0,
+});
+
+const newsPool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: 'Lzr@136595755',
+  database: 'esonews',
+  waitForConnections: true,
+  connectionLimit: 1000 ,
   queueLimit: 0,
 });
 
@@ -609,6 +640,113 @@ app.get('/api/golden-vendor', async (req, res) => {
     time: data.time,
     timestamp: new Date().toISOString()
   });
+});
+
+app.get('/api/foods', async (req, res) => {
+  const query = `
+    SELECT *
+    FROM foods
+    ORDER BY id DESC
+  `;
+
+  try {
+    const [rows] = await foodPool.query(query);
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/foods/:enName', async (req, res) => {
+  const { enName } = req.params;
+  const formattedEnName = decodeURIComponent(enName.replace(/_/g, '%20'));
+
+  const query = `
+    SELECT *
+    FROM foods
+    WHERE enName = ?
+  `;
+
+  try {
+    const [rows] = await foodPool.query(query, [formattedEnName]);
+    if (rows.length === 0) {
+      return res.status(404).json({ error: '未找到食物' });
+    }
+    res.json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+})
+
+app.get('/api/furniture', async (req, res) => {
+  const query = `
+    SELECT *
+    FROM furniture
+    ORDER BY id DESC
+  `;
+
+  try {
+    const [rows] = await furniturePool.query(query);
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/furniture/:enName', async (req, res) => {
+  const { enName } = req.params;
+  const formattedEnName = decodeURIComponent(enName.replace(/_/g, '%20'));
+
+  const query = `
+    SELECT *
+    FROM furniture
+    WHERE enName = ?
+  `;
+
+  try {
+    const [rows] = await furniturePool.query(query, [formattedEnName]);
+    if (rows.length === 0) {
+      return res.status(404).json({ error: '未找到家具' });
+    }
+    res.json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/news', async (req, res) => {
+  const query = `
+    SELECT *
+    FROM newsList
+    ORDER BY id DESC
+  `;
+
+  try {
+    const [rows] = await newsPool.query(query);
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/news/:id(\\d+)', async (req, res) => {
+  const { id } = req.params;
+
+  const query = `
+    SELECT *
+    FROM newsList
+    WHERE id = ?
+  `;
+
+  try {
+    const [rows] = await newsPool.query(query, [parseInt(id)]);
+    if (rows.length === 0) {
+      return res.status(404).json({ error: '未找到新闻' });
+    }
+    res.json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // 启动服务器

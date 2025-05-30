@@ -10,6 +10,7 @@
           <li><RouterLink to="/equipment">装备列表</RouterLink></li>
           <li><RouterLink to="/skills">技能图鉴</RouterLink></li>
           <li><RouterLink to="/buffs">增益减益</RouterLink></li>
+          <li><RouterLink to="/foods">烹饪食谱</RouterLink></li>
       </ul>
   </nav>
 </template>

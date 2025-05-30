@@ -75,7 +75,7 @@ onMounted(fetchServerStatus);
 <style scoped>
 .server-status {
   color: #C5C29E;
-  background-color: #101010;
+  background-color: #121113;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -83,7 +83,7 @@ onMounted(fetchServerStatus);
 
 h2 {
   font-size: 1.2rem;
-  margin-bottom: 1rem;
+  margin: 0 0 1rem 0rem;
 }
 
 table {
@@ -98,16 +98,16 @@ td {
 }
 
 th {
-  background-color: #3a3a3a;
+  background-color: #2c2c2c;
 }
 
 td {
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid #948159;
 }
 
 th:nth-child(1),
 td:nth-child(1) {
-  width: 25%;
+  width: 30%;
 }
 
 th:nth-child(2),
@@ -117,7 +117,7 @@ td:nth-child(2) {
 
 th:nth-child(3),
 td:nth-child(3) {
-  width: 40%;
+  width: 35%;
 }
 
 .status-online {

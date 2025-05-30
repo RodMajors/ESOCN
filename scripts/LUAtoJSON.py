@@ -950,6 +950,133 @@ def process_skills(cn_data, en_data):
     
     return skills
 
+def process_recipes(cn_data, en_data):
+    """处理 Recipes 类别，提取并合并中英文数据"""
+    recipes = []
+    
+    # 获取账户
+    cn_account = get_user_account(cn_data, "Recipes")
+    en_account = get_user_account(en_data, "Recipes")
+    if not cn_account or not en_account:
+        print(f"中文或英文账户未找到 (中文: {cn_account}, 英文: {en_account})")
+        return recipes
+    
+    # 提取中文 Recipes 数据
+    cn_path = ["Default", cn_account, "$AccountWide", "dataItems", "Recipes"]
+    cn_recipes = cn_data
+    for key in cn_path:
+        cn_recipes = cn_recipes.get(key, {})
+        if not cn_recipes:
+            print(f"中文 - 路径 {cn_path} 中未找到键 '{key}'")
+            return recipes
+    
+    # 提取英文 Recipes 数据
+    en_path = ["Default", en_account, "$AccountWide", "dataItems", "Recipes"]
+    en_recipes = en_data
+    for key in en_path:
+        en_recipes = en_recipes.get(key, {})
+        if not en_recipes:
+            print(f"英文 - 路径 {en_path} 中未找到键 '{key}'")
+            return recipes
+    
+    # 验证数据类型
+    if not isinstance(cn_recipes, dict):
+        print(f"错误: cn_recipes 不是字典，类型: {type(cn_recipes)}, 值: {cn_recipes}")
+        return recipes
+    
+    # 处理中文 Recipes
+    for key, recipe_data in cn_recipes.items():
+        recipe_data = extract_table(recipe_data, "cn")
+        print(f"处理中文配方: id={recipe_data.get('id', '')}, 名称={recipe_data.get('name', '')}, 材料={bool(recipe_data.get('ingredients'))}")
+        recipe_entry = {
+            "name": recipe_data.get("name", ""),
+            "enName": "",  # 占位，稍后填充英文名称
+            "ingredients": recipe_data.get("ingredients", ""),
+            "id": str(recipe_data.get("id", "")),
+            "icon": recipe_data.get("icon", "").replace(".dds", ".webp"),
+            "itemTypeText": recipe_data.get("type", ""),  # 使用 type 作为 itemTypeText
+            "quality": recipe_data.get("quality", ""),
+            "description": recipe_data.get("description", ""),  # 默认空字符串
+            "canBeCrafted": recipe_data.get("canBeCrafted", True),  # 配方默认可制作
+            "specializedItemTypeText": recipe_data.get("skills", "")  # 使用 skills 作为 specializedItemTypeText
+        }
+        
+        # 处理英文 Recipes
+        if not isinstance(en_recipes, dict):
+            print(f"错误: en_recipes 不是字典，类型: {type(en_recipes)}, 值: {en_recipes}")
+        else:
+            en_recipe = en_recipes.get(key, {})
+            if en_recipe:
+                en_recipe = extract_table(en_recipe, "en")
+                recipe_entry["enName"] = en_recipe.get("name", recipe_entry["name"])
+                print(f"找到英文配方: id={recipe_entry['id']}, 英文名称={recipe_entry['enName']}")
+            else:
+                print(f"未找到 id 为 {recipe_entry['id']} 的英文配方")
+        
+        recipes.append(recipe_entry)
+    
+    print(f"处理了 {len(recipes)} 个配方")
+    return recipes
+
+def merge_ingredients():
+    # 定义文件路径
+    base_path = Path("C:/projects/ESOCN/src/Data")
+    foods_file = base_path / "foods.json"
+    recipes_file = base_path / "recipes.json"
+    output_file = base_path / "foods.json"  # 输出新文件以避免覆盖原始文件
+
+    # 读取 JSON 文件
+    try:
+        with open(foods_file, "r", encoding="utf-8") as f:
+            foods_data = json.load(f)
+        with open(recipes_file, "r", encoding="utf-8") as f:
+            recipes_data = json.load(f)
+    except Exception as e:
+        print(f"读取 JSON 文件出错: {e}")
+        return
+
+    # 确保数据结构正确
+    if not isinstance(foods_data.get("foods", []), list):
+        print(f"错误: foods.json 的 'foods' 不是列表，类型: {type(foods_data.get('foods'))}")
+        return
+    if not isinstance(recipes_data.get("recipes", []), list):
+        print(f"错误: recipes.json 的 'recipes' 不是列表，类型: {type(recipes_data.get('recipes'))}")
+        return
+
+    # 创建 foods 的名称到条目的映射
+    foods_map = {item["name"]: item for item in foods_data["foods"]}
+
+    # 统计更新计数
+    updated_count = 0
+
+    # 遍历 recipes，寻找以“配方：”开头的条目
+    for recipe in recipes_data["recipes"]:
+        recipe_name = recipe.get("name", "")
+        if recipe_name.startswith("配方："):
+            # 提取去掉前缀后的名称
+            base_name = recipe_name[len("配方："):]
+            food_item = foods_map.get(base_name)
+            if food_item:
+                food_item["canBeCrafted"] = "True" 
+                # 检查 foods 中 ingredients 是否为空
+                if not food_item.get("ingredients", "").strip():
+                    # 复制 recipes 中的 ingredients
+                    food_item["ingredients"] = recipe.get("ingredients", "")
+                    updated_count += 1
+                    print(f"更新配方: {base_name}, 新增材料: {food_item['ingredients']}")
+                else:
+                    print(f"跳过 {base_name}: ingredients 已存在 ({food_item['ingredients']})")
+            else:
+                print(f"未在 foods.json 中找到匹配的配方: {base_name}")
+
+    # 保存更新后的 foods 数据
+    try:
+        with open(output_file, "w", encoding="utf-8") as f:
+            json.dump(foods_data, f, ensure_ascii=False, indent=2)
+        print(f"更新完成，修改了 {updated_count} 个配方的 ingredients，输出到 {output_file}")
+    except Exception as e:
+        print(f"写入 foods_updated.json 出错: {e}")
+
 def main():
     base_path = Path("C:/projects/ESOCN")
     cn_lua_file = base_path / "public/data/DataExtractor-cn.lua"
@@ -960,26 +1087,26 @@ def main():
     # 获取 LUA 文件修改时间
     cn_mtime = os.path.getmtime(cn_lua_file)
     en_mtime = os.path.getmtime(en_lua_file)
-    print(f"CN Lua file modified time: {cn_mtime}")
-    print(f"EN Lua file modified time: {en_mtime}")
+    print(f"中文 Lua 文件修改时间: {cn_mtime}")
+    print(f"英文 Lua 文件修改时间: {en_mtime}")
     
     # 检查输出 JSON 文件的时间戳
-    categories = ["equipment", "foods", "collectibleFurniture", "furniture", "cpSkills", "skills"]
+    categories = ["equipment", "foods", "collectibleFurniture", "furniture", "cpSkills", "skills", "recipes"]  # 添加 "recipes"
     all_json_fresh = True
     for category in categories:
         json_file = output_dir / f"{category}.json"
         if not json_file.exists():
-            print(f"{category}.json does not exist, will generate")
+            print(f"{category}.json 不存在，将生成")
             all_json_fresh = False
             break
         json_mtime = os.path.getmtime(json_file)
         if json_mtime < cn_mtime or json_mtime < en_mtime:
-            print(f"{category}.json is outdated, will regenerate")
+            print(f"{category}.json 已过期，将重新生成")
             all_json_fresh = False
             break
     
     if all_json_fresh:
-        print("All JSON files are up-to-date, skipping processing")
+        print("所有 JSON 文件均为最新，跳过处理")
         return
     
     # 读取 exportJson 文件
@@ -987,7 +1114,7 @@ def main():
         with open(export_json_file, "r", encoding="utf-8") as f:
             export_json = json.load(f)
     except Exception as e:
-        print(f"Error reading exportJson.json: {e}")
+        print(f"读取 exportJson.json 出错: {e}")
         return
     
     # 读取并解析 LUA 文件
@@ -995,7 +1122,7 @@ def main():
         cn_data = luadata.unserialize(cn_lua_file.read_text(encoding="utf-8"))
         en_data = luadata.unserialize(en_lua_file.read_text(encoding="utf-8"))
     except Exception as e:
-        print(f"Error parsing LUA files: {e}")
+        print(f"解析 LUA 文件出错: {e}")
         return
     
     # 处理每个类别
@@ -1005,7 +1132,8 @@ def main():
         "collectibleFurniture": process_collectible_furniture,
         "furniture": process_furniture,
         "cpSkills": lambda cn, en: process_cp_skills(cn, en, export_json),
-        "skills": process_skills
+        "skills": process_skills,
+        "recipes": process_recipes  # 添加 recipes 处理
     }
     
     for category, processor in processors.items():
@@ -1013,7 +1141,7 @@ def main():
         json_mtime = os.path.getmtime(json_file) if json_file.exists() else 0
         
         if json_mtime >= cn_mtime and json_mtime >= en_mtime:
-            print(f"{category}: Timestamps match, skipping JSON generation")
+            print(f"{category}: 时间戳匹配，跳过 JSON 生成")
             continue
         
         try:
@@ -1024,9 +1152,10 @@ def main():
             }
             with open(json_file, "w", encoding="utf-8") as f:
                 json.dump(output_data, f, ensure_ascii=False, indent=2)
-            print(f"{category} JSON file generated successfully with {len(data)} items")
+            print(f"{category} JSON 文件生成成功，包含 {len(data)} 项")
         except Exception as e:
-            print(f"Error processing {category}: {e}")
+            print(f"处理 {category} 出错: {e}")
+    merge_ingredients()
 
 if __name__ == "__main__":
     main()

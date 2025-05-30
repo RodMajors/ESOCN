@@ -233,7 +233,7 @@ const filteredEquipment = computed(() => {
 onMounted(() => {
   fetchAllEquipment();
   restorePageState();
-  applyRouteFilters();
+  applyRouteFilters();  
 });
 
 // 保存页面状态

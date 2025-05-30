@@ -19,7 +19,7 @@
             <span class="value clickable">{{ set.place.split(',')[0] }}</span>
           </div>
           <div class="info-item" @click="filterByType(set.type)">
-            <span class="label">套装类型：</span>
+            <span class="label" >套装类型：</span>
             <span class="value clickable">{{ getTypeText(set.type) }}</span>
           </div>
           <div class="info-item">

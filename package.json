@@ -12,6 +12,7 @@
     "server": "node scripts/server.js"
   },
   "dependencies": {
+    "@floating-ui/vue": "^1.1.6",
     "@tailwindcss/cli": "^4.0.12",
     "axios": "^1.8.3",
     "cheerio": "^1.0.0",

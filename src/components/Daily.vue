@@ -79,7 +79,7 @@ export default {
 
 <style scoped>
 .pledges {
-    background-color: #101010;
+    background-color: #121113;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }

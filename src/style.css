@@ -25,3 +25,8 @@ body {
   border-radius: 5px;
   border: #3a3a3a solid 1px;
 }
+
+@font-face {
+  font-family: 'notosans-bold';
+  src: url(@/fonts/NotoSans-Bold.ttf);
+}

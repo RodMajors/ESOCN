@@ -1,0 +1,289 @@
+/* news.css - Styles for ESO news pages */
+a {
+    color: rgb(204, 180, 117);
+    cursor: pointer;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+a:hover {
+    color: rgb(241, 195, 60);
+}
+
+.row {
+    box-sizing: border-box;
+    color: rgb(206, 205, 201);
+    display: block;
+    font-family: "ZOS Open Sans", Tahoma, Geneva, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 0; /* 移除偏移 */
+    margin-right: 0;
+    position: relative;
+    text-shadow: rgb(0, 0, 0) 0px 0px 1px, rgb(0, 0, 0) 0px 1px 1px, rgb(0, 0, 0) 0px 1px 10px;
+    unicode-bidi: isolate;
+    height: auto;
+}
+
+.container-fluid {
+    max-width: 1000px; /* 限制宽度 */
+    margin: 0 auto; /* 居中 */
+    padding: 0;
+}
+
+.col-xs-12 {
+    box-sizing: border-box;
+    color: rgb(206, 205, 201);
+    display: block;
+    font-family: "ZOS Open Sans", Tahoma, Geneva, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+    unicode-bidi: isolate;
+}
+
+.buttons {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.buttons .align-center {
+    text-align: center;
+}
+
+@media (min-width: 0) {
+    .button-simple .bs-wrap {
+        border: 2px solid #bca875;
+        color: #bca875;
+        display: inline-flex; /* 限制宽度 */
+        align-items: center;
+        height: calc(var(--h) - 4px);
+        padding: 0 calc(var(--pad) * 0.5); /* 缩小内边距 */
+        width: fit-content; /* 贴合内容 */
+        margin: 0 auto; /* 居中 */
+        transition: color 0.3s ease, border 0.3s ease;
+    }
+    .button-simple .bs-wrap:hover{
+        color: #ffffff;
+        border: 2px solid #ffffff;
+    }
+    .button-simple .bs-wrap .bs-box {
+        align-items: center;
+        display: flex;
+        font-size: calc((var(--h) - 4px) * 0.7);
+        height: 100%;
+        line-height: calc(var(--h) - 8px);
+        padding: 0 10px;
+    }
+    .button-simple .bs-wrap .bs-box img {
+        border: 0;
+        display: flex;
+        height: calc(var(--h) - 12px);
+        object-fit: cover;
+        width: calc(var(--h) - 12px);
+        margin-left: 8px;
+    }
+    .button-base {
+        --h: 50px;
+        --pad: 15px;
+        --offset: -8px;
+        height: 50px;
+    }
+}
+
+.button-nav {
+    box-sizing: border-box;
+    color: rgb(206, 205, 201);
+    display: block;
+    font-family: "ZOS Open Sans", Tahoma, Geneva, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+    text-shadow: rgb(0, 0, 0) 0px 0px 1px, rgb(0, 0, 0) 0px 1px 1px, rgb(0, 0, 0) 0px 1px 10px;
+    unicode-bidi: isolate;
+}
+
+.col-sm-12 {
+    box-sizing: border-box;
+    color: rgb(206, 205, 201);
+    display: block;
+    font-family: "ZOS Open Sans", Tahoma, Geneva, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 27.2px;
+    min-height: 1px;
+    padding-left: 0;
+    padding-right: 0;
+    position: relative;
+}
+
+.blog_videos {
+    box-sizing: border-box;
+    clear: both;
+    color: rgb(206, 205, 201);
+    display: block;
+    font-family: "ZOS Open Sans", Tahoma, Geneva, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    height: auto;
+    line-height: 27.2px;
+    position: relative;
+    unicode-bidi: isolate;
+    max-width: 800px; /* 限制宽度 */
+    margin: 0 auto; /* 居中 */
+}
+
+.lead-img {
+    width: 100%;
+    max-width: 800px;
+    border: 2px solid #000000;
+    transition: border-color 0.5s ease;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.lead-img:hover {
+    border-color: #ffffff;
+}
+
+.blog-body-wrap h2 {
+    color: #f1c33c;
+    background-color: rgb(241, 195, 60);
+    font-size: 32px;
+    text-transform: uppercase;
+    -webkit-text-fill-color: rgba(0, 0, 0, 0);
+    background-image: -webkit-linear-gradient(
+        top,
+        rgba(241, 195, 60, 0.533),
+        rgba(195, 134, 0, 0.933)
+    ),
+    url(https://esossl-a.akamaihd.net/uploads/textures/gold.jpg);
+    background-clip: text, text;
+    box-sizing: border-box;
+    display: block;
+    line-height: 32px;
+    font-weight: 700;
+}
+
+.blog_images {
+    max-width: 800px;
+    margin: 20px auto;
+    display: block;
+    position: relative;
+    clear: both;
+}
+
+.is-pa, .is-pip {
+    position: static;
+}
+
+.img-item {
+    box-sizing: border-box;
+    color: rgb(206, 205, 201);
+    display: block;
+    font-family: "ZOS Open Sans", Tahoma, Geneva, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 27.2px;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+    text-align: center;
+}
+
+.img-wrap {
+    box-sizing: border-box;
+    display: block;
+    text-align: center;
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.zl-link {
+    display: inline-block;
+    max-width: 100%;
+    cursor: pointer;
+}
+
+.img-responsive {
+    max-width: 100%;
+    max-height: 600px;
+    border: 2px solid #000000;
+    transition: border-color 0.5s ease;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+.img-responsive:hover {
+    border-color: #ffffff;
+}
+
+.preview {
+    max-width: 100%;
+    max-height: 600px;
+    border: 2px solid #000000;
+    transition: border-color 0.5s ease;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+.preview:hover {
+    border-color: #ffffff;
+}
+
+.video-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 64px;
+    max-height: 64px;
+    object-fit: contain;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.blog-body-wrap p {
+    box-sizing: border-box;
+    color: rgb(206, 205, 201);
+    display: block;
+    font-family: "ZOS Open Sans", Tahoma, Geneva, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    margin: 15px 0;
+    text-shadow: rgb(0, 0, 0) 0px 0px 1px, rgb(0, 0, 0) 0px 1px 1px, rgb(0, 0, 0) 0px 1px 10px;
+    unicode-bidi: isolate;
+}
+
+b {
+    font-weight: 700;
+    color: rgb(225, 225, 225);
+}
+
+.label {
+    color: #ccb475;
+    padding: 0.2em 0.2em 0.3em;
+    font-size: 20px;
+    display: inline-block;
+    margin: 5px;
+}

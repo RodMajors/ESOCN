@@ -26,6 +26,7 @@ const hideSidebar = ref();
 
 // 在组件挂载时初始化 hideSidebar
 onMounted(() => {
+  console.log('route:', route);
   hideSidebar.value = route.matched.some(record => record.meta?.hideSidebar === true);
 });
 

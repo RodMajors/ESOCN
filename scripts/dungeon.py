@@ -1,11 +1,12 @@
 import requests
+from requests.auth import HTTPBasicAuth
 from bs4 import BeautifulSoup
 import json
 import pymysql
 import time
 import hashlib
 import uuid
-
+import re
 
 # 设置请求头，模拟浏览器
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
@@ -13,8 +14,6 @@ headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 # 根页面 URL
 root_url = "https://en.uesp.net/wiki/Online:Group_Dungeons"
 base_url = "https://en.uesp.net"
-
-# 初始化 Google Translate
 
 # 数据库连接信息
 DB_CONFIG = {
@@ -48,85 +47,64 @@ def query_zh_text(en_text):
         print(f"查询失败: {e}")
         return None
 
-
-async def youdaoTranslate(translate_text,flag=0):
+async def youdaoTranslate(translate_text, flag=0):
     '''
     :param translate_text: 待翻译的句子
     :param flag: 1:原句子翻译成英文；0:原句子翻译成中文
     :return: 返回翻译结果
     '''
-    youdao_url = 'https://openapi.youdao.com/api'  # 有道api地址
-
-    # 翻译文本生成sign前进行的处理
+    return translate_text
+    
+    youdao_url = 'https://openapi.youdao.com/api'
     input_text = ""
-
-    # 当文本长度小于等于20时，取文本
-    if (len(translate_text) <= 20):
+    if len(translate_text) <= 20:
         input_text = translate_text
-
-    # 当文本长度大于20时，进行特殊处理
-    elif (len(translate_text) > 20):
+    elif len(translate_text) > 20:
         input_text = translate_text[:10] + str(len(translate_text)) + translate_text[-10:]
-
-    time_curtime = int(time.time())  # 秒级时间戳获取
-    app_id = "1d953d33718efa0d"  # 自己的应用id
-    uu_id = uuid.uuid4()  # 随机生成的uuid数，为了每次都生成一个不重复的数。
-    app_key = "1pwz6jOTBEqzjA48jWzAjfGzLryrSxqm"  # 自己的应用密钥
-
-    sign = hashlib.sha256(
-        (app_id + input_text + str(uu_id) + str(time_curtime) + app_key).encode('utf-8')).hexdigest()  # sign生成
-
+    time_curtime = int(time.time())
+    app_id = "1d953d33718efa0d"
+    uu_id = uuid.uuid4()
+    app_key = "1pwz6jOTBEqzjA48jWzAjfGzLryrSxqm"
+    sign = hashlib.sha256((app_id + input_text + str(uu_id) + str(time_curtime) + app_key).encode('utf-8')).hexdigest()
     data = {
-        'q': translate_text,  # 翻译文本
-        'appKey': app_id,  # 应用id
-        'salt': uu_id,  # 随机生产的uuid码
-        'sign': sign,  # 签名
-        'signType': "v3",  # 签名类型，固定值
-        'curtime': time_curtime,  # 秒级时间戳
+        'q': translate_text,
+        'appKey': app_id,
+        'salt': uu_id,
+        'sign': sign,
+        'signType': "v3",
+        'curtime': time_curtime,
     }
     if flag:
-        data['from'] = "zh-CHS"  # 译文语种
-        data['to'] = "en"  # 译文语种
+        data['from'] = "zh-CHS"
+        data['to'] = "en"
     else:
-        data['from'] = "en"  # 译文语种
-        data['to'] = "zh-CHS"  # 译文语种
-
-    r = requests.get(youdao_url, params=data).json()  # 获取返回的json()内容
-    # print("翻译后的结果：" + r["translation"][0])  # 获取翻译内容
+        data['from'] = "en"
+        data['to'] = "zh-CHS"
+    r = requests.get(youdao_url, params=data).json()
     print(r["translation"][0])
     return r["translation"][0]
-    
 
 # 获取技能图标
 def fetch_skill_icon(en_name):
-    # 构造 URL
     search_term = en_name.replace(" ", "+")
-    url = f"https://chat.uesp.net/esolog/viewlog.php?search={search_term}&searchtype=minedSkills"
-    
+    url = f"https://esoitem.uesp.net/viewlog.php?search={search_term}&searchtype=minedSkills"
     try:
-        response = requests.get(url, headers=headers, timeout=10)  # 设置超时避免卡死
+        response = requests.get(url, headers=headers, auth=HTTPBasicAuth("esolog", "esolog"), timeout=10)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
-        
-        # 找到唯一的表格
         table = soup.find("table")
         if not table:
             print(f"未找到表格: {url}")
             return "https://esoicons.uesp.net/esoui/art/icons/ability_mage_065.png"
-        
-        # 获取第三列（icon 列）的所有 <td>
-        rows = table.find_all("tr")[1:]  # 跳过表头
+        rows = table.find_all("tr")[1:]
         for row in rows:
             cols = row.find_all("td")
-            if len(cols) >= 3:  # 确保有第三列
-                td = cols[2]  # 第三列是 icon
+            if len(cols) >= 3:
+                td = cols[2]
                 a_tag = td.find("a", href=True)
                 if a_tag and a_tag["href"] != "//esoicons.uesp.net/esoui/art/icons/ability_mage_065.png":
                     return "https:" + a_tag["href"]
-        
-        # 如果没有找到合适的图标，返回默认值
         return "https://esoicons.uesp.net/esoui/art/icons/ability_mage_065.png"
-    
     except Exception as e:
         print(f"获取技能图标失败 {url}: {e}")
         return "https://esoicons.uesp.net/esoui/art/icons/ability_mage_065.png"
@@ -195,8 +173,8 @@ async def process_table(table, is_dlc=False):
                                     if full_img_link:
                                         dungeon["DLCicon"] = "https:" + full_img_link["href"]
                 crawl_detail_page(dungeon_url, dungeon)
-                await translate_dungeon(dungeon)  # 使用 await 调用异步函数
-                print(dungeon)
+                await translate_dungeon(dungeon)
+                print(json.dumps(dungeon, ensure_ascii=False))
                 dungeons_data.append(dungeon)
 
 # 爬取 BOSS 页面的函数
@@ -214,7 +192,7 @@ def crawl_boss_page(url, boss):
                 if element.name == "h2":
                     break
                 if element.name == "p":
-                    text = element.get_text(separator="", strip=False)
+                    text = re.sub(r'[\n\xa0]+', ' ', element.get_text(separator="", strip=False)).strip()
                     if text:
                         paragraphs.append(text)
             if paragraphs:
@@ -243,14 +221,15 @@ def crawl_boss_page(url, boss):
                 header = row.find("th")
                 value = row.find("td")
                 if header:
-                    current_header = header.get_text(strip=False)
-                    if value and current_header == "Species":
-                        boss["spicies"] = value.get_text(strip=False)
+                    current_header = re.sub(r'[\n\xa0]+', ' ', header.get_text(strip=False)).strip()
+                    if (value and current_header == "Species") or (value and current_header == "Race"):
+                        boss["spicies"] = re.sub(r'[\n\xa0]+', ' ', value.get_text(strip=False)).strip()
                     elif value and current_header == "Health":
                         health_texts = []
                         for content in value.contents:
                             if isinstance(content, str):
-                                text = content.strip(" (Hardmode)")
+                                text = re.sub(r'[\n\xa0]+', ' ', content).strip()
+                                text = re.sub(r'\s*\(Hard\s*Mode\)', '', text, flags=re.IGNORECASE)
                                 if text and text.replace(",", "").isdigit():
                                     health_texts.append(text)
                         if health_texts:
@@ -261,7 +240,8 @@ def crawl_boss_page(url, boss):
         # 提取 Skills and Abilities
         skills_header = None
         for h2 in soup.find_all("h2"):
-            if "Skills and Abilities" in h2.get_text(strip=False):
+            h2_text = re.sub(r'[\n\xa0]+', ' ', h2.get_text(strip=False)).strip()
+            if "Skills and Abilities" in h2_text or "Skills & Abilities" in h2_text:
                 skills_header = h2
                 break
 
@@ -271,32 +251,48 @@ def crawl_boss_page(url, boss):
             current = skills_header.next_sibling
             while current and (not next_h2 or current != next_h2):
                 if current.name == "dl":
+                    # 检查嵌套的 <dl>
                     nested_dls = current.find_all("dl", recursive=False)
                     if nested_dls:
                         for dl in nested_dls:
                             dt = dl.find("dt")
+                            if dt:
+                                # 移除 <sup> 标签
+                                for sup in dt.find_all("sup"):
+                                    sup.extract()
                             dd = dl.find("dd")
                             skill = {
                                 "name": "",
-                                "enName": dt.get_text(strip=False) if dt else "",
+                                "enName": re.sub(r'[\n\xa0]+', ' ', dt.get_text(strip=False)).strip() if dt else "",
                                 "icon": "",
-                                "des": dd.get_text(separator="", strip=False) if dd else ""
+                                "des": re.sub(r'[\n\xa0]+', ' ', dd.get_text(separator="", strip=False)).strip() if dd else ""
                             }
                             if skill["enName"]:
                                 skill["icon"] = fetch_skill_icon(skill["enName"])
                             skills.append(skill)
                     else:
-                        dt = current.find("dt")
-                        dd = current.find("dd")
-                        skill = {
-                            "name": "",
-                            "enName": dt.get_text(strip=False) if dt else "",
-                            "icon": "",
-                            "des": dd.get_text(separator="", strip=False) if dd else ""
-                        }
-                        if skill["enName"]:
-                            skill["icon"] = fetch_skill_icon(skill["enName"])
-                        skills.append(skill)
+                        # 处理当前 <dl> 中的所有 <dt> 和 <dd> 组合
+                        dt_dd_pairs = current.find_all(["dt", "dd"])
+                        i = 0
+                        while i < len(dt_dd_pairs) - 1:
+                            if dt_dd_pairs[i].name == "dt" and dt_dd_pairs[i + 1].name == "dd":
+                                dt = dt_dd_pairs[i]
+                                # 移除 <sup> 标签
+                                for sup in dt.find_all("sup"):
+                                    sup.extract()
+                                dd = dt_dd_pairs[i + 1]
+                                skill = {
+                                    "name": "",
+                                    "enName": re.sub(r'[\n\xa0]+', ' ', dt.get_text(strip=False)).strip() if dt else "",
+                                    "icon": "",
+                                    "des": re.sub(r'[\n\xa0]+', ' ', dd.get_text(separator="", strip=False)).strip() if dd else ""
+                                }
+                                if skill["enName"]:
+                                    skill["icon"] = fetch_skill_icon(skill["enName"])
+                                skills.append(skill)
+                                i += 2
+                            else:
+                                i += 1
                 current = current.next_sibling
             boss["skills"].extend(skills)
         
@@ -319,9 +315,9 @@ def crawl_detail_page(url, dungeon):
                 header = row.find("th")
                 value = row.find("td")
                 if header:
-                    current_header = header.get_text(strip=False)
+                    current_header = re.sub(r'[\n\xa0]+', ' ', header.get_text(strip=False)).strip()
                     if value:
-                        value_text = value.get_text(strip=False)
+                        value_text = re.sub(r'[\n\xa0]+', ' ', value.get_text(strip=False)).strip()
                         if current_header == "Min Level":
                             dungeon["mini_level"] = value_text
                         elif current_header == "Group Size":
@@ -331,7 +327,7 @@ def crawl_detail_page(url, dungeon):
                         elif current_header == "Mini-Bosses":
                             dungeon["mini_Bosses"] = value_text
                 elif value and current_header:
-                    value_text = value.get_text(strip=False)
+                    value_text = re.sub(r'[\n\xa0]+', ' ', value.get_text(strip=False)).strip()
                     if current_header == "Zone":
                         dungeon["enplace"] = [z.strip() for z in value_text.split(",")]
                     elif current_header == "Location":
@@ -342,7 +338,8 @@ def crawl_detail_page(url, dungeon):
                             if "text-align" in style and "center" in style:
                                 italic = div.find("i")
                                 if italic:
-                                    dungeon["mystery"] = "".join(italic.find_all(text=True, recursive=False)).strip()
+                                    mystery_text = re.sub(r'[\n\xa0]+', ' ', "".join(italic.find_all(string=True, recursive=False))).strip()
+                                    dungeon["mystery"] = mystery_text
                                     break
                         img_link = value.find("a", href=True)
                         if img_link and "/wiki/File:" in img_link["href"]:
@@ -375,7 +372,7 @@ def crawl_detail_page(url, dungeon):
                 if element.name == "h2":
                     break
                 if element.name == "p":
-                    text = element.get_text(separator="", strip=False)
+                    text = re.sub(r'[\n\xa0]+', ' ', element.get_text(strip=False)).strip()
                     if text:
                         paragraphs.append(text)
             if paragraphs:
@@ -384,7 +381,7 @@ def crawl_detail_page(url, dungeon):
             bosses_header = None
             for h3 in content.find_all("h3"):
                 headline = h3.find("span", class_="mw-headline")
-                if headline and headline.get_text(strip=False).lower() == "bosses":
+                if headline and re.sub(r'[\n\xa0]+', ' ', headline.get_text(strip=False)).strip().lower() == "bosses":
                     bosses_header = h3
                     break
             if bosses_header:
@@ -395,7 +392,7 @@ def crawl_detail_page(url, dungeon):
                     boss_items = next_element.find_all("li")
                     for item in boss_items:
                         first_link = item.find("a")
-                        en_name = first_link.get_text(strip=False) if first_link else item.get_text(strip=False)
+                        en_name = re.sub(r'[\n\xa0]+', ' ', first_link.get_text(strip=False)).strip() if first_link else item.get_text(strip=False)
                         boss = {
                             "name": "",
                             "enName": en_name,
@@ -415,21 +412,21 @@ def crawl_detail_page(url, dungeon):
 
             sets_header = None
             for h2 in content.find_all("h2"):
-                if "Sets" in h2.get_text(strip=False):
+                if "Sets" in re.sub(r'[\n\xa0]+', ' ', h2.get_text(strip=False)).strip():
                     sets_header = h2
                     break
             if sets_header:
-                table = sets_header.find_next("table", class_="wikitable sortable")
+                table = sets_header.find_next("table", class_="wikitable")
                 if table:
                     rows = table.find_all("tr")[1:]
                     for row in rows:
                         th = row.find("th")
                         if th:
-                            dungeon["equipment"].append(th.get_text(strip=False))
+                            dungeon["equipment"].append(re.sub(r'[\n\xa0]+', ' ', th.get_text(strip=False)).strip())
 
             achievements_header = None
             for h2 in content.find_all("h2"):
-                if "Achievements" in h2.get_text(strip=False):
+                if "Achievements" in re.sub(r'[\n\xa0]+', ' ', h2.get_text(strip=False)).strip():
                     achievements_header = h2
                     break
             if achievements_header:
@@ -443,8 +440,8 @@ def crawl_detail_page(url, dungeon):
                                 "name": "",
                                 "enName": tds[1].find("a").get_text(strip=False) if tds[1].find("a") else tds[1].get_text(strip=False),
                                 "icon": "",
-                                "des": tds[3].get_text(separator="", strip=False),
-                                "score": tds[2].get_text(strip=False)
+                                "des": re.sub(r'[\n\xa0]+', ' ', tds[3].get_text(separator="", strip=False)).strip(),
+                                "score": re.sub(r'[\n\xa0]+', ' ', tds[2].get_text(strip=False)).strip()
                             }
                             img_link = tds[0].find_all("a", href=True)[1] if len(tds[0].find_all("a", href=True)) > 1 else tds[0].find("a", href=True)
                             if img_link and "/wiki/File:" in img_link["href"]:
@@ -464,50 +461,35 @@ def crawl_detail_page(url, dungeon):
 
 # 翻译处理函数
 async def translate_dungeon(dungeon):
-    # 翻译 name（仍使用数据库）
     for place in dungeon["enplace"]:
         zhplace = query_zh_text(place)
         if place:
             dungeon["place"].append(zhplace)
-
     zh_name = query_zh_text(dungeon["enName"])
     if zh_name:
         dungeon["name"] = zh_name
-
-    # 翻译 mystery（仍使用数据库）
     if dungeon["mystery"]:
         zh_mystery = query_zh_text(dungeon["mystery"])
         if zh_mystery:
             dungeon["mystery"] = zh_mystery
-
-    # 翻译 dungeon["des"]（使用有道翻译）
     if dungeon["des"]:
         dungeon["des"] = await youdaoTranslate(dungeon["des"])
-
-    # 翻译 BOSS
     for boss in dungeon["BOSS"]:
-        # 翻译 name（仍使用数据库）
         zh_boss_name = query_zh_text(boss["enName"])
         if zh_boss_name:
             boss["name"] = zh_boss_name
-        # 翻译 spicies（仍使用数据库）
         if boss["spicies"]:
             zh_spicies = query_zh_text(boss["spicies"])
             if zh_spicies:
                 boss["spicies"] = zh_spicies
-        # 翻译 boss["des"]（使用有道翻译）
         if boss["des"]:
             boss["des"] = await youdaoTranslate(boss["des"])
-        # 翻译 skills
         for skill in boss["skills"]:
             zh_skill_name = query_zh_text(skill["enName"])
             if zh_skill_name:
                 skill["name"] = zh_skill_name
-            # 翻译 skill["des"]（使用有道翻译）
             if skill["des"]:
                 skill["des"] = await youdaoTranslate(skill["des"])
-
-    # 翻译 achievement（仍使用数据库）
     for achievement in dungeon["achievement"]:
         zh_ach_name = query_zh_text(achievement["enName"])
         if zh_ach_name:
@@ -522,14 +504,10 @@ async def main():
     await process_table(base_game_table, is_dlc=False)
     print("爬取 DLC Dungeons...")
     await process_table(dlc_table, is_dlc=True)
-
-    # 保存为 JSON 文件
     with open("group_dungeons.json", "w", encoding="utf-8") as f:
         json.dump(dungeons_data, f, ensure_ascii=False, indent=4)
-
     print("爬取完成，已生成 group_dungeons.json")
 
-# 运行主程序
 if __name__ == "__main__":
     import asyncio
     asyncio.run(main())
