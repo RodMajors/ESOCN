@@ -118,6 +118,13 @@ const routes: RouteRecordRaw[] = [
         meta: { 
             hideSidebar: false
         }
+    },
+    {
+        path: "/build-editor",
+        component: () => import("../views/BuildEditor.vue"),
+        meta: { 
+            hideSidebar: false
+        }
     }
 ];
 

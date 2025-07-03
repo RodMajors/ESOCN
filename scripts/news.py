@@ -1,16 +1,21 @@
 import asyncio
+import aiohttp
+import re
 from pyppeteer import launch
 import json
 import os
 import mysql.connector
 from datetime import datetime
+import time
 
 # 配置
-BASE_URL = "https://www.elderscrollsonline.com/cn/news"
+BASE_URL = "https://www.elderscrollsonline.com/cn/news?page=5"
 DETAIL_URL = "https://www.elderscrollsonline.com/cn/news/post/{}"
 OUTPUT_DIR = os.path.join("src", "Data")
 NEWS_LIST_PATH = os.path.join(OUTPUT_DIR, "news.json")
 LAST_ID_PATH = os.path.join(OUTPUT_DIR, "last-id.txt")
+LAST_TIME_PATH = os.path.join(OUTPUT_DIR, "last-time.txt")
+TOP_NEWS_PATH = os.path.join(OUTPUT_DIR, "top-news.txt")
 NEWS_HTML_DIR = os.path.join("src", "assets", "news")
 CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"  # Windows 示例
 # CHROME_PATH = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"  # Mac 示例
@@ -39,11 +44,34 @@ async def get_last_id():
     except FileNotFoundError:
         print("No last-id.txt found, treating as first run.")
         return None
+    
+async def get_last_time():
+    """读取上一次爬取的时间"""
+    try:
+        with open(LAST_TIME_PATH, "r", encoding="utf-8") as f:
+            last_time = f.read().strip()
+            print(f"Last time from file: {last_time}")
+            return last_time
+    except FileNotFoundError:
+        print("No last-time.txt found, treating as first run.")
+        return None
 
 async def save_last_id(news_id):
     """保存最新的第一个新闻 ID"""
     print(f"Saving new last ID: {news_id}")
     with open(LAST_ID_PATH, "w", encoding="utf-8") as f:
+        f.write(news_id)
+        
+async def save_last_time(last_time):
+    """保存最新的爬取时间"""
+    print(f"Saving new last time: {last_time}")
+    with open(LAST_TIME_PATH, "w", encoding="utf-8") as f:
+        f.write(str(int(last_time)))
+
+async def save_top_news_id(news_id):
+    """保存顶部新闻的 ID 到 top-news.txt"""
+    print(f"Saving top news ID: {news_id}")
+    with open(TOP_NEWS_PATH, "w", encoding="utf-8") as f:
         f.write(news_id)
 
 async def get_news_ids_from_db():
@@ -68,13 +96,13 @@ async def update_database(new_news):
         cursor = conn.cursor()
         for news in new_news:
             cursor.execute("""
-                INSERT INTO newsList (id, name, des, cover, date)
-                VALUES (%s, %s, %s, %s, %s)
+                INSERT INTO newsList (id, name, des, cover, date, sortID)
+                VALUES (%s, %s, %s, %s, %s, %s)
                 ON DUPLICATE KEY UPDATE
-                    name=%s, des=%s, cover=%s, date=%s
+                    name=%s, des=%s, cover=%s, date=%s, sortID=%s
             """, (
-                news["id"], news["name"], news["des"], news["cover"], news["date"],
-                news["name"], news["des"], news["cover"], news["date"]
+                news["id"], news["name"], news["des"], news["cover"], news["date"], news["sortID"],
+                news["name"], news["des"], news["cover"], news["date"], news["sortID"]
             ))
         conn.commit()
         print(f"Updated {len(new_news)} news items in database.")
@@ -87,7 +115,7 @@ async def update_database(new_news):
             conn.close()
 
 async def fetch_news_list():
-    """爬取新闻列表"""
+    """爬取新闻列表和顶部新闻 ID"""
     print("Launching browser for news list...")
     browser = await launch(
         headless=True,
@@ -120,8 +148,25 @@ async def fetch_news_list():
         await browser.close()
         return []
 
+    # 提取顶部新闻 ID
+    top_news_id = await page.evaluate('''() => {
+        const article = document.querySelector(
+            "div.tier-1-editorial article.col-xs-12.col-sm-12.col-md-12.col-lg-12.t1-box.hilight-image.text-center"
+        );
+        if (!article) return null;
+        const link = article.querySelector("a[href^='/cn/news/post/']");
+        if (!link) return null;
+        const href = link.getAttribute("href");
+        return href ? href.split("/").pop() : null;
+    }''')
+    if top_news_id:
+        await save_top_news_id(top_news_id)
+        print(f"Extracted top news ID: {top_news_id}")
+    else:
+        print("No top news ID found.")
+
     # 提取新闻列表
-    news_list = await page.evaluate(r'''() => {
+    news_list = await page.evaluate('''() => {
         const articles = document.querySelectorAll(".category-body.row.is-pa.is-pip article.tier-2-list-item");
         return Array.from(articles).map(article => {
             const link = article.querySelector(".link-block a.clean-link");
@@ -136,9 +181,9 @@ async def fetch_news_list():
                 ? article.querySelector(".link-block p").innerText.trim()
                 : "";
             
-            const date = article.querySelector("p.date")
-                ? article.querySelector("p.date").innerText.trim().split(" ")[0]
-                : "";
+            const dateEl = article.querySelector("p.date");
+            const dateMatch = dateEl ? dateEl.innerText.match(/\d{4}\/\d{2}\/\d{2}/) : null;
+            const date = dateMatch ? dateMatch[0].replace(/\//g, "-") : "";
             
             const img = article.querySelector(".hilight-image img");
             let cover = "";
@@ -173,12 +218,19 @@ async def fetch_news_list():
                 dataOriginal: img ? img.getAttribute("data-original") : null,
                 dataLazyload: img ? img.getAttribute("data-lazyload") : null,
                 backgroundImage: parent ? getComputedStyle(parent).backgroundImage : null,
-                cover
+                cover,
+                date
             });
             
             return { id: newsId, name, date, des, cover };
         }).filter(item => item.id && item.name && item.date);
     }''')
+
+    # 验证日期格式
+    for news in news_list:
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", news["date"]):
+            print(f"Invalid date format for news ID {news['id']}: {news['date']}")
+            news["date"] = "1970-01-01"
 
     print(f"Extracted {len(news_list)} news items.")
     await browser.close()
@@ -296,11 +348,12 @@ async def main():
 
     # 如果没有新闻，直接退出
     if not news_list:
-        print("No news found.")
+        print("No news found.") 
         return
 
     # 保存最新的第一个新闻 ID
     await save_last_id(news_list[0]["id"])
+    await save_last_time(time.time())
 
     # 增量爬取：只保留新的新闻（直到遇到 last_id）
     new_news = []
@@ -316,6 +369,19 @@ async def main():
             news for news in existing_news
             if not any(n["id"] == news["id"] for n in new_news)
         ] + new_news
+        # 按日期降序、ID 升序排序，并添加 sortID
+        try:
+            updated_news = sorted(
+                updated_news,
+                key=lambda x: (-datetime.strptime(x["date"], "%Y-%m-%d").timestamp(), int(x["id"]))
+            )
+            # 添加 sortID 字段
+            for i, news in enumerate(updated_news):
+                news["sortID"] = i
+            print("Sorted news by date (descending) and ID (ascending), added sortID.")
+        except ValueError as e:
+            print(f"Error sorting news due to invalid date format: {e}")
+            # 如果日期格式错误，跳过排序
         with open(NEWS_LIST_PATH, "w", encoding="utf-8") as f:
             json.dump(updated_news, f, ensure_ascii=False, indent=2)
         print(f"Updated news.json with {len(new_news)} new items.")

@@ -5,7 +5,7 @@
     >
         <div class="title-overlay">
             <h1>黄金商人</h1>
-            <p class="en-name">GOLDEN VENDOR</p>
+            <p class="en-title">GOLDEN VENDOR</p>
         </div>
     </header>
     <body>
@@ -100,9 +100,9 @@ export default {
 <style>
 .vendor-header {
     position: relative;
-    height: 200px;
+    height: 150px;
     background-size: cover;
-    background-position: top;
+    background-position: 50% 8%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -123,12 +123,10 @@ export default {
     margin: 0;
 }
 
-.en-name {
+.name-container .en-name {
     font-size: 1.4rem;
     margin: 0.5rem 0 0;
     font-weight: 600;
-    text-shadow: rgb(0, 0, 0) -1px 1px 4px, rgb(0, 0, 0) -2px 2px 4px,
-        rgb(0, 0, 0) -3px 3px 4px;
 }
 
 .body {

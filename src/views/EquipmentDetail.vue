@@ -138,6 +138,7 @@ const loadSet = async (enName: string) => {
 onMounted(async () => {
   const enName = (route.params.enName as string).replace(/_/g, ' ');
   await loadSet(enName);
+  console.log(set)
 });
 
 // 监听路由变化

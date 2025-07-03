@@ -30,3 +30,32 @@ body {
   font-family: 'notosans-bold';
   src: url(@/fonts/NotoSans-Bold.ttf);
 }
+
+b {
+    font-weight: 700;
+    color: #e5e2b9;
+    -webkit-text-stroke: 0.05px #ffffff;
+}
+
+.en-title {
+    font-size: 1.4rem;
+    margin: 0.5rem 0 0;
+    font-weight: 600;
+    text-shadow: rgb(0, 0, 0) -1px 1px 4px, rgb(0, 0, 0) -2px 2px 4px,
+        rgb(0, 0, 0) -3px 3px 4px;
+}
+
+@font-face {
+  font-family: 'HYWenHei';
+  src: url('@/assets/fonts/HYWenHei-65W.ttf');
+}
+
+@font-face {
+  font-family: 'Mythica Bold';
+  src: url('@/assets/fonts/Mythica W01 Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Mythica Medium';
+  src: url('@/assets/fonts/Mythica W01 Medium.ttf');
+}

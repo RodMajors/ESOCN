@@ -1,0 +1,171 @@
+export const traitOptions = {
+    armor: [
+        {
+            icon: "/icon/traits/quartz.png",
+            name: "强韧",
+            enName: "Sturdy",
+            bonuses: "格挡消耗降低4%。",
+        },
+        {
+            icon: "/icon/traits/diamond.png",
+            name: "牢不可破",
+            enName: "Impenetrable",
+            bonuses: "暴击抗性提高127，并且该物品受到的耐久度伤害减少50%。",
+        },
+        {
+            icon: "/icon/traits/sardonyx.png",
+            name: "加固",
+            enName: "Reinforced",
+            bonuses: "该物品的护甲值提高16%。",
+        },
+        {
+            icon: "/icon/traits/almandine.png",
+            name: "合身",
+            enName: "Well-fitted",
+            bonuses: "翻滚闪避和冲刺的消耗降低6%。",
+        },
+        {
+            icon: "/icon/traits/emerald.png",
+            name: "训练",
+            enName: "Training",
+            bonuses: "击杀获得的经验提高11%。",
+        },
+        {
+            icon: "/icon/traits/bloodstone.png",
+            name: "注魔",
+            enName: "Infused",
+            bonuses: "护甲附魔效果提高25%。",
+        },
+        {
+            icon: "/icon/traits/garnet.png",
+            name: "鼓舞",
+            enName: "Invigorating",
+            bonuses: "生命回复、魔力回复和耐力回复提高16%。",
+        },
+        {
+            icon: "/icon/traits/sapphire.png",
+            name: "神性",
+            enName: "Divines",
+            bonuses: "梦达思之石效果提高9.1%。",
+        },
+        {
+            icon: "/icon/traits/fortified_nirncrux.png",
+            name: "奈恩磨砺",
+            enName: "Nirnhorned",
+            bonuses: "物理抗性和法术抗性提高253。",
+        },
+    ],
+    weapon: [
+        {
+            icon: "/icon/traits/chysolite.png",
+            name: "动力",
+            enName: "Powered",
+            bonuses: "造成的治疗提高4.5%。",
+        },
+        {
+            icon: "/icon/traits/amethyst.png",
+            name: "充能",
+            enName: "Charged",
+            bonuses: "施加状态效果的几率提高240%。",
+        },
+        {
+            icon: "/icon/traits/ruby.png",
+            name: "精准",
+            enName: "Precise",
+            bonuses: "武器暴击和法术暴击提高3.5%。",
+        },
+        {
+            icon: "/icon/traits/jade.png",
+            name: "注魔",
+            enName: "Infused",
+            bonuses: "武器附魔效果提高30%，附魔冷却时间减少50%。",
+        },
+        {
+            icon: "/icon/traits/turquoise.png",
+            name: "防御",
+            enName: "Defending",
+            bonuses: "物理抗性和法术抗性提高1376。",
+        },
+        {
+            icon: "/icon/traits/carnelian.png",
+            name: "训练",
+            enName: "Training",
+            bonuses: "击杀获得的经验提高4.5%。",
+        },
+        {
+            icon: "/icon/traits/fireopal.png",
+            name: "锋锐",
+            enName: "Sharpened",
+            bonuses: "物理和法术穿透提高1376。",
+        },
+        {
+            icon: "/icon/traits/citrine.png",
+            name: "决意",
+            enName: "Decisive",
+            bonuses: "当你获得终极点时，你有20%的几率获得1点额外的终极点。",
+        },
+        {
+            icon: "/icon/traits/potent_nirncrux.png",
+            name: "奈恩磨砺",
+            enName: "Nirnhorned",
+            bonuses: "该武器的伤害提高15%。",
+        },
+    ],
+    jewelry: [
+        {
+            icon: "/icon/traits/cobalt.png",
+            name: "奥术",
+            enName: "Arcane",
+            bonuses: "魔力上限提高877。",
+        },
+        {
+            icon: "/icon/traits/antimony.png",
+            name: "健康",
+            enName: "Healthy",
+            bonuses: "生命上限提高965。",
+        },
+        {
+            icon: "/icon/traits/zinc.png",
+            name: "强壮",
+            enName: "Robust",
+            bonuses: "耐力上限提高877。",
+        },
+        {
+            icon: "/icon/traits/dawn_prism.png",
+            name: "三位一体",
+            enName: "Triune",
+            bonuses: "魔力上限提高439，耐力上限提高439，生命上限提高482。",
+        },
+        {
+            icon: "/icon/traits/aurbic_amber.png",
+            name: "注魔",
+            enName: "Infused",
+            bonuses: "珠宝附魔效果提高60%。",
+        },
+        {
+            icon: "/icon/traits/titanium.png",
+            name: "保护",
+            enName: "Protective",
+            bonuses: "法术抗性和物理抗性提高1844。",
+        },
+        {
+            icon: "/icon/traits/gilding_wax.png",
+            name: "轻灵",
+            enName: "Swift",
+            bonuses: "移动速度提高7%。",
+        },
+        {
+            icon: "/icon/traits/dibellium.png",
+            name: "和谐",
+            enName: "Harmony",
+            bonuses:
+                "使你激活的协同技的伤害、治疗、资源回复和伤害护盾强度提高20%。",
+        },
+        {
+            icon: "/icon/traits/slaughterstone.png",
+            name: "嗜血",
+            enName: "Bloodthirsty",
+            bonuses: "你对生命低于 90% 的敌人的武器伤害和法术伤害提高至多350。",
+        },
+    ],
+};

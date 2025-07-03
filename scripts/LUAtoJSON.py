@@ -417,7 +417,7 @@ def process_collectible_furniture(cn_data, en_data):
     cn_account = get_user_account(cn_data, "CollectibleFurniture")
     en_account = get_user_account(en_data, "CollectibleFurniture")
     if not cn_account or not en_account:
-        print(f"CN or EN account not found for CollectibleFurniture (CN: {cn_account}, EN: {en_account})")
+        print(f"中文或英文账户未找到 (中文: {cn_account}, 英文: {en_account})")
         return furniture
     
     cn_path = ["Default", cn_account, "$AccountWide", "dataItems", "CollectibleFurniture"]
@@ -425,7 +425,7 @@ def process_collectible_furniture(cn_data, en_data):
     for key in cn_path:
         cn_furniture = cn_furniture.get(key, {})
         if not cn_furniture:
-            print(f"CN - Key '{key}' not found in CollectibleFurniture path: {cn_path}")
+            print(f"中文 - 路径 {cn_path} 中未找到键 '{key}'")
             return furniture
     
     en_path = ["Default", en_account, "$AccountWide", "dataItems", "CollectibleFurniture"]
@@ -433,43 +433,42 @@ def process_collectible_furniture(cn_data, en_data):
     for key in en_path:
         en_furniture = en_furniture.get(key, {})
         if not en_furniture:
-            print(f"EN - Key '{key}' not found in CollectibleFurniture path: {en_path}")
+            print(f"英文 - 路径 {en_path} 中未找到键 '{key}'")
             return furniture
     
     if not isinstance(cn_furniture, dict):
-        print(f"Error: cn_furniture is not a dict, type: {type(cn_furniture)}, value: {cn_furniture}")
+        print(f"错误: cn_furniture 不是字典，类型: {type(cn_furniture)}, 值: {cn_furniture}")
         return furniture
     
     for key, furn_data in cn_furniture.items():
         furn_data = extract_table(furn_data, "cn")
-        print(f"Processing CN collectible furniture: id={furn_data.get('id', '')}, name={furn_data.get('name', '')}, description={bool(furn_data.get('description'))}")
+        print(f"处理中文收藏家具: id={furn_data.get('id', '')}, 名称={furn_data.get('name', '')}, 描述={bool(furn_data.get('description'))}")
         furn_entry = {
             "name": furn_data.get("name", ""),
             "enName": "",
-            "ingredients": furn_data.get("ingredients", ""),
             "id": str(furn_data.get("id", "")),
             "icon": furn_data.get("icon", "").replace(".dds", ".webp"),
-            "itemTypeText": furn_data.get("itemTypeText", ""),
-            "quality": furn_data.get("quality", ""),
+            "category": furn_data.get("category", ""),  # 使用 category 作为 itemTypeText
             "description": furn_data.get("description", ""),
             "canBeCrafted": furn_data.get("canBeCrafted", False),
-            "specializedItemTypeText": furn_data.get("specializedItemTypeText", "")
+            "hint": furn_data.get("hint", ""),  # 使用 hint 作为 specializedItemTypeText
+            "furnitureId": str(furn_data.get("furnitureId", ""))  # 新增 furnitureId 字段
         }
         
         if not isinstance(en_furniture, dict):
-            print(f"Error: en_furniture is not a dict, type: {type(en_furniture)}, value: {en_furniture}")
+            print(f"错误: en_furniture 不是字典，类型: {type(en_furniture)}, 值: {en_furniture}")
         else:
             en_furn = en_furniture.get(key, {})
             if en_furn:
                 en_furn = extract_table(en_furn, "en")
                 furn_entry["enName"] = en_furn.get("name", furn_entry["name"])
-                print(f"Found EN collectible furniture: id={furn_entry['id']}, enName={furn_entry['enName']}")
+                print(f"找到英文收藏家具: id={furn_entry['id']}, 英文名称={furn_entry['enName']}")
             else:
-                print(f"No English match found for collectible furniture with id: {furn_entry['id']}")
+                print(f"未找到 id 为 {furn_entry['id']} 的英文收藏家具")
         
         furniture.append(furn_entry)
     
-    print(f"Processed {len(furniture)} CollectibleFurniture")
+    print(f"处理了 {len(furniture)} 个收藏家具")
     return furniture
 
 def process_furniture(cn_data, en_data):
@@ -511,11 +510,13 @@ def process_furniture(cn_data, en_data):
             "ingredients": furn_data.get("ingredients", ""),
             "id": str(furn_data.get("id", "")),
             "icon": furn_data.get("icon", "").replace(".dds", ".webp"),
-            "itemTypeText": furn_data.get("itemTypeText", ""),
+            "type": furn_data.get("itemTypeText", ""),
             "quality": furn_data.get("quality", ""),
             "description": furn_data.get("description", ""),
-            "canBeCrafted": furn_data.get("canBeCrafted", False),
-            "specializedItemTypeText": furn_data.get("specializedItemTypeText", "")
+            "canBeCrafted": False,
+            "category": furn_data.get("category", ""),
+            "subCategory": furn_data.get("subcategory", ""),
+            "skills": ""
         }
         
         if not isinstance(en_furniture, dict):
@@ -993,12 +994,9 @@ def process_recipes(cn_data, en_data):
             "enName": "",  # 占位，稍后填充英文名称
             "ingredients": recipe_data.get("ingredients", ""),
             "id": str(recipe_data.get("id", "")),
-            "icon": recipe_data.get("icon", "").replace(".dds", ".webp"),
-            "itemTypeText": recipe_data.get("type", ""),  # 使用 type 作为 itemTypeText
             "quality": recipe_data.get("quality", ""),
-            "description": recipe_data.get("description", ""),  # 默认空字符串
-            "canBeCrafted": recipe_data.get("canBeCrafted", True),  # 配方默认可制作
-            "specializedItemTypeText": recipe_data.get("skills", "")  # 使用 skills 作为 specializedItemTypeText
+            "type": recipe_data.get("type", ""),  # 使用 type 作为 type
+            "skills": recipe_data.get("skills", "")  # 使用 skills 作为 specializedItemTypeText
         }
         
         # 处理英文 Recipes
@@ -1018,7 +1016,7 @@ def process_recipes(cn_data, en_data):
     print(f"处理了 {len(recipes)} 个配方")
     return recipes
 
-def merge_ingredients():
+def merge_food_ingredients():
     # 定义文件路径
     base_path = Path("C:/projects/ESOCN/src/Data")
     foods_file = base_path / "foods.json"
@@ -1077,6 +1075,73 @@ def merge_ingredients():
     except Exception as e:
         print(f"写入 foods_updated.json 出错: {e}")
 
+def merge_furniture_ingredients():
+    # 定义文件路径
+    base_path = Path("C:/projects/ESOCN/src/Data")
+    furniture_file = base_path / "furniture.json"
+    recipes_file = base_path / "recipes.json"
+    output_file = base_path / "furniture.json"  # 直接覆盖 furniture.json
+
+    # 读取 JSON 文件
+    try:
+        with open(furniture_file, "r", encoding="utf-8") as f:
+            furniture_data = json.load(f)
+        with open(recipes_file, "r", encoding="utf-8") as f:
+            recipes_data = json.load(f)
+    except Exception as e:
+        print(f"读取 JSON 文件出错: {e}")
+        return
+
+    # 确保数据结构正确
+    if not isinstance(furniture_data.get("furniture", []), list):
+        print(f"错误: furniture.json 的 'furniture' 不是列表，类型: {type(furniture_data.get('furniture'))}")
+        return
+    if not isinstance(recipes_data.get("recipes", []), list):
+        print(f"错误: recipes.json 的 'recipes' 不是列表，类型: {type(recipes_data.get('recipes'))}")
+        return
+
+    # 创建 furniture 的名称到条目的映射
+    furniture_map = {item["name"]: item for item in furniture_data["furniture"]}
+
+    # 定义所有可能的前缀
+    prefixes = ["配方：", "蓝图：", "设计：", "配方图", "制作图：", "图纸："]
+
+    # 统计更新计数
+    updated_count = 0
+
+    # 遍历 recipes，寻找包含指定前缀的条目
+    for recipe in recipes_data["recipes"]:
+        recipe_name = recipe.get("name", "")
+        # 检查是否以任一前缀开头
+        for prefix in prefixes:
+            if recipe_name.startswith(prefix):
+                # 提取去掉前缀后的名称
+                base_name = recipe_name[len(prefix):]
+                furniture_item = furniture_map.get(base_name)
+                if furniture_item:
+                    # 检查 furniture 中 ingredients 是否为空
+                    if not furniture_item.get("ingredients", "").strip():
+                        # 复制 recipes 中的 ingredients 和 canBeCrafted
+                        furniture_item["ingredients"] = recipe.get("ingredients", "")
+                        furniture_item["canBeCrafted"] = True
+                        furniture_item["skills"] = recipe.get("skills", "")
+                        furniture_item["type"] = recipe.get("type", "")
+                        updated_count += 1
+                        print(f"更新家具: {base_name}, 新增材料: {furniture_item['ingredients']}, 可制作: {furniture_item['canBeCrafted']}")
+                    else:
+                        print(f"跳过 {base_name}: ingredients 已存在 ({furniture_item['ingredients']})")
+                else:
+                    print(f"未在 furniture.json 中找到匹配的家具: {base_name}")
+                break  # 找到匹配的前缀后退出前缀循环
+
+    # 保存更新后的 furniture 数据
+    try:
+        with open(output_file, "w", encoding="utf-8") as f:
+            json.dump(furniture_data, f, ensure_ascii=False, indent=2)
+        print(f"更新完成，修改了 {updated_count} 个家具的 ingredients 和 canBeCrafted，输出到 {output_file}")
+    except Exception as e:
+        print(f"写入 furniture.json 出错: {e}")
+        
 def main():
     base_path = Path("C:/projects/ESOCN")
     cn_lua_file = base_path / "public/data/DataExtractor-cn.lua"
@@ -1155,7 +1220,8 @@ def main():
             print(f"{category} JSON 文件生成成功，包含 {len(data)} 项")
         except Exception as e:
             print(f"处理 {category} 出错: {e}")
-    merge_ingredients()
+    merge_food_ingredients()
+    merge_furniture_ingredients()
 
 if __name__ == "__main__":
     main()

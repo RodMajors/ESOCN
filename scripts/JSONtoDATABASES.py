@@ -46,14 +46,12 @@ def insert_equipment_data(connection, equipment_data):
     cursor = connection.cursor()
     inserted_sets = 0
     inserted_bonuses = 0
-    inserted_styles = 0
-
     try:
         for set_item in equipment_data.get('equipment', []):
-            # 插入套装数据到 sets 表
+            # 插入套装数据到 sets 表，包括 styles 作为 JSON
             set_query = """
-                INSERT IGNORE INTO sets (id, name, enName, place, enplace, type, icon, style, armor)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                INSERT IGNORE INTO sets (id, name, enName, place, enplace, type, icon, style, armor, styles)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             set_values = (
                 set_item['id'],
@@ -64,7 +62,8 @@ def insert_equipment_data(connection, equipment_data):
                 set_item['type'],
                 set_item['icon'],
                 set_item['style'],
-                set_item['armor']
+                set_item['armor'],
+                json.dumps(set_item.get('styles', {}))  # 序列化 styles 为 JSON 字符串
             )
             cursor.execute(set_query, set_values)
             if cursor.rowcount == 0:
@@ -84,34 +83,10 @@ def insert_equipment_data(connection, equipment_data):
                     cursor.execute(bonus_query, bonus_values)
                     inserted_bonuses += cursor.rowcount
 
-            # 插入样式到 styles 表
-            for category, sub_categories in set_item.get('styles', {}).items():
-                for sub_category, styles in sub_categories.items():
-                    for style_name, style_data in styles.items():
-                        style_query = """
-                            INSERT IGNORE INTO styles (set_id, category, sub_category, style, style_id, icon)
-                            VALUES (%s, %s, %s, %s, %s, %s)
-                        """
-                        style_values = (
-                            set_item['id'],
-                            category,
-                            sub_category,
-                            style_data.get('style', ''),
-                            style_data.get('styleId', ''),
-                            style_data.get('icon', '')
-                        )
-                        cursor.execute(style_query, style_values)
-                        inserted_styles += cursor.rowcount
-
         connection.commit()
-        logger.info(f"Equipment import completed: {inserted_sets} sets, {inserted_bonuses} bonuses, {inserted_styles} styles inserted")
-
-    except mysql.connector.Error as err:
-        logger.error(f"Database error during equipment insertion: {err}")
-        connection.rollback()
-        raise
-    except Exception as err:
-        logger.error(f"Unexpected error in equipment insertion: {err}")
+        logger.info(f"Equipment import completed: {inserted_sets} sets, {inserted_bonuses} bonuses inserted")
+    except Exception as e:
+        logger.error(f"Error during equipment import: {e}")
         connection.rollback()
         raise
     finally:
@@ -292,19 +267,43 @@ def insert_furniture_data(connection, furniture_data):
 
     try:
         for furniture_item in furniture_data.get('furniture', []):
+            ingredients = {}
+            skills = {}
+            #处理ingredients
+            pattern = re.compile(r'([^(),]+)\s*\(\s*(\d+)\s*\)')
+            matches = pattern.finditer(furniture_item['ingredients'])
+            for match in matches:
+                name = match.group(1).strip()
+                quantity = int(match.group(2))
+                ingredients[name] = quantity
+                
+            pattern = re.compile(r'([^\d]+)\s+(\d+)')
+            matches = pattern.finditer(furniture_item['skills'])
+            for match in matches:
+                name = match.group(1).strip()
+                quantity = int(match.group(2))
+                skills[name] = quantity
+                
             # 插入套装数据到 furniture 表
             furniture_query = """
-                INSERT IGNORE INTO furniture (id, name, enName, icon, quality, description, canBeCrafted)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                INSERT IGNORE INTO furniture (id, name, enName, icon, type,
+                quality, description, canBeCrafted, category, subCategory,
+                ingredients, skills)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             set_values = (
                 furniture_item['id'],
                 furniture_item['name'],
                 furniture_item['enName'],
                 furniture_item['icon'],
+                furniture_item['type'],
                 furniture_item['quality'],
                 furniture_item['description'],
-                furniture_item['canBeCrafted']
+                furniture_item['canBeCrafted'],
+                furniture_item['category'],
+                furniture_item['subCategory'],
+                json.dumps(ingredients, ensure_ascii=False),
+                json.dumps(skills, ensure_ascii=False),
             )
             cursor.execute(furniture_query, set_values)
             if cursor.rowcount == 0:
@@ -322,6 +321,51 @@ def insert_furniture_data(connection, furniture_data):
         raise
     except Exception as err:
         logger.error(f"Unexpected error in furniture insertion: {err}")
+        connection.rollback()
+        raise
+    finally:
+        cursor.close()
+        
+def insert_collectibleFurniture_data(connection, furniture_data):
+    """将 furniture.json 数据插入数据库"""
+    cursor = connection.cursor()
+    inserted_furniture = 0
+
+    try:
+        for furniture_item in furniture_data.get('collectibleFurniture', []):
+            # 插入套装数据到 furniture 表
+            furniture_query = """
+                INSERT IGNORE INTO collectibleFurniture (id, name, enName, icon, 
+                furnitureId, quality, description,  category, hint)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """
+            set_values = (
+                furniture_item['id'],
+                furniture_item['name'],
+                furniture_item['enName'],
+                furniture_item['icon'],
+                furniture_item['furnitureId'],
+                furniture_item['quality'],
+                furniture_item['description'],
+                furniture_item['category'],
+                furniture_item['hint'],
+            )
+            cursor.execute(furniture_query, set_values)
+            if cursor.rowcount == 0:
+                logger.debug(f"Skipped set (possible duplicate): id={furniture_item['id']}, name={furniture_item['name']}")
+            else:
+                logger.debug(f"Inserted set: id={furniture_item['id']}, name={furniture_item['name']}")
+            inserted_furniture += cursor.rowcount
+
+        connection.commit()
+        logger.info(f"collectibleFurniture import completed: {inserted_furniture} collectibleFurniture, ")
+
+    except mysql.connector.Error as err:
+        logger.error(f"Database error during collectibleFurniture insertion: {err}")
+        connection.rollback()
+        raise
+    except Exception as err:
+        logger.error(f"Unexpected error in collectibleFurniture insertion: {err}")
         connection.rollback()
         raise
     finally:
@@ -635,6 +679,33 @@ def process_furniture_json(json_path):
         logger.error(f"Error processing furniture.json: {err}")
         raise
     
+def process_collectibleFurniture_json(json_path):
+    """处理 furniture.json 文件并导入数据库"""
+    try:
+        # 读取 JSON 文件
+        with open(json_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        logger.info(f"Loaded JSON file: {json_path}")
+
+        # 连接数据库
+        connection = connect_to_database('eso_furniture')
+        try:
+            # 插入数据
+            insert_collectibleFurniture_data(connection, data)
+        finally:
+            connection.close()
+            logger.info("Database connection closed for furniture")
+
+    except FileNotFoundError:
+        logger.error(f"JSON file not found: {json_path}")
+        raise
+    except json.JSONDecodeError as err:
+        logger.error(f"Invalid JSON format in {json_path}: {err}")
+        raise
+    except Exception as err:
+        logger.error(f"Error processing furniture.json: {err}")
+        raise
+    
 def process_cpSkills_json(json_path):
     """处理 cpSkills.json 文件并导入数据库"""
     try:
@@ -715,36 +786,11 @@ def process_foods_json(json_path):
     except Exception as err:
         logger.error(f"Error processing foods.json: {err}")
         raise
-    
-def process_news_json(json_path):
-    """处理 news.json 文件并导入数据库"""
-    try:
-        # 读取 JSON 文件
-        with open(json_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        logger.info(f"Loaded JSON file: {json_path}")
-
-        # 连接数据库
-        connection = connect_to_database('esonews')
-        try:
-            # 插入数据
-            insert_news_data(connection, data)
-        finally:
-            connection.close()
-            logger.info("Database connection closed for news")
-
-    except FileNotFoundError:
-        logger.error(f"JSON file not found: {json_path}")
-        raise
-    except json.JSONDecodeError as err:
-        logger.error(f"Invalid JSON format in {json_path}: {err}")
-        raise
-    except Exception as err:
-        logger.error(f"Error processing news.json: {err}")
-        raise
+            
 
 def main():
     base_path = Path("C:/projects/ESOCN")
+    #此处没有news
     json_files = {
         'equipment': base_path / "src/Data/equipment.json",
         'skills': base_path / "src/Data/skills.json",
@@ -752,9 +798,8 @@ def main():
         'cpSkills': base_path / "src/Data/cpSkills.json",
         'buffs': base_path / "src/Data/buffs.json",
         'foods': base_path / "src/Data/foods.json",
-        'news': base_path / "src/Data/news.json"
+        'collectibleFurniture': base_path / "src/Data/collectibleFurniture.json"
     }
-
     logger.info("Starting JSON to DATABASE import process")
     for category, json_path in json_files.items():
         if category == 'equipment':
@@ -769,8 +814,8 @@ def main():
             process_buffs_json(json_path)
         elif category == 'foods':
             process_foods_json(json_path)
-        elif category == 'news':
-            process_news_json(json_path)
+        elif category == 'collectibles':
+            process_collectibleFurniture_json(json_path)
     logger.info("Import process completed")
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@
       <RouterLink to="/" class="logo">ESOCN</RouterLink>
 
       <ul class="nav-links">
+          <li><RouterLink to="/build-editor">构建编辑</RouterLink></li>
           <li><RouterLink to="/dungeons">副本攻略</RouterLink></li>
           <li><RouterLink to="/trials">试炼攻略</RouterLink></li>
           <li><RouterLink to="/champions">勇士点数</RouterLink></li>

@@ -1,5 +1,5 @@
 {
-  "timestamp": "82bd4844-3d46-4c3c-b7b1-a67a09e080b7",
+  "timestamp": "5261d86c-1483-4580-bf10-796f56d860d1",
   "foods": [
     {
       "name": "香蕉惊喜",
@@ -3501,7 +3501,7 @@
       "icon": "/esoui/art/icons/crafting_dom_beer_001.webp",
       "itemTypeText": "饮品",
       "quality": "传说",
-      "description": "魔力与耐力回复提高|cffffff492|r，持续|cffffff1|r小时。",
+      "description": "魔力与耐力回复提高AB_DERIVED_VALUE，持续|cffffff1|r小时。",
       "canBeCrafted": "False",
       "specializedItemTypeText": "酒精饮料"
     },
@@ -4346,8 +4346,8 @@
       "specializedItemTypeText": "甜点餐食"
     },
     {
-      "name": "迪沙安蜜瓜开胃甜点",
-      "enName": "Deshaan Honeydew Hors D'Ouevre",
+      "name": "迪沙安蜜瓜开胃菜",
+      "enName": "Deshaan Honeydew Hors D'oeuvres",
       "ingredients": "甜瓜 (1), 盐米 (1)",
       "id": "33855",
       "icon": "/esoui/art/icons/crafting_fruit_002.webp",
@@ -4989,7 +4989,7 @@
       "icon": "/esoui/art/icons/crafting_dom_beer_001.webp",
       "itemTypeText": "饮品",
       "quality": "传说",
-      "description": "魔力与耐力回复提高|cffffff492|r，持续|cffffff1|r小时。",
+      "description": "魔力与耐力回复提高AB_DERIVED_VALUE，持续|cffffff1|r小时。",
       "canBeCrafted": "False",
       "specializedItemTypeText": "酒精饮料"
     },
@@ -6230,15 +6230,15 @@
       "specializedItemTypeText": "肉类餐食"
     },
     {
-      "name": "迪沙安蜜瓜开胃甜点",
-      "enName": "Deshaan Honeydew Hors D'Ouevre",
-      "ingredients": "",
+      "name": "迪沙安蜜瓜开胃菜",
+      "enName": "Deshaan Honeydew Hors D'oeuvres",
+      "ingredients": "甜瓜 (1), 盐米 (1)",
       "id": "37841",
       "icon": "/esoui/art/icons/crafting_fruit_001.webp",
       "itemTypeText": "食物",
       "quality": "普通",
       "description": "魔力上限提高|cffffff1400|r，持续|cffffff35|r分钟。",
-      "canBeCrafted": "False",
+      "canBeCrafted": "True",
       "specializedItemTypeText": "水果餐食"
     },
     {
@@ -8916,18 +8916,6 @@
       "description": "生命上限提高|cffffff5066|r，耐力上限提高|cffffff4635|r，持续|cffffff1|r小时。",
       "canBeCrafted": "True",
       "specializedItemTypeText": "蔬菜炖肉餐食"
-    },
-    {
-      "name": "克罗维亚的琥珀麦酒",
-      "enName": "Colovian Amber Ale",
-      "ingredients": "小麦 (1), 蜂蜜酒 (1)",
-      "id": "57161",
-      "icon": "/esoui/art/icons/crafting_beer_001.webp",
-      "itemTypeText": "饮品",
-      "quality": "优良",
-      "description": "生命回复提高|cffffff404|r，持续|cffffff35|r分钟。",
-      "canBeCrafted": "True",
-      "specializedItemTypeText": "酒精饮料"
     },
     {
       "name": "甜蜜蜜",
@@ -11865,7 +11853,7 @@
       "icon": "/esoui/art/icons/crownstore_consumable_entremet_cake.webp",
       "itemTypeText": "食物",
       "quality": "传说",
-      "description": "联盟等级与联盟技能获得|cffffff50|r%经验加成，持续|cffffff30|r分钟。离线时间不计入在内，再次上线后重新开始计时。该加成可与其它食物和饮料同时使用。",
+      "description": "你从所有来源获得|cffffff50|r%的联盟等级与联盟战争技能线经验加成，持续|cffffff30|r分钟。离线时间不计入在内，再次上线后重新开始计时。该加成可与其它食物和饮料同时使用。",
       "canBeCrafted": "True",
       "specializedItemTypeText": "独特餐食"
     },
@@ -11877,7 +11865,7 @@
       "icon": "/esoui/art/icons/ava_skill_boost_food_001.webp",
       "itemTypeText": "食物",
       "quality": "传说",
-      "description": "联盟等级与联盟技能获得|cffffff100|r%经验加成，持续|cffffff30|r分钟。离线时间不计入在内，再次上线后重新开始计时。该加成可与其它食物和饮料同时使用。",
+      "description": "你从所有来源获得|cffffff100|r%的联盟等级与联盟战争技能线经验加成，持续|cffffff30|r分钟。离线时间不计入在内，再次上线后重新开始计时。该加成可与其它食物和饮料同时使用。",
       "canBeCrafted": "True",
       "specializedItemTypeText": "独特餐食"
     },
@@ -11889,7 +11877,7 @@
       "icon": "/esoui/art/icons/ava_skill_boost_food_002.webp",
       "itemTypeText": "食物",
       "quality": "传说",
-      "description": "联盟等级与联盟技能获得|cffffff150|r%经验加成，持续|cffffff30|r分钟。离线时间不计入在内，再次上线后重新开始计时。该加成可与其它食物和饮料同时使用。",
+      "description": "你从所有来源获得|cffffff150|r%的联盟等级与联盟战争技能线经验加成，持续|cffffff30|r分钟。离线时间不计入在内，再次上线后重新开始计时。该加成可与其它食物和饮料同时使用。",
       "canBeCrafted": "True",
       "specializedItemTypeText": "独特餐食"
     },
@@ -11949,7 +11937,7 @@
       "icon": "/esoui/art/icons/ava_skill_boost_food_001.webp",
       "itemTypeText": "食物",
       "quality": "传说",
-      "description": "联盟等级与联盟技能获得|cffffff100|r%经验加成，持续|cffffff30|r分钟。离线时间不计入在内，再次上线后重新开始计时。该加成可与其它食物和饮料同时使用。",
+      "description": "你从所有来源获得|cffffff100|r%的联盟等级与联盟战争技能线经验加成，持续|cffffff30|r分钟。离线时间不计入在内，再次上线后重新开始计时。该加成可与其它食物和饮料同时使用。",
       "canBeCrafted": "True",
       "specializedItemTypeText": "独特餐食"
     }
